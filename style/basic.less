@@ -1,0 +1,237 @@
+.fonts(@size: 12px) {
+  font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", Tahoma, Verdana, Arial, Sans-Serif;
+  font-size: @size;
+}
+
+* {
+  .fonts();
+}
+
+@lightGrey: #efefef;
+@controlBorderColor: #999;
+body {
+  .fonts();
+  background-color: @lightGrey;
+}
+
+//@blue: #4691ed;
+//@darkBlue: #335dad;
+@blue: #127787;
+@darkBlue: #158EA1;
+
+@inputPadding: 3px;
+input {
+  padding: @inputPadding;
+}
+
+input {
+  border: 1px solid @controlBorderColor;
+  border-radius: 2px;
+}
+
+input:active, input:focus {
+  border-color: black;
+}
+
+input[type="button"], input[type="submit"], .submitButton {
+  padding-left: 6px;
+  padding-right: 6px;
+  font-weight: bold;
+}
+
+input[type="button"] {
+  background-color: @lightGrey;
+}
+
+input[type="submit"], .submitButton {
+  background-color: @blue;
+  color: white;
+  border-color: black;
+}
+
+label {
+  font-weight: bold;
+}
+
+// Option control
+div.optionControl {
+  margin: (@inputPadding + 1px);
+  display: inline-block; *zoom: 1; *display: inline;
+}
+
+span.option, span.selectedOption {
+  padding: @inputPadding;
+  cursor: pointer;
+  border: 1px solid @controlBorderColor;
+  border-radius: 2px;
+}
+
+span.option {
+  background-color: @lightGrey;
+}
+
+span.selectedOption {
+  font-weight: bold;
+  color: white;
+  background-color: @blue;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+}
+
+h6 {
+  font-size: 110%;
+}
+
+h5 {
+  font-size: 125%;
+}
+
+h4 {
+  font-size: 150%;
+}
+
+h3 {
+  font-size: 200%;
+}
+
+h2 {
+  font-size: 250%;
+}
+
+h1 {
+  font-size: 300%;
+}
+
+.fill {
+  width: 100%;
+  height: 100%;
+}
+
+@contentBoxPadding: 10px;
+#centeredContentBox {
+  width: @pageContentWidth;
+  padding: @contentBoxPadding;
+  margin: 10px auto;
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 3px;
+}
+
+.vspace {
+  content: "x";
+  visibility: hidden;
+  position: relative;
+  height: 1em;
+}
+
+.tallVspace {
+  content: "x";
+  visibility: hidden;
+  position: relative;
+  height: 100px;
+}
+
+.formLeftSide {
+  text-align: right;
+}
+
+.formRightSide {
+  text-align: left;
+  padding-left: 5px;
+  margin-left: 5px;
+  clear: both;
+}
+
+.halfWidth {
+  width: 50%;
+}
+
+.floatLeft {
+  float: left;
+}
+
+.floatRight {
+  float: right;
+}
+
+.alignLeft {
+  text-align: left;
+}
+
+.alignRight {
+  text-align: right;
+}
+
+.alignCenter {
+  text-align: center;
+}
+
+.smallMargin {
+  margin: 5px;
+}
+
+div.inlineBlock {
+  // The * stuff is an IE hack.
+  display: inline-block; *zoom: 1; *display: inline;
+}
+
+@pageContentWidth: 800px;
+
+// -----
+
+@topBarHeight: 36px;
+@topBarContentHeight: 20px;
+@topBarTextSizeMultiplier: 125%;
+@topBarBackgroundColor: @blue;
+@topBarBackgroundColorDark: @darkBlue;
+#topBar {
+  position: fixed;
+  width: 100%;
+  height: @topBarHeight;
+  background-color: @topBarBackgroundColor;
+  color: white;
+}
+
+#topBarContent {
+  height: @topBarContentHeight;
+  width: @pageContentWidth;
+  font-size: @topBarTextSizeMultiplier;
+  margin: ((@topBarHeight - @topBarContentHeight) / 2) auto 0;
+}
+
+#topBarFixedPlaceholder {
+  height: @topBarHeight;
+}
+
+.topBarLink, .topBarLink:active, .topBarLink:visited {
+  color: white;
+  text-decoration: none;
+}
+
+.topBarLink:hover {
+  background-color: @topBarBackgroundColorDark;
+}
+
+#topBarRightPanel {
+  float: right;
+}
+
+// -----
+
+#loginContainer {
+  position: relative;
+  margin: 0 auto;
+  width: 300px;
+  text-align: center;
+}
+
+.loginFixedSizeInput {
+  width: 150px;
+  margin-left: 10px;
+}
+
+.loginPanel {
+  min-height: 85px;
+}

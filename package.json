@@ -1,0 +1,13 @@
+{
+  "name": "notes",
+  "version": "0.0.1",
+  "description": "A note taking app",
+  "dependencies": {
+    "express": "~3.4.4",
+    "less": "~1.5.0",
+    "handlebars": "~1.1.2",
+    "open": "0.0.4",
+    "consolidate": "~0.10.0",
+    "mysql": "~2.0.0-rc1"
+  }
+}
