@@ -1,11 +1,15 @@
 <div id="topBar">
   <div id="topBarContent">
-    <a href="/" class="topBarLink">Notes</a> &gt; {{title}}
     <div id="topBarRightPanel">
-      {{#unless suppressLoginHeaderLink}}
-        <a href="/login" class="topBarLink">Log in</a>
-      {{/unless}}
+      {{#if user}}
+        Hello, {{user}}. <a href="/logout" class="topBarLink">Log out</a>
+      {{else}}
+        {{#unless suppressLoginHeaderLink}}
+          <a href="/login" class="topBarLink">Log in</a>
+        {{/unless}}
+      {{/if}}
     </div>
+    <a href="/" class="topBarLink">Notes</a> &gt; {{title}}
   </div>
 </div>
 <div id="topBarFixedPlaceholder"></div>

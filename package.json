@@ -8,6 +8,8 @@
     "handlebars": "~1.1.2",
     "open": "0.0.4",
     "consolidate": "~0.10.0",
-    "mysql": "~2.0.0-rc1"
+    "mysql": "~2.0.0-rc1",
+    "passport": "~0.1.17",
+    "passport-local": "~0.1.6"
   }
 }
