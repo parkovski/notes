@@ -1,5 +1,10 @@
-module.exports = function(app) {
-  app.get('/', function (req, res) {
-    res.render('index.html', { title: 'Home page', user: req.user });
-  });
+function IndexController() {
 }
+
+IndexController.prototype.showHomePage = function(req, res) {
+  this.render('index.html', {
+    title: 'Home page'
+  });
+};
+
+module.exports = IndexController;

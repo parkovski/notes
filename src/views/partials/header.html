@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="/style/reset.css" />
+    <link rel="stylesheet" href="/style/basic.css" />
+    {{#if user}}
+      <link rel="stylesheet" href="/style/theme{{user.theme}}.css" id="themecss" />
+    {{else}}
+      <link rel="stylesheet" href="/style/theme0.css" id="themecss" />
+    {{/if}}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  </head>
+  <body>
+    {{>topbar}}
+    <div id="centeredContentBox">

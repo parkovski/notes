@@ -1,10 +1,15 @@
 // Brute force build system. Find all files that need to be built
 // and run their compilers.
 
-/// <reference path="typings/DefinitelyTyped/node/node.d.ts"/>
+// /// <reference path="typings/DefinitelyTyped/node/node.d.ts"/>
 
-import fs = require('fs');
-import child_process = require('child_process');
+// gotta migrate this to js...
+declare var require: any;
+declare var __dirname: any;
+declare var process: any;
+
+var fs = require('fs');
+var child_process = require('child_process');
 
 declare module 'open' {
   // not correct, but all that we need here.
@@ -50,7 +55,8 @@ var commands = {
 var excludeNames = [
   '.git',
   'node_modules',
-  'typings'
+  'typings',
+  'style/themebase.less'
 ].map((name) => {
   return __dirname + '/' + name;
 });
@@ -83,6 +89,7 @@ process.argv.slice(2).forEach(arg => {
 
 var targets = {
   'build': () => collectFiles().forEach(compile),
+  'themes': buildThemes,
   'clean': () => collectFiles().forEach(removeOutput),
   'start': () => {
     options['run'] = true;
@@ -200,4 +207,48 @@ function collectFiles(): string[] {
   // when we haven't collected any files.
   finish_target = files.length + 1;
   return files;
+}
+
+function compileTheme(themebase: string, out: string, overrides: any) {
+  var shortInput = themebase.substring(__dirname.length + 1);
+  var shortOutput = out.substring(__dirname.length + 1);
+
+  console.log('building theme', shortInput, '>', shortOutput);
+
+  var command = 'lessc ';
+  Object.keys(overrides).forEach((v) => {
+    command += '--modify-var="' + v + '=' + overrides[v] + '" ';
+  });
+
+  command += themebase + ' ' + out;
+
+  child_process.exec(command, (error, stdout, stderr) => {
+    if (error) {
+      hadError = true;
+    }
+
+    if (stdout.length) {
+      console.log(stdout.toString());
+    }
+    if (stderr.length) {
+      hadError = true;
+      console.log(stderr.toString());
+    }
+    finish();
+  });
+}
+
+function buildThemes() {
+  var themes = require('./src/themes.json');
+  var themebase = __dirname + '/style/themebase.less';
+
+  finish_target = 1;
+  Object.keys(themes).forEach((theme) => {
+    ++finish_target;
+    compileTheme(
+      themebase,
+      __dirname + '/style/theme' + theme + '.css',
+      themes[theme]
+    );
+  });
 }

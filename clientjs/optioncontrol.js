@@ -16,7 +16,7 @@
         });
         var clickFn = jqDiv.data('click');
         if (typeof clickFn === 'function') {
-          clickFn(jqSpan.attr('name'), outerIndex);
+          clickFn.call(div, jqSpan.attr('name'), outerIndex);
         }
       });
     });

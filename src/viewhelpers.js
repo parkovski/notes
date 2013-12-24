@@ -1,19 +1,13 @@
 var fs = require('fs');
 var Handlebars = require('handlebars');
 
-var controllerFiles = [
-  'index',
-  'login'
-];
-
-function loadRoutes(app) {
+module.exports.setupAppForHandlebars = function setupAppForHandlebars(app) {
   app.set('views', __dirname + '/views');
   app.set('view engine', 'handlebars');
   app.engine('html', require('consolidate').handlebars);
-  controllerFiles.forEach(function (file) {
-    require(__dirname + '/controllers/' + file)(app);
-  });
+}
 
+module.exports.registerPartials = function registerPartials() {
   fs.readdirSync(__dirname + '/views/partials/').forEach(function (viewName) {
     if (viewName.substr(viewName.length - 5) === '.html') {
       Handlebars.registerPartial(
@@ -23,7 +17,3 @@ function loadRoutes(app) {
     }
   });
 }
-
-
-module.exports = loadRoutes;
-

@@ -1,0 +1,14 @@
+{
+  "/": "index/showHomePage",
+
+  "/login": "login/showLoginPage",
+  "post /login": "login/processLogin",
+  "post /logout": "login/logout",
+  "/isuser/:user": "login/isUser",
+  "/register": "login/showRegisterPage",
+  "post /register": "login/registerUser",
+
+  "/settings": "settings/showThemePicker",
+  "/settings/theme": "settings/showThemePicker",
+  "post /settings/theme": "settings/changeTheme"
+}

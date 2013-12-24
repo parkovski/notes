@@ -1,6 +1,3 @@
-// Brute force build system. Find all files that need to be built
-// and run their compilers.
-/// <reference path="typings/DefinitelyTyped/node/node.d.ts"/>
 var fs = require('fs');
 var child_process = require('child_process');
 
@@ -42,7 +39,8 @@ var commands = {
 var excludeNames = [
     '.git',
     'node_modules',
-    'typings'
+    'typings',
+    'style/themebase.less'
 ].map(function (name) {
     return __dirname + '/' + name;
 });
@@ -76,6 +74,7 @@ var targets = {
     'build': function () {
         return collectFiles().forEach(compile);
     },
+    'themes': buildThemes,
     'clean': function () {
         return collectFiles().forEach(removeOutput);
     },
@@ -193,5 +192,45 @@ function collectFiles() {
     // when we haven't collected any files.
     finish_target = files.length + 1;
     return files;
+}
+
+function compileTheme(themebase, out, overrides) {
+    var shortInput = themebase.substring(__dirname.length + 1);
+    var shortOutput = out.substring(__dirname.length + 1);
+
+    console.log('building theme', shortInput, '>', shortOutput);
+
+    var command = 'lessc ';
+    Object.keys(overrides).forEach(function (v) {
+        command += '--modify-var="' + v + '=' + overrides[v] + '" ';
+    });
+
+    command += themebase + ' ' + out;
+
+    child_process.exec(command, function (error, stdout, stderr) {
+        if (error) {
+            hadError = true;
+        }
+
+        if (stdout.length) {
+            console.log(stdout.toString());
+        }
+        if (stderr.length) {
+            hadError = true;
+            console.log(stderr.toString());
+        }
+        finish();
+    });
+}
+
+function buildThemes() {
+    var themes = require('./src/themes.json');
+    var themebase = __dirname + '/style/themebase.less';
+
+    finish_target = 1;
+    Object.keys(themes).forEach(function (theme) {
+        ++finish_target;
+        compileTheme(themebase, __dirname + '/style/theme' + theme + '.css', themes[theme]);
+    });
 }
 

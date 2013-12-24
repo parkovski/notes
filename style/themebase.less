@@ -1,0 +1,52 @@
+// Everything that changes color based on the theme must go in this file.
+
+//@blue: #4691ed;
+//@darkBlue: #335dad;
+// Defaults - override these with lessc --modify-var="var=value"
+@color: #127787;
+@textcolor: white;
+@hlcolor: #158EA1;
+@hltextcolor: white;
+
+input[type="submit"]:not(.link), .submitButton {
+  background-color: @color;
+  color: @textcolor;
+}
+
+span.selectedOption {
+  background-color: @color;
+  color: @textcolor;
+}
+
+#topBar {
+  background-color: @color;
+  color: @textcolor;
+}
+
+span.topBarSep {
+  color: @hlcolor;
+}
+
+#topBarContent > a,
+#topBarContent > a:active,
+#topBarContent > a:visited,
+#topBarRightPanel > a,
+#topBarRightPanel > a:active,
+#topBarRightPanel > a:visited {
+  color: @textcolor;
+}
+
+#topBarContent > a:hover,
+#topBarRightPanel > a:hover {
+  background-color: @hlcolor;
+  color: @hltextcolor;
+}
+
+#topbardropdowntoggle {
+  border-left-color: @hlcolor;
+}
+
+.link, .link:hover, .link:active, .link:visited {
+  color: @hlcolor;
+  background-color: white;
+}

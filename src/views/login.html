@@ -1,51 +1,47 @@
-<!DOCTYPE html>
-<html class="fill">
-  <head>
-    <title>{{title}}</title>
-    <link rel="stylesheet" href="/style/reset.css" />
-    <link rel="stylesheet" href="/style/basic.css" />
-  </head>
-  <body class="fill">
-    {{>topbar}}
-    <div id="centeredContentBox">
-      <div class="tallVspace"></div>
-      <div id="loginContainer">
-        <div><h1 class="alignCenter">Hi.</h1></div>
-        <div class="vspace"></div>
-        <div><p class="alignCenter">How would you like to access your notes?</p></div>
-        <div class="vspace"></div>
-        <div class="alignCenter"><div class="optionControl">
-          <span class="selectedOption">Notes account</span>
-          <span class="option">Facebook</span>
-          <span class="option">Twitter</span>
-          <span class="option">Google</span>
-        </div></div>
-        <div class="vspace"></div>
-        <div class="alignCenter inlineBlock loginPanel" id="panel0">
-          <form method="post" action="/login">
-            <div class="alignRight smallMargin"><label>Username: <input type="text" id="username" name="username" class="loginFixedSizeInput" /></label></div>
-            <div class="alignRight smallMargin"><label>Password: <input type="password" id="password" name="password" class="loginFixedSizeInput" /></label></div>
-            <div class="alignRight smallMargin"><input type="submit" value="Log in" /></div>
-          </form>
-        </div>
-        <div class="alignCenter inlineBlock loginPanel" style="display: none;" id="panel1">Facebook!</div>
-        <div class="alignCenter inlineBlock loginPanel" style="display: none;" id="panel2">Twitter!</div>
-        <div class="alignCenter inlineBlock loginPanel" style="display: none;" id="panel3">Google!</div>
-      </div>
-      <div class="tallVspace"></div>
-    </div>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="/clientjs/optioncontrol.js"></script>
-    <script>
-      $('.optionControl').optionControl(function(sel, index) {
-        for (var i = 0; i < 4; ++i) {
-          var vis = 'none';
-          if (index === i) {
-            vis = '';
-          }
-          $('#panel' + i).css({display: vis});
+{{>header}}
+<div class="tallVspace"></div>
+<div id="loginContainer">
+  <div><h1 class="alignCenter">Hi.</h1></div>
+  <div class="vspace"></div>
+  <div>
+    {{#if errorMessage}}
+      <p class="alignCenter warning">{{errorMessage}}</p>
+    {{else}}
+      <p class="alignCenter">How would you like to access your notes?</p>
+    {{/if}}
+  </div>
+  <div class="vspace"></div>
+  <div class="alignCenter"><div class="optionControl">
+    <span class="selectedOption">Notes account</span>
+    <span class="option">Facebook</span>
+    <span class="option">Twitter</span>
+    <span class="option">Google</span>
+  </div></div>
+  <div class="vspace"></div>
+  <div class="alignCenter inlineBlock loginPanel" id="panel0">
+    <form method="post" action="/login">
+      <div class="alignRight smallMargin"><label>Username: <input type="text" id="username" name="username" class="loginFixedSizeInput" /></label></div>
+      <div class="alignRight smallMargin"><label>Password: <input type="password" id="password" name="password" class="loginFixedSizeInput" /></label></div>
+      <div class="alignRight smallMargin"><input type="submit" value="Log in" /></div>
+    </form>
+  </div>
+  <div class="alignCenter inlineBlock loginPanel" style="display: none;" id="panel1">Facebook!</div>
+  <div class="alignCenter inlineBlock loginPanel" style="display: none;" id="panel2">Twitter!</div>
+  <div class="alignCenter inlineBlock loginPanel" style="display: none;" id="panel3">Google!</div>
+</div>
+<div class="tallVspace"></div>
+<script src="/clientjs/optioncontrol.js"></script>
+<script>
+  $(function() {
+    $('.optionControl').optionControl(function(sel, index) {
+      for (var i = 0; i < 4; ++i) {
+        var vis = 'none';
+        if (index === i) {
+          vis = '';
         }
-      });
-    </script>
-  </body>
-</html>
+        $('#panel' + i).css({display: vis});
+      }
+    });
+  });
+</script>
+{{>footer}}

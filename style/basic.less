@@ -14,11 +14,6 @@ body {
   background-color: @lightGrey;
 }
 
-//@blue: #4691ed;
-//@darkBlue: #335dad;
-@blue: #127787;
-@darkBlue: #158EA1;
-
 @inputPadding: 3px;
 input {
   padding: @inputPadding;
@@ -33,7 +28,7 @@ input:active, input:focus {
   border-color: black;
 }
 
-input[type="button"], input[type="submit"], .submitButton {
+input[type="button"], input[type="submit"]:not(.link), .submitButton {
   padding-left: 6px;
   padding-right: 6px;
   font-weight: bold;
@@ -43,9 +38,7 @@ input[type="button"] {
   background-color: @lightGrey;
 }
 
-input[type="submit"], .submitButton {
-  background-color: @blue;
-  color: white;
+input[type="submit"]:not(.link), .submitButton {
   border-color: black;
 }
 
@@ -72,8 +65,6 @@ span.option {
 
 span.selectedOption {
   font-weight: bold;
-  color: white;
-  background-color: @blue;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -173,7 +164,7 @@ h1 {
 }
 
 div.inlineBlock {
-  // The * stuff is an IE hack.
+  // The * stuff is an IE7 hack.
   display: inline-block; *zoom: 1; *display: inline;
 }
 
@@ -184,14 +175,10 @@ div.inlineBlock {
 @topBarHeight: 36px;
 @topBarContentHeight: 20px;
 @topBarTextSizeMultiplier: 125%;
-@topBarBackgroundColor: @blue;
-@topBarBackgroundColorDark: @darkBlue;
 #topBar {
   position: fixed;
   width: 100%;
   height: @topBarHeight;
-  background-color: @topBarBackgroundColor;
-  color: white;
 }
 
 #topBarContent {
@@ -205,17 +192,63 @@ div.inlineBlock {
   height: @topBarHeight;
 }
 
-.topBarLink, .topBarLink:active, .topBarLink:visited {
-  color: white;
+#topBarContent > a,
+#topBarContent > a:active,
+#topBarRightPanel > a,
+#topBarRightPanel > a:active {
   text-decoration: none;
-}
-
-.topBarLink:hover {
-  background-color: @topBarBackgroundColorDark;
 }
 
 #topBarRightPanel {
   float: right;
+  text-align: right;
+}
+
+#topbardropdowntoggle {
+  padding: 0;
+  padding-left: @inputPadding;
+  margin-left: @inputPadding;
+  border-left-width: 1px;
+  border-left-style: solid;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+  top: 3px;
+  display: none;
+  text-align: left;
+  background-color: white;
+  color: black;
+  border: 1px solid @controlBorderColor;
+  padding: @inputPadding;
+  border-radius: 2px;
+  z-index: 1;
+}
+
+.dropdown input.link {
+  font-size: 100%;
+  cursor: pointer;
+}
+
+input.link::-moz-focus-inner {
+  border: none;
+  padding: 0;
+}
+
+.dropdown > ul > li {
+  margin: 5px;
+}
+
+.link, .link:hover, .link:active {
+  border: none;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+  // color is in themebase.less
 }
 
 // -----
@@ -234,4 +267,8 @@ div.inlineBlock {
 
 .loginPanel {
   min-height: 85px;
+}
+
+.warning {
+  color: #d00;
 }

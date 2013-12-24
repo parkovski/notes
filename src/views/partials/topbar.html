@@ -1,15 +1,29 @@
-<div id="topBar">
+<div id="topBar" class="hc">
   <div id="topBarContent">
     <div id="topBarRightPanel">
       {{#if user}}
-        Hello, {{user}}. <a href="/logout" class="topBarLink">Log out</a>
+        {{user.name}}
+        <span id="topbardropdowntoggle">&nbsp;&#x25BE;</span>
+        <div class="dropdown" data-toggle="topbardropdowntoggle">
+          <ul>
+            <li><a class="link" href="/settings">Settings</a></li>
+            <li>
+              <form method="post" action="/logout">
+                <input type="submit" value="Log out" class="link"></input>
+              </form>
+            </li>
+          </ul>
+        </div>
+        <script src="/clientjs/dropdownmenu.js"></script>
       {{else}}
         {{#unless suppressLoginHeaderLink}}
-          <a href="/login" class="topBarLink">Log in</a>
+          <a href="/register">Register</a>
+          <span class="topBarSep">|</span>
+          <a href="/login">Log in</a>
         {{/unless}}
       {{/if}}
     </div>
-    <a href="/" class="topBarLink">Notes</a> &gt; {{title}}
+    <a href="/">Notes</a> <span class="topBarSep">&#x25B8;</span> {{title}}
   </div>
 </div>
 <div id="topBarFixedPlaceholder"></div>

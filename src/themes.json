@@ -1,0 +1,32 @@
+{
+  "0": {
+    "color": "#127787",
+    "textcolor": "white",
+    "hlcolor": "#158ea1",
+    "hltextcolor": "white"
+  },
+  "1": {
+    "color": "#4681ed",
+    "textcolor": "white",
+    "hlcolor": "#335dad",
+    "hltextcolor": "white"
+  },
+  "2": {
+    "color": "#115c18",
+    "textcolor": "white",
+    "hlcolor": "#187a21",
+    "hltextcolor": "white"
+  },
+  "3": {
+    "color": "#3f3f3f",
+    "textcolor": "white",
+    "hlcolor": "#5f5f5f",
+    "hltextcolor": "white"
+  },
+  "4": {
+    "color": "#efefef",
+    "textcolor": "black",
+    "hlcolor": "#e0e0e0",
+    "hltextcolor": "black"
+  }
+}

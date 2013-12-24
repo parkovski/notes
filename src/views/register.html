@@ -1,0 +1,23 @@
+{{>header}}
+<div class="tallVspace"></div>
+<div id="loginContainer">
+  <div><h1 class="alignCenter">Welcome.</h1></div>
+  <div class="vspace"></div>
+  <div><p class="alignCenter">Please fill out the fields below to create your account.</p></div>
+  <div class="vspace"></div>
+  <div class="alignCenter inlineBlock">
+    <form method="post" action="/register">
+      <div class="alignRight smallMargin"><label>Username: <input type="text" id="username" name="username" class="loginFixedSizeInput" /></label> <span id="usernameCheckmark" style="visibility: hidden; color: red;">&#x2717;</span></div>
+      <div class="alignRight smallMargin" style="display: none;" id="usernameMessage"><span id="usernameMessageSpan"></span> <span style="visibility: hidden;">&#x2713;</span></div>
+      <div class="alignRight smallMargin"><label>Password: <input type="password" id="password" name="password" class="loginFixedSizeInput" /></label> <span id="passwordCheckmark" style="visibility: hidden; color: red;">&#x2717;</span></div>
+      <div class="alignRight smallMargin" style="display: none;" id="passwordMessage"><span id="passwordMessageSpan"></span> <span style="visibility: hidden;">&#x2713;</span></div>
+      <div class="alignRight smallMargin"><label>Email (optional): <input type="text" id="email" name="email" class="loginFixedSizeInput" /></label> <span id="emailCheckmark" style="visibility: hidden; color: green;">&#x2713;</span></div>
+      <div class="alignRight smallMargin" style="display: none;" id="emailMessage"><span id="emailMessageSpan"></span> <span style="visibility: hidden;">&#x2713;</span></div>
+      <div class="alignRight smallMargin"><input type="submit" value="Register" /> <span style="visibility: hidden;">&#x2713;</span></div>
+    </form>
+  </div>
+</div>
+<div class="tallVspace"></div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="/clientjs/registeruser.js"></script>
+{{>footer}}

@@ -1,0 +1,67 @@
+{{>header}}
+<style>
+  div.optionControl {
+    margin: 20px 0;
+  }
+
+  div.optionControl > span {
+    padding: 10px;
+    font-size: 150%;
+    margin: 0 5px;
+    font-weight: bold;
+  }
+
+  div.optionControl > span:last-child {
+    margin-right: 0;
+  }
+
+  div.optionControl > span:first-child {
+    margin-left: 0;
+  }
+</style>
+<div class="tallVspace"></div>
+<div><h1 class="alignCenter">Pick a theme.</h1></div>
+<div class="vspace"></div>
+<div class="alignCenter">Themes are a way to create your own
+  personalized site using the color scheme you like best.</div>
+<div class="vspace"></div>
+<div class="alignCenter">
+  <div class="inlineBlock">
+    <div class="optionControl">
+      {{#each themes}}
+      <span
+        class="option"
+        id="picktheme{{@key}}"
+        data-themeid="{{@key}}"
+        data-textcolor="{{textcolor}}"
+        style="background-color: {{color}}; color: {{color}}">&#x2713;</span>
+      {{/each}}
+    </div>
+    <div class="alignRight">
+      <form method="post" action="/settings/theme">
+        <input type="hidden" name="themeid" id="themeid" value=""></input>
+        <input type="submit" value="Change theme"></input>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="tallVspace"></div>
+<script src="/clientjs/optioncontrol.js"></script>
+<script>
+  $(function() {
+    $('.optionControl').optionControl(function(sel, index) {
+      var children = $('span', this);
+      $('#themecss').attr('href', '/style/theme' + index + '.css');
+      $('#themeid').val(index);
+      for (var i = 0; i < children.length; ++i) {
+        var child = $(children[i]);
+        if (i === index) {
+          child.css({color: child.data('textcolor')});
+        } else {
+          child.css({color: child.css('background-color')});
+        }
+      }
+    });
+  });
+</script>
+{{>footer}}
