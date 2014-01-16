@@ -13,4 +13,12 @@
   </head>
   <body>
     {{>topbar}}
-    <div id="centeredContentBox">
+    <div id="contentContainer">
+      <div class="box sidebar"{{#unless user}} style="visibility: hidden;"{{/unless}}>
+        <h6 class="alignCenter underline">Following</h6>
+        <div class="vspace"></div>
+        <ul>
+          <li><a href="/c/test">Test class</a></li>
+        </ul>
+      </div>
+      <div id="centeredContentBox">

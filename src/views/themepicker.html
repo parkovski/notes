@@ -49,6 +49,7 @@
 <script src="/clientjs/optioncontrol.js"></script>
 <script>
   $(function() {
+    $('#picktheme{{user.theme}}').click();
     $('.optionControl').optionControl(function(sel, index) {
       var children = $('span', this);
       $('#themecss').attr('href', '/style/theme' + index + '.css');

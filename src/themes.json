@@ -27,6 +27,7 @@
     "color": "#efefef",
     "textcolor": "black",
     "hlcolor": "#e0e0e0",
-    "hltextcolor": "black"
+    "hltextcolor": "black",
+    "showTopBarBottomBorder": "true"
   }
 }

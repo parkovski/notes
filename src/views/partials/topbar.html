@@ -23,7 +23,13 @@
         {{/unless}}
       {{/if}}
     </div>
-    <a href="/">Notes</a> <span class="topBarSep">&#x25B8;</span> {{title}}
+    <a href="/">Notes</a>
+    {{#if sections}}
+      {{#each sections}}
+      <span class="topBarSep">&#x25B8;</span> {{this}}
+      {{/each}}
+    {{/if}}
+    <span class="topBarSep">&#x25B8;</span> {{title}}
   </div>
 </div>
 <div id="topBarFixedPlaceholder"></div>

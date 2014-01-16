@@ -1,0 +1,3 @@
+- Organization for classes, topics, timelines.
+- Search & subscribe to classes, topics, etc.
+- Etherpad integration.

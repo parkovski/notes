@@ -10,5 +10,9 @@
 
   "/settings": "settings/showThemePicker",
   "/settings/theme": "settings/showThemePicker",
-  "post /settings/theme": "settings/changeTheme"
+  "post /settings/theme": "settings/changeTheme",
+
+  "/search": "search/showSearchResults",
+
+  "/c/:name": "class/showClassPage"
 }

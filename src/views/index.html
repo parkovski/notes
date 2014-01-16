@@ -1,7 +1,16 @@
 {{>header}}
-Todo: If you are logged in, you will see a list of topics you are subscribed to,
-and some type of news feed for what's going on in those topics.<br /><br />
-If you are not logged in, you will see some reminder to register,
-as well as the news feed thing for trending topics.<br /><br />
-You are: {{user.name}}.
+{{#unless user}}
+<p>You are not logged in. You are welcome to browse anonymously, but if you would like to contribute, please <a href="/login">log in first</a>.</p>
+<div class="vspace"></div>
+{{/unless}}
+<div>
+  <form method="get" action="/search">
+    <div class="floatRight">
+      <input type="submit" value="Search"></input>
+    </div>
+    <div class="expandContainer">
+      <input type="text" class="expand" name="q" placeholder="Search for a class or topic"></input>
+    </div>
+  </form>
+</div>
 {{>footer}}

@@ -1,22 +1,39 @@
 var passport = require('passport');
 var userModel = require('../models/user');
 
-function LoginController(app, configure) {
+// So that you can't redirect to another website.
+function validateRedirectUrl(url) {
+  if (!url) {
+    return '/';
+  }
+  url = decodeURIComponent(url);
+  if (url[0] === '/') {
+    return url;
+  }
+  return '/';
+}
+
+function LoginController(configure) {
 }
 
 LoginController.prototype.showLoginPage = function(req, res) {
-  this.render('login.html', {
+  res.render('login.html', {
     title: 'Log in',
     suppressLoginHeaderLink: true,
-    user: req.user,
+    redirectUrl: req.query.r,
     errorMessage: req.query.error
   });
 };
 
 LoginController.prototype.processLogin = function(req, res) {
+  var failureUrl = '/login/?error='
+    + encodeURIComponent('Wrong username or password.');
+  if (req.body.redirectUrl) {
+    failureUrl += '&r=' + encodeURIComponent(req.body.redirectUrl);
+  }
   passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login/?error=Wrong username or password.'
+    successRedirect: validateRedirectUrl(req.body.redirectUrl),
+    failureRedirect: failureUrl
   })(req, res);
 };
 
@@ -39,15 +56,13 @@ LoginController.prototype.showRegisterPage = function(req, res) {
     return res.redirect('/');
   }
 
-  this.render('register.html', {
+  res.render('register.html', {
     title: 'Register',
     suppressLoginHeaderLink: true
   });
 };
 
 LoginController.prototype.registerUser = function(req, res) {
-  var req = req, res = res;
-
   userModel.createUser(
     {
       name: req.body.username,

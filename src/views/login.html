@@ -20,6 +20,9 @@
   <div class="vspace"></div>
   <div class="alignCenter inlineBlock loginPanel" id="panel0">
     <form method="post" action="/login">
+      {{#if redirectUrl}}
+      <input type="hidden" name="redirectUrl" value="{{redirectUrl}}"></input>
+      {{/if}}
       <div class="alignRight smallMargin"><label>Username: <input type="text" id="username" name="username" class="loginFixedSizeInput" /></label></div>
       <div class="alignRight smallMargin"><label>Password: <input type="password" id="password" name="password" class="loginFixedSizeInput" /></label></div>
       <div class="alignRight smallMargin"><input type="submit" value="Log in" /></div>

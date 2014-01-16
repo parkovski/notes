@@ -1,3 +1,5 @@
+var _ = require('underscore');
+
 function RouteConfiguration() {
   this.beforeList = [];
   this.afterList = [];
@@ -17,7 +19,7 @@ RouteConfiguration.prototype.after = function() {
 RouteConfiguration.prototype.requireLogin = function(req, res, next) {
   this.before(function(req, res, next) {
     if (!req.user) {
-      return res.redirect('/login');
+      return res.redirect('/login?r=' + encodeURIComponent(req.originalUrl));
     }
     next();
   });
@@ -25,10 +27,46 @@ RouteConfiguration.prototype.requireLogin = function(req, res, next) {
 
 // -----
 
+function upgradeReqAndRes(app) {
+  app.use(function(req, res, next) {
+    var renderVars = { user: req.user };
+
+    var originalRender = res.render;
+    res.render = function(view, locals, callback) {
+      if (typeof locals === 'function') {
+        callback = locals;
+        locals = renderVars;
+      } else if (locals) {
+        _.extend(locals, renderVars);
+      } else {
+        locals = renderVars;
+      }
+
+      originalRender.call(res, view, locals, callback);
+    };
+
+    res.setRenderVar = function(name, value) {
+      renderVars[name] = value;
+    };
+
+    res.getRenderVar = function(name) {
+      return renderVars[name];
+    };
+
+    res.deleteRenderVar = function(name) {
+      delete renderVars[name];
+    };
+
+    next();
+  });
+}
+
 function Router(app) {
   this.app = app;
   this.controllers = {};
   this.config = {};
+
+  upgradeReqAndRes(app);
 }
 
 Router.prototype.getConfigFunctionFor = function(controllerName) {
@@ -36,16 +74,6 @@ Router.prototype.getConfigFunctionFor = function(controllerName) {
   return function(methodName) {
     return config[methodName] || (config[methodName] = new RouteConfiguration());
   };
-};
-
-// Hacky form of inheritance whatever who cares.
-// Pass a controller constructor.
-Router.prototype.mixinController = function(controller) {
-  controller.prototype.render = function(view, args) {
-    args = args || {};
-    args.user = this.req.user;
-    this.res.render(view, args)
-  }
 };
 
 // Route path specifies a controller and method.
@@ -62,16 +90,9 @@ Router.prototype.getRouterFor = function(routePath) {
   var controller = this.controllers[controllerName];
   if (!controller) {
     var ControllerClass = require('./controllers/' + controllerName);
-    this.mixinController(ControllerClass);
     controller
       = this.controllers[controllerName]
-      = new ControllerClass(
-        this,
-        this.getConfigFunctionFor(controllerName)
-      );
-
-    controller.req = null;
-    controller.res = null;
+      = new ControllerClass(this.getConfigFunctionFor(controllerName));
   }
 
   var methodConfig = this.config[controllerName][methodName] || {};
@@ -84,15 +105,7 @@ Router.prototype.getRouterFor = function(routePath) {
   var afterList = methodConfig.afterList || [];
 
   var routeFunction = function(req, res) {
-    controller.req = req;
-    controller.res = res;
     controller[methodName](req, res);
-
-    // If you use these inside closures you should copy them.
-    // They're set to null here so you get errors instead of accidentally
-    // using another request's variables.
-    controller.req = null;
-    controller.res = null;
   };
 
   var allResponseFunctions = [];

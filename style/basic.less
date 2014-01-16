@@ -7,25 +7,15 @@
   .fonts();
 }
 
-@lightGrey: #efefef;
-@controlBorderColor: #999;
 body {
   .fonts();
-  background-color: @lightGrey;
 }
 
 @inputPadding: 3px;
 input {
   padding: @inputPadding;
-}
-
-input {
-  border: 1px solid @controlBorderColor;
-  border-radius: 2px;
-}
-
-input:active, input:focus {
-  border-color: black;
+  border: @borderWidth solid;
+  border-radius: @borderRadius;
 }
 
 input[type="button"], input[type="submit"]:not(.link), .submitButton {
@@ -34,12 +24,18 @@ input[type="button"], input[type="submit"]:not(.link), .submitButton {
   font-weight: bold;
 }
 
-input[type="button"] {
-  background-color: @lightGrey;
+.container {
+  position: relative;
 }
 
-input[type="submit"]:not(.link), .submitButton {
-  border-color: black;
+div.expandContainer {
+  overflow: hidden;
+  // It seems to go up to the button text, not until the button border.
+  padding-right: (5px + @inputPadding * 2);
+}
+
+.expand {
+  width: 100%;
 }
 
 label {
@@ -48,50 +44,47 @@ label {
 
 // Option control
 div.optionControl {
-  margin: (@inputPadding + 1px);
+  margin: (@inputPadding + @borderWidth);
   display: inline-block; *zoom: 1; *display: inline;
 }
 
 span.option, span.selectedOption {
   padding: @inputPadding;
   cursor: pointer;
-  border: 1px solid @controlBorderColor;
-  border-radius: 2px;
-}
-
-span.option {
-  background-color: @lightGrey;
+  border: @borderWidth solid;
+  border-radius: @borderRadius;
 }
 
 span.selectedOption {
   font-weight: bold;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6,
+span.h1, span.h2, span.h3, span.h4, span.h5, span.h6 {
   font-weight: bold;
 }
 
-h6 {
+h6, span.h6 {
   font-size: 110%;
 }
 
-h5 {
+h5, span.h5 {
   font-size: 125%;
 }
 
-h4 {
+h4, span.h4 {
   font-size: 150%;
 }
 
-h3 {
+h3, span.h3 {
   font-size: 200%;
 }
 
-h2 {
+h2, span.h2 {
   font-size: 250%;
 }
 
-h1 {
+h1, span.h1 {
   font-size: 300%;
 }
 
@@ -100,14 +93,42 @@ h1 {
   height: 100%;
 }
 
+@borderWidth: 1px;
+@borderRadius: 2px;
+@pageContentWidth: 700px;
 @contentBoxPadding: 10px;
-#centeredContentBox {
-  width: @pageContentWidth;
-  padding: @contentBoxPadding;
+@sidebarWidth: 150px;
+// [ subscriptions panel ] [ content panel ]
+// [ 10px content 10px ] 10px [ 10px content 10px ]
+// + borders
+@totalContentWidth: @pageContentWidth
+  + @contentBoxPadding * 3 * 2
+  + @borderWidth * 3 * 2
+  + @sidebarWidth * 2;
+
+#contentContainer {
+  width: @totalContentWidth;
   margin: 10px auto;
-  background-color: white;
-  border: 1px solid #e0e0e0;
-  border-radius: 3px;
+}
+
+.box {
+  padding: @contentBoxPadding;
+  border: @borderWidth solid;
+  border-radius: @borderRadius;
+}
+
+.sidebar {
+  float: left;
+  width: @sidebarWidth;
+}
+
+#centeredContentBox {
+  float: left;
+  width: (@pageContentWidth - 10px * 2); // subtract padding to align with top bar
+  padding: @contentBoxPadding;
+  margin: 0 10px;
+  border: @borderWidth solid;
+  border-radius: @borderRadius;
 }
 
 .vspace {
@@ -159,6 +180,10 @@ h1 {
   text-align: center;
 }
 
+.underline {
+  text-decoration: underline;
+}
+
 .smallMargin {
   margin: 5px;
 }
@@ -168,7 +193,23 @@ div.inlineBlock {
   display: inline-block; *zoom: 1; *display: inline;
 }
 
-@pageContentWidth: 800px;
+input.link::-moz-focus-inner {
+  border: none;
+  padding: 0;
+}
+
+a, a:hover, a:active,
+.link, .link:hover, .link:active {
+  font-weight: bold;
+  border: none;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+  // color is in themebase.less
+}
 
 // -----
 
@@ -197,6 +238,7 @@ div.inlineBlock {
 #topBarRightPanel > a,
 #topBarRightPanel > a:active {
   text-decoration: none;
+  font-weight: normal;
 }
 
 #topBarRightPanel {
@@ -208,7 +250,7 @@ div.inlineBlock {
   padding: 0;
   padding-left: @inputPadding;
   margin-left: @inputPadding;
-  border-left-width: 1px;
+  border-left-width: @borderWidth;
   border-left-style: solid;
   cursor: pointer;
 }
@@ -218,37 +260,19 @@ div.inlineBlock {
   top: 3px;
   display: none;
   text-align: left;
-  background-color: white;
-  color: black;
-  border: 1px solid @controlBorderColor;
+  border: @borderWidth solid;
   padding: @inputPadding;
-  border-radius: 2px;
+  border-radius: @borderRadius;
   z-index: 1;
-}
-
-.dropdown input.link {
-  font-size: 100%;
-  cursor: pointer;
-}
-
-input.link::-moz-focus-inner {
-  border: none;
-  padding: 0;
 }
 
 .dropdown > ul > li {
   margin: 5px;
 }
 
-.link, .link:hover, .link:active {
-  border: none;
-  padding: 0;
-  margin: 0;
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-  }
-  // color is in themebase.less
+.dropdown input.link {
+  font-size: 100%;
+  cursor: pointer;
 }
 
 // -----
@@ -267,8 +291,4 @@ input.link::-moz-focus-inner {
 
 .loginPanel {
   min-height: 85px;
-}
-
-.warning {
-  color: #d00;
 }

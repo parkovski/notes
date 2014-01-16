@@ -1,16 +1,46 @@
 // Everything that changes color based on the theme must go in this file.
 
-//@blue: #4691ed;
-//@darkBlue: #335dad;
+// define these when compiling themes:
+// @color: #127787;
+// @textcolor: white;
+// @hlcolor: #158EA1;
+// @hltextcolor: white;
+
 // Defaults - override these with lessc --modify-var="var=value"
-@color: #127787;
-@textcolor: white;
-@hlcolor: #158EA1;
-@hltextcolor: white;
+@bodybgcolor: #efefef;
+@controlBorderColor: #999;
+@controlBorderColorActive: black;
+@panelBorderColor: #e0e0e0;
+@warningTextColor: #d00;
+@showTopBarBottomBorder: false;
+
+body {
+  background-color: @bodybgcolor;
+}
+
+input {
+  border-color: @controlBorderColor;
+}
+
+input:active, input:focus {
+  border-color: black;
+}
 
 input[type="submit"]:not(.link), .submitButton {
   background-color: @color;
   color: @textcolor;
+}
+
+input[type="button"] {
+  background-color: @bodybgcolor;
+}
+
+input[type="submit"]:not(.link), .submitButton {
+  border-color: black;
+}
+
+span.option, span.selectedOption {
+  border-color: @controlBorderColor;
 }
 
 span.selectedOption {
@@ -18,9 +48,26 @@ span.selectedOption {
   color: @textcolor;
 }
 
+span.option {
+  background-color: @bodybgcolor;
+}
+
+.box, #centeredContentBox {
+  background-color: white;
+  border-color: @panelBorderColor;
+}
+
+.topBarBottomBorder() when (@showTopBarBottomBorder) {
+  border-bottom: 1px solid @panelBorderColor;
+}
+
+.topBarBottomBorder() {
+}
+
 #topBar {
   background-color: @color;
   color: @textcolor;
+  .topBarBottomBorder;
 }
 
 span.topBarSep {
@@ -46,7 +93,17 @@ span.topBarSep {
   border-left-color: @hlcolor;
 }
 
-.link, .link:hover, .link:active, .link:visited {
-  color: @hlcolor;
+.dropdown {
   background-color: white;
+  border-color: @panelBorderColor;
+}
+
+a, a:hover, a:active, a:visited,
+.link, .link:hover, .link:active, .link:visited {
+  color: black;
+  background-color: transparent;
+}
+
+.warning {
+  color: @warningTextColor;
 }

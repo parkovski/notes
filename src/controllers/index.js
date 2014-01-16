@@ -1,8 +1,8 @@
-function IndexController() {
+function IndexController(configure) {
 }
 
 IndexController.prototype.showHomePage = function(req, res) {
-  this.render('index.html', {
+  res.render('index.html', {
     title: 'Home page'
   });
 };
