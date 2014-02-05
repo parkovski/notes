@@ -7,20 +7,27 @@ function RouteConfiguration() {
 
 RouteConfiguration.prototype.before = function() {
   var self = this;
-  [].slice.call(arguments).forEach(function(arg) { self.beforeList.push(arg); });
+  [].forEach.call(arguments, function(arg) { self.beforeList.push(arg); });
 };
 
 RouteConfiguration.prototype.after = function() {
   throw 'This will never be called.';
   var self = this;
-  [].slice.call(arguments).forEach(function(arg) { self.afterList.push(arg); });
+  [].forEach.call(arguments, function(arg) { self.afterList.push(arg); });
 };
 
-RouteConfiguration.prototype.requireLogin = function(req, res, next) {
+RouteConfiguration.prototype.requireLogin = function() {
   this.before(function(req, res, next) {
     if (!req.user) {
       return res.redirect('/login?r=' + encodeURIComponent(req.originalUrl));
     }
+    next();
+  });
+};
+
+RouteConfiguration.prototype.setRenderVar = function(name, value) {
+  this.before(function(req, res, next) {
+    res.setRenderVar(name, value);
     next();
   });
 };

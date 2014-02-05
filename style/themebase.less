@@ -14,6 +14,13 @@
 @warningTextColor: #d00;
 @showTopBarBottomBorder: false;
 
+.glass() {
+  @topc: lighten(desaturate(@color, 25%), 40%);
+  @midc: lighten(@color, 20%);
+  background: linear-gradient(to top, lighten(@color, 30%), lighten(@color, 10%), lighten(@color, 30%));
+  border-color: desaturate(@color, 30%);
+}
+
 body {
   background-color: @bodybgcolor;
 }
@@ -29,6 +36,7 @@ input:active, input:focus {
 input[type="submit"]:not(.link), .submitButton {
   background-color: @color;
   color: @textcolor;
+  //.glass();
 }
 
 input[type="button"] {

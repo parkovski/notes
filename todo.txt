@@ -1,3 +1,8 @@
+- 404 page
 - Organization for classes, topics, timelines.
+  - New, view, edit class
+  - New, view, edit topic
 - Search & subscribe to classes, topics, etc.
 - Etherpad integration.
+- Account settings
+  - Change name, email, password
