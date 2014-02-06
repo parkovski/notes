@@ -14,6 +14,13 @@
 @warningTextColor: #d00;
 @showTopBarBottomBorder: false;
 
+// Derived variables - do not modify w/ command line
+@_modifyAmount: 7%;
+@colorLight: lighten(@color, @_modifyAmount);
+@colorDark: darken(@color, @_modifyAmount);
+@bodybgcolorLight: lighten(@bodybgcolor, @_modifyAmount);
+@bodybgcolorDark: darken(@bodybgcolor, @_modifyAmount);
+
 .glass() {
   @topc: lighten(desaturate(@color, 25%), 40%);
   @midc: lighten(@color, 20%);
@@ -37,10 +44,24 @@ input[type="submit"]:not(.link), .submitButton {
   background-color: @color;
   color: @textcolor;
   //.glass();
+
+  &:hover {
+    background-color: @colorLight;
+  }
+  &:active {
+    background-color: @colorDark;
+  }
 }
 
 input[type="button"] {
   background-color: @bodybgcolor;
+
+  &:hover {
+    background-color: @bodybgcolorLight;
+  }
+  &:active {
+    background-color: @bodybgcolorDark;
+  }
 }
 
 input[type="submit"]:not(.link), .submitButton {
@@ -54,10 +75,15 @@ span.option, span.selectedOption {
 span.selectedOption {
   background-color: @color;
   color: @textcolor;
+  cursor: default;
 }
 
 span.option {
   background-color: @bodybgcolor;
+  &:hover {
+    background-color: @colorLight;
+    color: @textcolor;
+  }
 }
 
 .box, #centeredContentBox {

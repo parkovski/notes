@@ -14,18 +14,9 @@
   <body>
     {{>topbar}}
     <div id="contentContainer">
-      <div class="box sidebar"{{#unless user}} style="visibility: hidden;"{{/unless}}>
-        <h6 class="alignCenter underline">Following</h6>
-        <div class="vspace"></div>
-        <ul>
-          <li><a href="/c/test">Test class</a></li>
-        </ul>
-        <div class="vspace"></div>
-        <h6 class="alignCenter underline">Other</h6>
-        <div class="vspace"></div>
-        <ul>
-          <li><a href="/classes/following">Change what I follow</a></li>
-          <li><a href="/classes/new">Create a new class</a></li>
-        </ul>
-      </div>
+      {{#if user}}
+        {{>navbar}}
+      {{else}}
+        <div class="box sidebar" style="visibility: hidden;"></div>
+      {{/if}}
       <div id="centeredContentBox">
