@@ -23,5 +23,5 @@ var router = new Router(app);
 router.configureRoutes(require('./src/routes'));
 router.addLastResort();
 
-app.listen(4000);
+app.listen(process.env.PORT || 4000);
 
