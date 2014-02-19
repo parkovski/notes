@@ -15,7 +15,7 @@
 @showTopBarBottomBorder: false;
 
 // Derived variables - do not modify w/ command line
-@_modifyAmount: 7%;
+@_modifyAmount: 8%;
 @colorLight: lighten(@color, @_modifyAmount);
 @colorDark: darken(@color, @_modifyAmount);
 @bodybgcolorLight: lighten(@bodybgcolor, @_modifyAmount);
@@ -24,7 +24,7 @@
 .glass() {
   @topc: lighten(desaturate(@color, 25%), 40%);
   @midc: lighten(@color, 20%);
-  background: linear-gradient(to top, lighten(@color, 30%), lighten(@color, 10%), lighten(@color, 30%));
+  background: linear-gradient(to top, @topc, @midc, @topc);
   border-color: desaturate(@color, 30%);
 }
 
@@ -32,7 +32,11 @@ body {
   background-color: @bodybgcolor;
 }
 
-input {
+input.readonly {
+  background-color: @bodybgcolor;
+}
+
+input, button {
   border-color: @controlBorderColor;
 }
 
@@ -40,7 +44,8 @@ input:active, input:focus {
   border-color: black;
 }
 
-input[type="submit"]:not(.link), .submitButton {
+input[type="submit"]:not(.link), button[type="submit"], .submitButton {
+  border-color: black;
   background-color: @color;
   color: @textcolor;
   //.glass();
@@ -53,7 +58,7 @@ input[type="submit"]:not(.link), .submitButton {
   }
 }
 
-input[type="button"] {
+input[type="button"], button {
   background-color: @bodybgcolor;
 
   &:hover {
@@ -62,10 +67,6 @@ input[type="button"] {
   &:active {
     background-color: @bodybgcolorDark;
   }
-}
-
-input[type="submit"]:not(.link), .submitButton {
-  border-color: black;
 }
 
 span.option, span.selectedOption {
@@ -81,8 +82,8 @@ span.selectedOption {
 span.option {
   background-color: @bodybgcolor;
   &:hover {
-    background-color: @colorLight;
-    color: @textcolor;
+    background-color: @bodybgcolorLight;
+    //color: @textcolor;
   }
 }
 
@@ -136,6 +137,15 @@ a, a:hover, a:active, a:visited,
 .link, .link:hover, .link:active, .link:visited {
   color: black;
   background-color: transparent;
+}
+
+.hoverLink a {
+  display: inline-block;
+  width: 100%;
+}
+
+.hoverLink:hover {
+  background-color: @bodybgcolor;
 }
 
 .warning {

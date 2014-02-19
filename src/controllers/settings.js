@@ -5,6 +5,10 @@ function SettingsController(configure) {
   configure('*').requireLogin();
 }
 
+SettingsController.prototype.showSettingsHomePage = function(req, res) {
+  res.render('settings.html', { title: 'Settings' });
+};
+
 SettingsController.prototype.showThemePicker = function(req, res) {
   res.render('themepicker.html', { title: 'Pick a theme', themes: this.themes });
 };

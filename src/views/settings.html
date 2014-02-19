@@ -1,0 +1,44 @@
+{{>header}}
+<h1 class="alignCenter">Settings</h1>
+<div class="vspace"></div>
+<div class="alignCenter">
+  <div class="inlineBlock alignLeft">
+    <h5>Account details</h5>
+    <div class="vspace"></div>
+    <form method="post" action="/settings">
+      <fieldset class="settingsFormRow">
+        <label for="username" class="floatLeft settingsFormLabel">Username:</label>
+        <div class="settingsFormRight">
+          <input id="username" type="text" value="{{user.name}}" readonly="true" class="readonly">
+        </div>
+      </fieldset>
+      <fieldset class="settingsFormRow">
+        <label for="displayname" class="floatLeft settingsFormLabel">Display name:</label>
+        <div class="settingsFormRight">
+          <input id="displayname" type="text" value="doesn't work yet">
+        </div>
+      </fieldset>
+      <fieldset class="settingsFormRow">
+        <label for="password" class="floatLeft settingsFormLabel">Password:</label>
+        <div class="settingsFormRight">
+          <input id="password" type="password">
+        </div>
+      </fieldset>
+      <fieldset class="settingsFormRow">
+        <label for="email" class="floatLeft settingsFormLabel">Email:</label>
+        <div class="settingsFormRight">
+          <input id="email" type="text" value="{{user.email}}">
+        </div>
+      </fieldset>
+      <div class="settingsFormRight settingsFormRow">
+        <button type="submit">Update</button>
+      </div>
+    </form>
+    <div class="vspace"></div>
+    <h5 class="floatLeft">Color theme</h5>
+    <div class="settingsFormRight">
+      <a href="/settings/theme">Click to change</a>
+    </div>
+  </div>
+</div>
+{{>footer}}

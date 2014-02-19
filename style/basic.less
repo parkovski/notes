@@ -12,13 +12,16 @@ body {
 }
 
 @inputPadding: 3px;
-input {
+input, button {
   padding: @inputPadding;
   border: @borderWidth solid;
   border-radius: @borderRadius;
 }
 
-input[type="button"], input[type="submit"]:not(.link), .submitButton {
+button,
+input[type="button"],
+input[type="submit"]:not(.link),
+.submitButton {
   padding-left: 6px;
   padding-right: 6px;
   font-weight: bold;
@@ -38,7 +41,7 @@ div.expandContainer {
   width: 100%;
 }
 
-label {
+label, .label {
   font-weight: bold;
 }
 
@@ -57,6 +60,16 @@ span.option, span.selectedOption {
 
 span.selectedOption {
   font-weight: bold;
+}
+
+p, .para {
+  line-height: 135%;
+  //margin: 1em;
+}
+
+ul.bulletList {
+  list-style-type: disc;
+  margin-left: 20px;
 }
 
 h1, h2, h3, h4, h5, h6,
@@ -138,8 +151,26 @@ h1, span.h1 {
   width: @sidebarWidth;
 }
 
-#centeredContentBox {
+#page {
   float: left;
+  display: inline-block;
+}
+
+#pageFooter {
+  margin-top: 0.5em;
+  font-size: 85%;
+}
+
+#pageFooter a {
+  text-decoration: none;
+}
+
+#pageFooter a:hover, #pageFooter a:active {
+  text-decoration: underline;
+  color: inherit;
+}
+
+#centeredContentBox {
   width: (@pageContentWidth - 10px * 2); // subtract padding to align with top bar
   padding: @contentBoxPadding;
   margin: 0 10px;
@@ -307,4 +338,16 @@ a, a:hover, a:active,
 
 .loginPanel {
   min-height: 85px;
+}
+
+.settingsFormRow {
+  margin-bottom: 10px;
+}
+
+.settingsFormRight {
+  margin-left: 200px;
+}
+
+.settingsFormLabel {
+  padding: 5px 0;
 }

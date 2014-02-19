@@ -1,6 +1,8 @@
 {
   "/": "index/showHomePage",
 
+  "404": "fourohfour/show404Page",
+
   "/login": "login/showLoginPage",
   "post /login": "login/processLogin",
   "post /logout": "login/logout",
@@ -8,7 +10,7 @@
   "/register": "login/showRegisterPage",
   "post /register": "login/registerUser",
 
-  "/settings": "settings/showThemePicker",
+  "/settings": "settings/showSettingsHomePage",
   "/settings/theme": "settings/showThemePicker",
   "post /settings/theme": "settings/changeTheme",
 
@@ -16,5 +18,10 @@
 
   "/c/:name": "class/showClassPage",
   "/classes/following": "class/showFollowingPage",
-  "/classes/new": "class/showCreatePage"
+  "/classes/new": "class/showCreatePage",
+
+  "/about": "help/showAboutPage",
+  "/feedback": "help/showFeedbackPage",
+  "/contribute": "help/showContributePage",
+  "/help": "help/showHelpPage"
 }

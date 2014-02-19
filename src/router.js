@@ -72,6 +72,7 @@ function Router(app) {
   this.app = app;
   this.controllers = {};
   this.config = {};
+  this._lastResort = null;
 
   upgradeReqAndRes(app);
 }
@@ -132,6 +133,21 @@ Router.prototype.getRouterFor = function(routePath) {
   return allResponseFunctions;
 };
 
+Router.prototype.handleSpecialRoute = function(routeName, controllerPath) {
+  if (routeName === '404') {
+    this._lastResort = this.getRouterFor(controllerPath);
+    return true;
+  }
+
+  return false;
+};
+
+Router.prototype.addLastResort = function() {
+  if (this._lastResort) {
+    this.app.use(this._lastResort);
+  }
+};
+
 // routes object:
 // {
 //  '/': 'index/showHomePage',
@@ -142,6 +158,9 @@ Router.prototype.getRouterFor = function(routePath) {
 Router.prototype.configureRoutes = function(routes) {
   var self = this;
   Object.keys(routes).forEach(function(key) {
+    if (self.handleSpecialRoute(key, routes[key])) {
+      return;
+    }
     var spacePos = key.indexOf(' ');
     var verb = 'get';
     var path = key;

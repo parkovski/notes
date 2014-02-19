@@ -29,5 +29,35 @@
     "hlcolor": "#e0e0e0",
     "hltextcolor": "black",
     "showTopBarBottomBorder": "true"
+  },
+  "5": {
+    "color": "#f7549e",
+    "textcolor": "black",
+    "hlcolor": "#f7a1c8",
+    "hltextcolor": "black"
+  },
+  "6": {
+    "color": "#0a35f5",
+    "textcolor": "white",
+    "hlcolor": "#3d63fc",
+    "hltextcolor": "white"
+  },
+  "7": {
+    "color": "#f5f500",
+    "textcolor": "black",
+    "hlcolor": "#e5e500",
+    "hltextcolor": "black"
+  },
+  "8": {
+    "color": "#f08324",
+    "textcolor": "black",
+    "hlcolor": "#ffb370",
+    "hltextcolor": "black"
+  },
+  "9": {
+    "color": "#de0c09",
+    "textcolor": "white",
+    "hlcolor": "#ed5855",
+    "hltextcolor": "white"
   }
 }
