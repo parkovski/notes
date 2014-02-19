@@ -23,6 +23,11 @@ var renderLess = function(name, res) {
   if (name in lessfiles) {
     res.end(lessfiles[name]);
   } else {
+    var rendername = name;
+    if (/theme.+\.less/.match(name)) {
+      rendername = 'themebase.less';
+      // TODO: fill in theme vars
+    }
     fs.read(__dirname + '/../style/' + name, function(err, contents) {
       if (err) {
         lessfiles[name] = contents = '/* file read error */';
