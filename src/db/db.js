@@ -1,6 +1,11 @@
 var mysql = require('mysql');
 
-var config = require('./config.json');
+var config;
+if (process.env.DB_CONFIG) {
+  config = JSON.parse(process.env.DB_CONFIG);
+} else {
+  config = require('./config.json');
+}
 // {host, user, password, database, salt}
 
 function handleDisconnect() {
