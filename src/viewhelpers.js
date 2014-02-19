@@ -38,12 +38,12 @@ var renderLess = function(name, res) {
 };
 
 module.exports.getStyleResponseFunction = function() {
-  if (fs.existsSync(__dirname + '/../style/style0.css') {
+  if (fs.existsSync(__dirname + '/../style/style0.css')) {
     return require('express').static(__dirname + '/../style');
   }
   var less = require('less');
   return function(req, res) {
     var name = req.url.substring(1).replace(/\.css$/, '.less');
-    less.render(
+    renderLess(name, res);
   };
 };
