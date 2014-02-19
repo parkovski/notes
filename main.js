@@ -10,7 +10,7 @@ var app = express();
 viewhelpers.setupAppForHandlebars(app);
 viewhelpers.registerPartials();
 
-app.use('/style', express.static(__dirname + '/style'));
+app.use('/style', viewhelpers.getStyleResponseFunction());
 app.use('/clientjs', express.static(__dirname + '/clientjs'));
 app.use(express.cookieParser());
 app.use(express.session({ secret: 'omgwtfbbq', cookie: { maxAge: 3600000 } }));
