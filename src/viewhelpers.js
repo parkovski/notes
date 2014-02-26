@@ -57,8 +57,8 @@ var compileThemes = function(themebase, styleDir) {
 };
 
 // Blocking apis allowed - see compileLessFiles.
-var compileLess = function(less, css) {
-  less.render(fs.readFileSync(less), _writeCss(css));
+var compileLess = function(lessFile, cssFile) {
+  less.render(fs.readFileSync(lessFile), _writeCss(cssFile));
 };
 
 // This is called once on startup so we are allowed to use blocking apis.
