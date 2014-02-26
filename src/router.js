@@ -112,8 +112,8 @@ Router.prototype.getRouterFor = function(routePath) {
   var beforeList = methodConfig.beforeList || [];
   var afterList = methodConfig.afterList || [];
 
-  var routeFunction = function(req, res) {
-    controller[methodName](req, res);
+  var routeFunction = function(req, res, next) {
+    controller[methodName](req, res, next);
   };
 
   var allResponseFunctions = [];

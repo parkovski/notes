@@ -25,7 +25,7 @@ LoginController.prototype.showLoginPage = function(req, res) {
   });
 };
 
-LoginController.prototype.processLogin = function(req, res) {
+LoginController.prototype.processLogin = function(req, res, next) {
   var failureUrl = '/login/?error='
     + encodeURIComponent('Wrong username or password.');
   if (req.body.redirectUrl) {
@@ -34,7 +34,7 @@ LoginController.prototype.processLogin = function(req, res) {
   passport.authenticate('local', {
     successRedirect: validateRedirectUrl(req.body.redirectUrl),
     failureRedirect: failureUrl
-  })(req, res);
+  })(req, res, next);
 };
 
 LoginController.prototype.logout = function(req, res) {
