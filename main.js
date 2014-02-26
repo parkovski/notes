@@ -5,12 +5,17 @@ var viewhelpers = require('./src/viewhelpers');
 
 require('./src/userauth')();
 
+if (process.env.CHECK_DB_SETUP) {
+  require('./src/db/checkdbsetup')();
+}
+
 var app = express();
 
+viewhelpers.compileLessFiles();
 viewhelpers.setupAppForHandlebars(app);
 viewhelpers.registerPartials();
 
-app.use('/style', viewhelpers.getStyleResponseFunction());
+app.use('/style', express.static(__dirname + '/style'));
 app.use('/clientjs', express.static(__dirname + '/clientjs'));
 app.use(express.cookieParser());
 app.use(express.session({ secret: 'omgwtfbbq', cookie: { maxAge: 3600000 } }));

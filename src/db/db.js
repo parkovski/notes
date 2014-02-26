@@ -8,10 +8,6 @@ if (process.env.DB_CONFIG) {
 }
 // {host, user, password, database, salt}
 
-if (process.env.CHECK_DB_SETUP) {
-  require('./checkdbsetup');
-}
-
 function handleDisconnect() {
   connection = mysql.createConnection(config);
 

@@ -1,6 +1,7 @@
 x = done, - = in progress
 
 [x] 404 page
+[ ] CSS 304 / If-Modified-Since / max age or better way to serve.
 [ ] Organization for classes, topics, timelines.
   [ ] New, view, edit class
   [ ] New, view, edit topic

@@ -19,78 +19,73 @@ module.exports.registerPartials = function registerPartials() {
   });
 };
 
-var _csscache = {};
-var _themevars = (function() {
-  // The less compiler translates --modify-var to a piece of code and tacks it
-  // on to the file, so we'll do the same thing.
-  var themevars = require('./themes.json');
-  var themecode = {};
-  Object.keys(themevars).forEach(function(theme) {
-    var code = '';
-    Object.keys(themevars[theme]).forEach(function(v) {
-      code += '\n@' + v + ': ' + themevars[theme][v] + ';';
-    });
-    themecode[theme] = code;
-  });
-  return themecode;
-})();
-var renderLess = function(name, res) {
-  var rendername;
-  var themeid = null;
-  var match = /theme(.+)\.css$/.exec(name);
-  if (match) {
-    rendername = __dirname + '/../style/themebase.less';
-    themeid = match[1];
-  } else {
-    rendername = __dirname + '/../style/' + name.replace(/\.css$/, '.less');
-  }
-  fs.readFile(rendername, function(err, contents) {
+// Only use this in functions called by compileLessFiles,
+// since it uses blocking apis.
+var _writeCss = function(where) {
+  return function(err, css) {
     if (err) {
-      res.writeHeader(404);
-      res.end();
+      console.log(err);
       return;
     }
-    contents = '' + contents;
-    if (themeid !== null) {
-      contents += _themevars[themeid];
-    }
-    less.render(contents, function(err, css) {
-      if (err) {
-        console.log('*** less render error');
-        console.log(err);
-        css = '/* less render error */';
-      }
-      _csscache[name] = css;
-      res.end(css);
+    fs.writeFileSync(where, css);
+  };
+};
+
+// Blocking apis allowed - see compileLessFiles.
+var compileThemes = function(themebase, styleDir) {
+  var themevars = (function() {
+    // The less compiler translates --modify-var to a piece of code and tacks it
+    // on to the file, so we'll do the same thing.
+    var themevars = require('./themes.json');
+    var themecode = {};
+    Object.keys(themevars).forEach(function(theme) {
+      var code = '';
+      Object.keys(themevars[theme]).forEach(function(v) {
+        code += '\n@' + v + ': ' + themevars[theme][v] + ';';
+      });
+      themecode[theme] = code;
     });
+    return themecode;
+  })();
+
+  themebase = fs.readFileSync(themebase);
+
+  Object.keys(themevars).forEach(function(theme) {
+    less.render(themebase + themevars[theme],
+      _writeCss(styleDir + 'theme' + theme + '.css'));
   });
 };
 
-// When we're asked for style/x.css, do these things:
-// 1) If x.css is cached, serve that.
-// 2) If x.css exists on disk, cache and serve it.
-// 3) If x is theme[n].css, compile themebase.less for the appropriate theme;
-//    cache and serve that.
-// 4) If x.less exists on disk, compile, cache and serve it.
-// 5) 404.
-module.exports.getStyleResponseFunction = function() {
-  // hacky check to see if themes were compiled or not. probably remove this.
-  if (fs.existsSync(__dirname + '/../style/style0.css')) {
-    return require('express').static(__dirname + '/../style');
-  }
+// Blocking apis allowed - see compileLessFiles.
+var compileLess = function(less, css) {
+  less.render(fs.readFileSync(less), _writeCss(css));
+};
 
-  return function(req, res) {
-    var cssname = req.url.substring(1);
-    var diskFileName = __dirname + '/../style/' + cssname;
-    res.setHeader('Content-Type', 'text/css');
-    if (_csscache.hasOwnProperty(cssname)) {
-      return res.end(_csscache[cssname]);
+// This is called once on startup so we are allowed to use blocking apis.
+module.exports.compileLessFiles = function compileLessFiles() {
+  var styleDir = __dirname + '/../style/';
+  fs.readdirSync(styleDir).forEach(function(file) {
+    if (/\.css$/.test(file)) return;
+    var fullLess = styleDir + file;
+    var css = file.replace(/\.less$/, '.css');
+    var fullCss = styleDir + css;
+    var isThemebase = false;
+    if (file === 'themebase.less') {
+      // check one to see if they should be recompiled.
+      css = 'theme0.css';
+      isThemebase = true;
     }
-    fs.readFile(diskFileName, function(err, contents) {
-      if (err) {
-        return renderLess(cssname, res);
+    var lessTime = fs.statSync(fullLess).mtime;
+    var cssTime = fs.existsSync(fullCss)
+      ? fs.statSync(fullCss)
+      : 0;
+
+    if (lessTime > cssTime) {
+      if (isThemebase) {
+        compileThemes(fullLess, styleDir);
+      } else {
+        compileLess(fullLess, fullCss);
       }
-      res.end(_csscache[cssname] = contents);
-    });
-  };
+    }
+  });
 };
