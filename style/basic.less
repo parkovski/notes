@@ -18,6 +18,11 @@ input, button {
   border-radius: @borderRadius;
 }
 
+input::-moz-focus-inner, button::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
 button,
 input[type="button"],
 input[type="submit"]:not(.link),
