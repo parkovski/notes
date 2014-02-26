@@ -48,7 +48,7 @@ var compileThemes = function(themebase, styleDir) {
     return themecode;
   })();
 
-  themebase = fs.readFileSync(themebase);
+  themebase = '' + fs.readFileSync(themebase);
 
   Object.keys(themevars).forEach(function(theme) {
     less.render(themebase + themevars[theme],
@@ -58,7 +58,7 @@ var compileThemes = function(themebase, styleDir) {
 
 // Blocking apis allowed - see compileLessFiles.
 var compileLess = function(lessFile, cssFile) {
-  less.render(fs.readFileSync(lessFile), _writeCss(cssFile));
+  less.render('' + fs.readFileSync(lessFile), _writeCss(cssFile));
 };
 
 // This is called once on startup so we are allowed to use blocking apis.
