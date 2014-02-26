@@ -69,7 +69,7 @@ var functions = {
   // cb = function(err, result)
   createUser: function(fields, cb) {
     db.query(
-      'INSERT INTO `users` (name, password, email)'
+      'INSERT INTO `users` (`name`, `password`, `email`)'
       + ' SELECT ?, UNHEX(?), ? FROM `users`'
       + ' WHERE NOT EXISTS ('
       + '   SELECT * FROM `users` WHERE LCASE(`name`)=LCASE(?)'
