@@ -1,6 +1,8 @@
 x = done, - = in progress
 
 [ ] Real session management in database
+[ ] Email verification for new users
+[ ] Facebook / google / twitter (?) login
 [x] 404 page
 [x] CSS 304 / If-Modified-Since / max age or better way to serve.
 [ ] Organization for classes, topics, timelines.
