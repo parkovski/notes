@@ -1,6 +1,6 @@
 x = done, - = in progress
 
-[ ] Real session management in database
+[ ] Real session management w/ redis
 [ ] Email verification for new users
 [ ] Facebook / google / twitter (?) login
 [x] 404 page
