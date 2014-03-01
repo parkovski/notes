@@ -1,3 +1,36 @@
 {{>header}}
-Create a class!? Omg wow no way!
+<h1 class="alignCenter">Create a new class.</h1>
+<div class="vspace"></div>
+<p class="alignCenter warning">
+  Don't create duplicates.
+  If you think this class might already exist, <a href="/search">search for it</a>.
+</p>
+<div class="vspace"></div>
+<div class="alignCenter">
+  <div class="inlineBlock alignLeft">
+    <form method="post" action="/classes/new">
+      <fieldset class="settingsFormRow">
+        <label for="title" class="floatLeft settingsFormLabel">Class title:</label>
+        <div class="settingsFormRight">
+          <input id="title" type="text">
+        </div>
+      </fieldset>
+      <fieldset class="settingsFormRow">
+        <label for="subject" class="floatLeft settingsFormLabel">Subject area:</label>
+        <div class="settingsFormRight">
+          <input id="subject" type="text">
+        </div>
+      </fieldset>
+      <fieldset class="settingsFormRow">
+        <label for="school" class="floatLeft settingsFormLabel">School:</label>
+        <div class="settingsFormRight">
+          <input id="school" type="text" value="University of Arizona" readonly="true" class="readonly">
+        </div>
+      </fieldset>
+      <div class="settingsFormRight settingsFormRow">
+        <button type="submit">Create</button>
+      </div>
+    </form>
+  </div>
+</div>
 {{>footer}}
