@@ -148,6 +148,39 @@ Router.prototype.addLastResort = function() {
   }
 };
 
+function getModifiersAndRoute(routeStr) {
+  var mods = [];
+  var info = {
+    regex: false,
+    verb: 'get',
+    route: null
+  };
+
+  while (true) {
+    var spacePos = routeStr.indexOf(' ');
+    if (~spacePos) {
+      mods.push(routeStr.substring(0, spacePos));
+      routeStr = routeStr.substring(spacePos + 1);
+    } else {
+      break;
+    }
+  }
+
+  mods.forEach(function(mod) {
+    if (mod === 'regex') {
+      info.regex = true;
+    } else if (~['get', 'post', 'all'].indexOf(mod)) {
+      info.verb = mod;
+    } else {
+      throw new Error('invalid route modifier: ' + mod);
+    }
+  });
+
+  info.route = routeStr;
+
+  return info;
+}
+
 // routes object:
 // {
 //  '/': 'index/showHomePage',
@@ -161,19 +194,11 @@ Router.prototype.configureRoutes = function(routes) {
     if (self.handleSpecialRoute(key, routes[key])) {
       return;
     }
-    var spacePos = key.indexOf(' ');
-    var verb = 'get';
-    var path = key;
-    if (~spacePos) {
-      verb = key.substring(0, spacePos);
-      path = key.substring(spacePos + 1);
-    }
+    var info = getModifiersAndRoute(key);
+    var path = info.route;
+    if (info.regex) path = new RegExp(path);
 
-    if (!~['get', 'post', 'all'].indexOf(verb)) {
-      throw new Error('invalid verb ' + verb);
-    }
-
-    self.app[verb](path, self.getRouterFor(routes[key]));
+    self.app[info.verb](path, self.getRouterFor(routes[key]));
   });
 
   this.config = null;

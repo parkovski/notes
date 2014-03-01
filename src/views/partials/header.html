@@ -13,6 +13,7 @@
   </head>
   <body>
     {{>topbar}}
+    {{#unless noContentContainer}}
     <div id="contentContainer">
       {{#if user}}
         {{>navbar}}
@@ -21,3 +22,4 @@
       {{/if}}
       <div id="page">
         <div id="centeredContentBox">
+    {{/unless}}

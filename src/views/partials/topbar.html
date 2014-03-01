@@ -1,5 +1,8 @@
 <div id="topBar" class="hc">
-  <div id="topBarContent">
+  {{! If noContentContainer is set, the page width isn't restricted }}
+  {{! So we shouldn't restrict the top bar's width either }}
+  {{! This is set with a special CSS style }}
+  <div id="topBarContent"{{#if noContentContainer}} class="unrestrictedWidth"{{/if}}>
     <div id="topBarRightPanel">
       {{#if user}}
         {{user.name}}

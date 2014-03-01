@@ -19,6 +19,7 @@
   "/c/:name": "class/showClassPage",
   "/classes/following": "class/showFollowingPage",
   "/classes/new": "class/showCreatePage",
+  "regex ^/pad(?:/(\\w+))?$": "class/showEtherpad",
 
   "/about": "help/showAboutPage",
   "/feedback": "help/showFeedbackPage",

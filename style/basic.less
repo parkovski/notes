@@ -269,6 +269,31 @@ a, a:hover, a:active,
   // color is in themebase.less
 }
 
+// Embed Etherpad:
+div.fullPageContentContainer {
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding-top: @topBarHeight;
+  z-index: -1;
+  overflow: hidden;
+}
+
+iframe.fullPageContent {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
 // -----
 
 @topBarHeight: 36px;
@@ -285,6 +310,11 @@ a, a:hover, a:active,
   width: @pageContentWidth;
   font-size: @topBarTextSizeMultiplier;
   margin: ((@topBarHeight - @topBarContentHeight) / 2) auto 0;
+}
+
+#topBarContent.unrestrictedWidth {
+  width: auto;
+  padding: 0 5px;
 }
 
 #topBarFixedPlaceholder {

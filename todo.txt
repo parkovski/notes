@@ -5,11 +5,11 @@ x = done, - = in progress
 [ ] Facebook / google / twitter (?) login
 [x] 404 page
 [x] CSS 304 / If-Modified-Since / max age or better way to serve.
-[ ] Organization for classes, topics, timelines.
-  [ ] New, view, edit class
+[-] Organization for classes, topics, timelines.
+  [-] New, view, edit class
   [ ] New, view, edit topic
 [ ] Search & subscribe to classes, topics, etc.
-[ ] Etherpad integration.
+[-] Etherpad integration.
 [-] Account settings
   [-] Change name, email, password
 [ ] Feedback tool

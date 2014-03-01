@@ -20,4 +20,13 @@ ClassController.prototype.showCreatePage = function(req, res) {
   });
 };
 
+ClassController.prototype.showEtherpad = function(req, res) {
+  res.render('classes/etherpad.html', {
+    noContentContainer: true,
+    sections: ['Classes', 'Edit'],
+    title: 'test',
+    id: 'test'
+  });
+};
+
 module.exports = ClassController;
