@@ -42,14 +42,11 @@ function upgradeReqAndRes(app) {
     res.render = function(view, locals, callback) {
       if (typeof locals === 'function') {
         callback = locals;
-        locals = renderVars;
       } else if (locals) {
-        _.extend(locals, renderVars);
-      } else {
-        locals = renderVars;
+        _.extend(renderVars, locals);
       }
 
-      originalRender.call(res, view, locals, callback);
+      originalRender.call(res, view, renderVars, callback);
     };
 
     res.setRenderVar = function(name, value) {

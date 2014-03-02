@@ -1,5 +1,8 @@
 function ClassController(configure) {
-  configure('*').setRenderVar('sections', ['Classes']);
+  configure('*').setRenderVar('sections', [{
+    name: 'Classes',
+    url: '/classes/following'
+  }]);
 }
 
 ClassController.prototype.showClassPage = function(req, res) {
@@ -21,11 +24,16 @@ ClassController.prototype.showCreatePage = function(req, res) {
 };
 
 ClassController.prototype.showEtherpad = function(req, res) {
+  var docId = req.params.docId;
+
   res.render('classes/etherpad.html', {
     noContentContainer: true,
-    sections: ['Classes', 'Edit'],
-    title: 'test',
-    id: 'test'
+    sections: [
+      { name: 'Classes', url: '/classes/following' },
+      { name: docId, url: '/c/' + docId }
+    ],
+    title: 'Edit',
+    id: docId
   });
 };
 

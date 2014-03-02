@@ -10,7 +10,11 @@ SettingsController.prototype.showSettingsHomePage = function(req, res) {
 };
 
 SettingsController.prototype.showThemePicker = function(req, res) {
-  res.render('themepicker.html', { title: 'Pick a theme', themes: this.themes });
+  res.render('themepicker.html', {
+    title: 'Change theme',
+    sections: [{ name: 'Settings', url: '/settings' }],
+    themes: this.themes
+  });
 };
 
 SettingsController.prototype.changeTheme = function(req, res) {
