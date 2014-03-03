@@ -1,8 +1,11 @@
 x = done, - = in progress
 
-[ ] Real session management w/ redis
+[ ] Real session management w/ redis, including etherpad.
+  * Once sessions are stored in Redis, we can pass a session ID to etherpad
+    and write a plugin to have it authenticate on its own.
 [ ] Email verification for new users
-[ ] Facebook / google / twitter (?) login
+[ ] Facebook / google
+  * Services that use your real name.
 [x] 404 page
 [x] CSS 304 / If-Modified-Since / max age or better way to serve.
 [-] Organization for classes, topics, timelines.
