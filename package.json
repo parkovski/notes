@@ -11,6 +11,8 @@
     "passport": "~0.1.17",
     "passport-local": "~0.1.6",
     "sha-1": "~0.1.1",
-    "underscore": "~1.5.2"
+    "underscore": "~1.5.2",
+    "log4js": "^0.6.10",
+    "async": "^0.2.10"
   }
 }

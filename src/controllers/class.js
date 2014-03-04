@@ -3,6 +3,9 @@ function ClassController(configure) {
     name: 'Classes',
     url: '/classes/following'
   }]);
+  configure('showFollowingPage').requireLogin();
+  configure('showCreatePage').requireLogin();
+  configure('createClass').requireLogin();
 }
 
 ClassController.prototype.showClassPage = function(req, res) {
@@ -21,6 +24,9 @@ ClassController.prototype.showCreatePage = function(req, res) {
   res.render('classes/new.html', {
     title: 'Create new'
   });
+};
+
+ClassController.prototype.createClass = function(req, res) {
 };
 
 ClassController.prototype.showEtherpad = function(req, res) {

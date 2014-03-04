@@ -1,0 +1,14 @@
+{{>header}}
+<h5 class="alignCenter">{{title}}</h5>
+<div class="vspace"></div>
+All the classes in this school:
+{{#if classes.length}}
+  <ul class="bulletList">
+  {{#each classes}}
+    <li><a href="/c/{{this.id}}">{{this.name}}</a></li>
+  {{/each}}
+  </ul>
+{{else}}
+  There are no classes. Would you like to <a href="/classes/new">create one</a>?
+{{/if}}
+{{>footer}}

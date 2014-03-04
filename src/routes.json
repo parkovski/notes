@@ -21,6 +21,8 @@
   "/classes/new": "class/showCreatePage",
   "/edit/:docId": "class/showEtherpad",
 
+  "/org/:id": "org/showOrgOverview",
+
   "/about": "help/showAboutPage",
   "/feedback": "help/showFeedbackPage",
   "/contribute": "help/showContributePage",

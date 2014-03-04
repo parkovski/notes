@@ -13,6 +13,8 @@ x = done, - = in progress
   [ ] New, view, edit topic
 [ ] Search & subscribe to classes, topics, etc.
 [-] Etherpad integration.
+  [ ] Etherpad authentication and readonly for non authenticated users.
+[ ] Separate auth and non-auth endpoints in controllers.
 [-] Account settings
   [-] Change name, email, password
 [ ] Feedback tool
