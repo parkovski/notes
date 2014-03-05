@@ -1,4 +1,6 @@
 {
+  "get *": "global/loadGlobalVars",
+
   "/": "index/showHomePage",
 
   "404": "fourohfour/show404Page",

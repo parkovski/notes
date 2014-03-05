@@ -11,7 +11,7 @@ x = done, - = in progress
 [-] Organization for classes, topics, timelines.
   [-] New, view, edit class
   [ ] New, view, edit topic
-[ ] Search & subscribe to classes, topics, etc.
+[-] Search & subscribe to classes, topics, etc.
 [-] Etherpad integration.
   [ ] Etherpad authentication and readonly for non authenticated users.
 [ ] Separate auth and non-auth endpoints in controllers.

@@ -53,6 +53,17 @@ var functions = {
       [userId, orgId],
       cb
     );
+  },
+  // cb = function(err, orgs)
+  getUserOrgs: function(userId, cb) {
+    db.query(
+      'SELECT * FROM `orgs`'
+      + ' INNER JOIN `user_org_membership`'
+      + ' ON `orgs`.`id` = `user_org_membership`.`orgid`'
+      + ' AND `user_org_membership`.`userid` = ?;',
+      [userId],
+      cb
+    );
   }
 };
 

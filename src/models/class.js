@@ -51,6 +51,17 @@ module.exports = {
       cb
     );
   },
+  // cb = function(err, classes)
+  getUserClasses: function(userId, cb) {
+    db.query(
+      'SELECT * FROM `classes`'
+      + ' INNER JOIN `user_class_membership`'
+      + ' ON `classes`.`id` = `user_class_membership`.`classid`'
+      + ' AND `user_class_membership`.`userid` = ?;',
+      [userId],
+      cb
+    );
+  },
   // cb = function(err, classId)
   create: function(orgId, name, topicTag, cb) {
     var start = function(callback) {

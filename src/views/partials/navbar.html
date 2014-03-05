@@ -1,9 +1,21 @@
 <div class="box sidebar">
-  <h6 class="phalf">Following</h6>
+  <h6 class="phalf">My classes</h6>
   <ul class="smallIndentList">
-    <li class="hoverLink"><a href="/c/test">Test class</a></li>
+    {{#each classMembership}}
+      <li class="hoverLink"><a href="/c/{{this.id}}">{{this.name}}</a></li>
+    {{else}}
+      <li class="hoverLink"><a href="/classes">Find a class</a></li>
+    {{/each}}
   </ul>
-  <h6 class="phalf">Other</h6>
+  <h6 class="phalf">My schools</h6>
+  <ul class="smallIndentList">
+    {{#each orgMembership}}
+      <li class="hoverLink"><a href="/org/{{this.id}}">{{this.name}}</a></li>
+    {{else}}
+      <li class="hoverLink"><a href="/org">Find your school</a></li>
+    {{/each}}
+  </ul>
+  <h6 class="phalf">Manage</h6>
   <ul class="smallIndentList">
     <li class="hoverLink"><a href="/classes/following">Change what I follow</a></li>
     <li class="hoverLink"><a href="/classes/new">Create a new class</a></li>

@@ -6,14 +6,14 @@
         {{#if membershipChanged}}
           <span class="success">&#x2713; Joined</span>
         {{/if}}
-        <button type="submit">Leave</button>
+        <button type="submit">Leave school</button>
       </form>
     {{else}}
       <form method="post" action="/org/{{id}}/join" class="rightCornerAdjusted">
         {{#if membershipChanged}}
           <span class="success">&#x2713; Left</span>
         {{/if}}
-        <button type="submit">Join</button>
+        <button type="submit">Join school</button>
       </form>
     {{/if}}
   {{else}}
