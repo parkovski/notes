@@ -82,6 +82,12 @@ module.exports.compileLessFiles = function compileLessFiles() {
       ? fs.statSync(fullCss).mtime
       : 0;
 
+    if (isThemebase && lessTime <= cssTime) {
+      // maybe we didn't change themebase but we did change
+      // the themes definition file.
+      lessTime = fs.statSync(__dirname + '/themes.json').mtime;
+    }
+
     if (lessTime > cssTime) {
       if (isThemebase) {
         compileThemes(fullLess, styleDir);

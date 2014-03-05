@@ -10,9 +10,9 @@
   <div class="inlineBlock alignLeft">
     <form method="post" action="/classes/new">
       <fieldset class="settingsFormRow">
-        <label for="title" class="floatLeft settingsFormLabel">Class title:</label>
+        <label for="name" class="floatLeft settingsFormLabel">Class name:</label>
         <div class="settingsFormRight">
-          <input id="title" type="text">
+          <input id="name" name="name" type="text">
         </div>
       </fieldset>
       <fieldset class="settingsFormRow">
@@ -24,6 +24,7 @@
       <fieldset class="settingsFormRow">
         <label for="school" class="floatLeft settingsFormLabel">School:</label>
         <div class="settingsFormRight">
+          <input type="hidden" name="orgId" value="2">
           <input id="school" type="text" value="University of Arizona" readonly="true" class="readonly">
         </div>
       </fieldset>

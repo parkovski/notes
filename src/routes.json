@@ -19,9 +19,12 @@
   "/c/:name": "class/showClassPage",
   "/classes/following": "class/showFollowingPage",
   "/classes/new": "class/showCreatePage",
+  "post /classes/new": "class/createClass",
   "/edit/:docId": "class/showEtherpad",
 
   "/org/:id": "org/showOrgOverview",
+  "post /org/:id/join": "org/joinUserToOrg",
+  "post /org/:id/leave": "org/unjoinUserFromOrg",
 
   "/about": "help/showAboutPage",
   "/feedback": "help/showFeedbackPage",

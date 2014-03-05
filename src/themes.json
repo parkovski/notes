@@ -32,9 +32,9 @@
   },
   "5": {
     "color": "#f7549e",
-    "textcolor": "black",
+    "textcolor": "white",
     "hlcolor": "#f7a1c8",
-    "hltextcolor": "black"
+    "hltextcolor": "white"
   },
   "6": {
     "color": "#0a35f5",
@@ -43,16 +43,16 @@
     "hltextcolor": "white"
   },
   "7": {
-    "color": "#f5f500",
-    "textcolor": "black",
-    "hlcolor": "#e5e500",
-    "hltextcolor": "black"
+    "color": "#ffe903",
+    "textcolor": "#228",
+    "hlcolor": "#fff803",
+    "hltextcolor": "#228"
   },
   "8": {
     "color": "#f08324",
-    "textcolor": "black",
+    "textcolor": "white",
     "hlcolor": "#ffb370",
-    "hltextcolor": "black"
+    "hltextcolor": "white"
   },
   "9": {
     "color": "#de0c09",

@@ -21,6 +21,6 @@ x = done, - = in progress
   [x] Page footer - about, contact, feedback, contribute
 [ ] Messaging and chat
 [-] Add pages for footer links about/feedback/contribute/help
-[ ] Fix <p> and sidebar link hover bg
+[x] Fix <p> and sidebar link hover bg
 [ ] Design a better way of doing forms/controls
   [ ] Templating seems really unfriendly sometimes

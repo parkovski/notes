@@ -1,3 +1,9 @@
+var log4js = require('log4js');
+
+var orgModel = require('../models/org');
+
+var logger = log4js.getLogger();
+
 function ClassController(configure) {
   configure('*').setRenderVar('sections', [{
     name: 'Classes',
@@ -27,6 +33,16 @@ ClassController.prototype.showCreatePage = function(req, res) {
 };
 
 ClassController.prototype.createClass = function(req, res) {
+  orgModel.createClass(req.body.orgId,
+    req.body.name,
+    null, 
+    function(err, classId) {
+      if (err) {
+        logger.error(err);
+      }
+      return res.redirect('/c/' + classId);
+    }
+  );
 };
 
 ClassController.prototype.showEtherpad = function(req, res) {
