@@ -16,7 +16,9 @@
 
   "/search": "search/showSearchResults",
 
-  "/c/:name": "class/showClassPage",
+  "/c/:id": "class/showClassPage",
+  "post /c/:id/sub": "class/subscribeUser",
+  "post /c/:id/unsub": "class/unsubscribeUser",
   "/classes/following": "class/showFollowingPage",
   "/classes/new": "class/showCreatePage",
   "post /classes/new": "class/createClass",
