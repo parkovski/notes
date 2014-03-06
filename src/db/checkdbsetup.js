@@ -34,7 +34,7 @@ module.exports = function() {
       + ' FOREIGN KEY (classid) REFERENCES classes(id) ON DELETE CASCADE,'
       + ' FOREIGN KEY (tagid) REFERENCES topic_tags(id) ON DELETE CASCADE)',
 
-    'note_page (id serial PRIMARY KEY,'
+    'note_pages (id serial PRIMARY KEY,'
       + ' classid bigint unsigned,'
       + ' name varchar(128),'
       + ' INDEX classid_ind (classid),'
