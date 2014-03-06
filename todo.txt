@@ -1,7 +1,7 @@
 x = done, - = in progress
 
-[ ] Real session management w/ redis, including etherpad.
-  * Once sessions are stored in Redis, we can pass a session ID to etherpad
+[x] Real session management w/ redis, including etherpad.
+  [ ] Once sessions are stored in Redis, we can pass a session ID to etherpad
     and write a plugin to have it authenticate on its own.
 [ ] Email verification for new users
 [ ] Facebook / google
@@ -22,5 +22,6 @@ x = done, - = in progress
 [ ] Messaging and chat
 [-] Add pages for footer links about/feedback/contribute/help
 [x] Fix <p> and sidebar link hover bg
+[ ] Move to the swig template engine.
 [ ] Design a better way of doing forms/controls
   [ ] Templating seems really unfriendly sometimes

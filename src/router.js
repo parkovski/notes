@@ -195,8 +195,18 @@ Router.prototype.configureRoutes = function(routes) {
     var path = info.route;
     if (info.regex) path = new RegExp(path);
 
-    self.app[info.verb](path, self.getRouterFor(routes[key]));
+    var router = self.getRouterFor(routes[key]);
+    var addRouter = function(r) {
+      self.app[info.verb](path, r);
+    };
+    if (Array.isArray(router)) {
+      router.forEach(addRouter);
+    } else {
+      addRouter(router);
+    }
   });
+
+  this.addLastResort();
 
   this.config = null;
 };

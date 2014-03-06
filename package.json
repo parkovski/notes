@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "A note taking app",
   "dependencies": {
-    "express": "~3.4.4",
+    "express": "~4.0.0",
     "less": "~1.5.0",
     "handlebars": "~1.1.2",
     "consolidate": "~0.10.0",
@@ -13,6 +13,11 @@
     "sha-1": "~0.1.1",
     "underscore": "~1.5.2",
     "log4js": "^0.6.10",
-    "async": "^0.2.10"
+    "async": "^0.2.10",
+    "redis": "^0.10.1",
+    "cookie-parser": "^1.0.1",
+    "express-session": "^1.0.2",
+    "body-parser": "^1.0.0",
+    "connect-redis": "^1.5.0"
   }
 }

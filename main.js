@@ -3,6 +3,13 @@ var passport = require('passport');
 var Router = require('./src/router');
 var viewhelpers = require('./src/viewhelpers');
 
+// middleware
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+
+var RedisStore = require('connect-redis')(session);
+
 require('./src/userauth')();
 
 if (process.env.CHECK_DB_SETUP) {
@@ -15,18 +22,30 @@ viewhelpers.compileLessFiles();
 viewhelpers.setupAppForHandlebars(app);
 viewhelpers.registerPartials();
 
+var redisStore;
+if (process.env.REDIS_CONFIG) {
+  redisStore = new RedisStore(JSON.parse(process.env.REDIS_CONFIG));
+} else {
+  redisStore = new RedisStore();
+}
+
 app.use('/style', express.static(__dirname + '/style'));
 app.use('/clientjs', express.static(__dirname + '/clientjs'));
-app.use(express.cookieParser());
-app.use(express.session({ secret: 'omgwtfbbq', cookie: { maxAge: 3600000 } }));
-app.use(express.json());
-app.use(express.urlencoded());
+app.use(cookieParser());
+app.use(session({
+  store: redisStore,
+  secret: 'omgwtfbbq',
+  cookie: { maxAge: 3600000 }
+}));
+app.use(bodyParser());
 app.use(passport.initialize());
 app.use(passport.session());
 
-var router = new Router(app);
+var expressRouter = express.Router();
+var router = new Router(expressRouter);
 router.configureRoutes(require('./src/routes'));
-router.addLastResort();
+
+app.use(expressRouter);
 
 app.listen(process.env.PORT || 4000);
 
