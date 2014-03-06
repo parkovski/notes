@@ -22,7 +22,13 @@
   <h5>{{title}}</h5>
 </div>
 <div class="vspace"></div>
-<p>This is the class where we learn how websites are built.</p>
+<p>
+{{#if description}}
+  {{description}}
+{{else}}
+  This class has no description. Would you like to write one?
+{{/if}}
+</p>
 <div class="vspace"></div>
 <h5>Recent documents</h5>
 <div class="vspace"></div>

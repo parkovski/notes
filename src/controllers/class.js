@@ -20,8 +20,8 @@ function ClassController(configure) {
 ClassController.prototype.showClassPage = function(req, res) {
   var classId = req.params.id;
   var membershipChanged = 'changed' in req.query;
-  var getClassName = function(callback) {
-    classModel.getName(classId, callback);
+  var getClassNameAndDesc = function(callback) {
+    classModel.getNameAndDescription(classId, callback);
   };
   var isSubscribed = function(callback) {
     if (!req.user) {
@@ -30,14 +30,15 @@ ClassController.prototype.showClassPage = function(req, res) {
       classModel.isUserSubscribed(classId, req.user.id, callback);
     }
   };
-  async.map([getClassName, isSubscribed],
+  async.map([getClassNameAndDesc, isSubscribed],
     function(item, cb) { item(cb); },
     function(err, results) {
       if (err) {
         logger.error(err);
       }
       res.render('class.html', {
-        title: results[0],
+        title: results[0].name,
+        description: results[0].description,
         id: classId,
         joined: results[1],
         membershipChanged: membershipChanged

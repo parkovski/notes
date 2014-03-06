@@ -20,6 +20,20 @@ module.exports = {
       }
     );
   },
+  // cb = function(err, {name, description})
+  getNameAndDescription: function(classId, cb) {
+    db.query(
+      'SELECT `name`, `description` FROM `classes` WHERE `id` = ? LIMIT 1;',
+      [classId],
+      function(err, rows) {
+        if (rows.length === 0) {
+          cb(err, null);
+        } else {
+          cb(err, rows[0]);
+        }
+      }
+    );
+  },
   // cb = function(err, isSubscribed)
   isUserSubscribed: function(classId, userId, cb) {
     db.query(
