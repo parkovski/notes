@@ -76,6 +76,7 @@ ClassController.prototype.showEtherpad = function(req, res) {
   var docId = req.params.docId;
 
   res.render('classes/etherpad.html', {
+    padUrl: process.env.PAD_URL || 'http://pad.uanotes.com',
     noContentContainer: true,
     sections: [
       { name: 'Classes', url: '/classes/following' },
