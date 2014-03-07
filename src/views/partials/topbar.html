@@ -3,29 +3,31 @@
   {{! So we shouldn't restrict the top bar's width either }}
   {{! This is set with a special CSS style }}
   <div id="topBarContent"{{#if noContentContainer}} class="unrestrictedWidth"{{/if}}>
-    <div id="topBarRightPanel">
-      {{#if user}}
+    {{#if user}}
+      <div id="topBarRightPanel">
         {{user.name}}
-        <span id="topbardropdowntoggle">&nbsp;&#x25BE;</span>
-        <div class="dropdown" data-toggle="topbardropdowntoggle">
-          <ul>
-            <li><a class="link" href="/settings">Settings</a></li>
-            <li>
-              <form method="post" action="/logout">
-                <input type="submit" value="Log out" class="link"></input>
-              </form>
-            </li>
-          </ul>
-        </div>
-        <script src="/clientjs/dropdownmenu.js"></script>
-      {{else}}
-        {{#unless suppressLoginHeaderLink}}
+        <span id="topbardropdowntoggle" class="dropdownButton">&nbsp;&#x25BE;&nbsp;</span>
+      </div>
+      <div class="dropdown" style="float: right; clear: both;" data-toggle="topbardropdowntoggle">
+        <ul>
+          <li><a class="link" href="/settings">Settings</a></li>
+          <li>
+            <form method="post" action="/logout">
+              <input type="submit" value="Log out" class="link"></input>
+            </form>
+          </li>
+        </ul>
+      </div>
+      <script src="/clientjs/dropdownmenu.js"></script>
+    {{else}}
+      {{#unless suppressLoginHeaderLink}}
+        <div id="topBarRightPanel">
           <a href="/register">Register</a>
           <span class="topBarSep">|</span>
           <a href="/login">Log in</a>
-        {{/unless}}
-      {{/if}}
-    </div>
+        </div>
+      {{/unless}}
+    {{/if}}
     <a href="/">Notes</a>
     {{#if sections}}
       {{#each sections}}

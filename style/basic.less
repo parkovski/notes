@@ -356,22 +356,35 @@ iframe.fullPageContent {
 
 #topbardropdowntoggle {
   padding: 0;
-  padding-left: @inputPadding;
   margin-left: @inputPadding;
-  border-left-width: @borderWidth;
-  border-left-style: solid;
+  border-left: @borderWidth solid;
+  border-right: @borderWidth solid;
   cursor: pointer;
 }
 
+#topbardropdowntoggle.sel {
+  border-left: @borderWidth solid;
+  border-right: @borderWidth solid;
+  border-top: @borderWidth solid;
+
+  border-top-left-radius: @borderRadius;
+  border-top-right-radius: @borderRadius;
+
+  padding-bottom: 3px;
+}
+
 .dropdown {
+  float: right;
+  clear: both;
   position: relative;
   top: 3px;
   display: none;
   text-align: left;
   border: @borderWidth solid;
+  border-top: 0;
   padding: @inputPadding;
   border-radius: @borderRadius;
-  z-index: 1;
+  border-top-right-radius: 0;
 }
 
 .dropdown > ul > li {

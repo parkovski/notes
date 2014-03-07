@@ -1,14 +1,23 @@
 (function() {
+  function open(menu, button) {
+    menu.css({display: 'block'});
+    button.addClass('sel');
+  }
+
+  function close(menu, button) {
+    menu.css({display: 'none'});
+    button.removeClass('sel');
+  }
+
   function dropdownMenu(toggle, div) {
     if (!(toggle instanceof $)) toggle = $('#' + toggle);
     if (!(div instanceof $)) div = $('#' + div);
     toggle.click(function(e) {
       var disp = div.css('display');
-      console.log('toggle', '"' + disp + '"');
       if (disp === 'none') {
-        div.css({display: 'block'});
+        open(div, toggle);
       } else {
-        div.css({display: 'none'});
+        close(div, toggle);
       }
       e.stopPropagation();
       return false;
@@ -18,11 +27,11 @@
   $(function() {
     $('.dropdown').each(function() {
       var $this = $(this);
-      console.log('data-toggle', $this.data('toggle'));
       dropdownMenu($this.data('toggle'), $this);
     });
     $(document).click(function() {
       $('.dropdown').css({display: 'none'});
+      $('.dropdownButton').removeClass('sel');
     });
   });
 })();
