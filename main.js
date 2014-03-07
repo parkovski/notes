@@ -25,7 +25,7 @@ viewhelpers.registerPartials();
 var redisStore;
 if (process.env.REDIS_CONFIG) {
   var redisConfig = JSON.parse(process.env.REDIS_CONFIG);
-  redisStore = new RedisStore(redisConfig.port, redisConfig.host, redisConfig);
+  redisStore = new RedisStore(redisConfig);
 } else {
   redisStore = new RedisStore();
 }
