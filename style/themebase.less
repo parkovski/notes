@@ -45,7 +45,9 @@ input:active, input:focus {
   border-color: black;
 }
 
-input[type="submit"]:not(.link), button[type="submit"], .submitButton {
+input[type="submit"]:not(.link),
+button[type="submit"]:not(.link),
+.submitButton {
   border-color: black;
   background-color: @color;
   color: @textcolor;
@@ -142,7 +144,7 @@ span.topBarSep {
 }
 
 div.hline {
-  border-color: black;
+  border-color: @panelBorderColor;
 }
 
 a, a:hover, a:active, a:visited,
@@ -166,4 +168,8 @@ a, a:hover, a:active, a:visited,
 
 .success {
   color: @successTextColor;
+}
+
+.lightText {
+  color: #A0A0A0;
 }

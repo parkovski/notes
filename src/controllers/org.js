@@ -11,7 +11,6 @@ function OrgController(configure) {
 
 OrgController.prototype.showOrgOverview = function(req, res) {
   var orgId = req.params.id;
-  var membershipChanged = 'changed' in req.query;
   var getOrgName = function(callback) {
     orgModel.getName(orgId, callback);
   };
@@ -36,8 +35,7 @@ OrgController.prototype.showOrgOverview = function(req, res) {
         id: orgId,
         sections: [{ name: 'Schools', url: '/org' }],
         classes: results[1],
-        joined: results[2],
-        membershipChanged: membershipChanged
+        joined: results[2]
       });
     }
   );

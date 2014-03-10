@@ -1,37 +1,38 @@
 {
-  "get *": "global/loadGlobalVars",
+  "get *": "global#loadGlobalVars",
 
-  "/": "index/showHomePage",
+  "/": "index#showHomePage",
 
-  "404": "fourohfour/show404Page",
+  "404": "fourohfour#show404Page",
 
-  "/login": "login/showLoginPage",
-  "post /login": "login/processLogin",
-  "post /logout": "login/logout",
-  "/isuser/:user": "login/isUser",
-  "/register": "login/showRegisterPage",
-  "post /register": "login/registerUser",
+  "/login": "login#showLoginPage",
+  "post /login": "login#processLogin",
+  "post /logout": "login#logout",
+  "/isuser/:user": "login#isUser",
+  "/register": "login#showRegisterPage",
+  "post /register": "login#registerUser",
 
-  "/settings": "settings/showSettingsHomePage",
-  "/settings/theme": "settings/showThemePicker",
-  "post /settings/theme": "settings/changeTheme",
+  "/settings": "settings#showSettingsHomePage",
+  "/settings/theme": "settings#showThemePicker",
+  "post /settings/theme": "settings#changeTheme",
 
-  "/search": "search/showSearchResults",
+  "/search": "search#showSearchResults",
 
-  "/c/:id": "class/showClassPage",
-  "post /c/:id/sub": "class/subscribeUser",
-  "post /c/:id/unsub": "class/unsubscribeUser",
-  "/classes/following": "class/showFollowingPage",
-  "/classes/new": "class/showCreatePage",
-  "post /classes/new": "class/createClass",
-  "/edit/:docId": "class/showEtherpad",
+  "/c/:id": "class#showClassPage",
+  "post /c/:id/sub": "class#subscribeUser",
+  "post /c/:id/unsub": "class#unsubscribeUser",
+  "/classes/following": "class#showFollowingPage",
+  "/classes/new": "class#showCreatePage",
+  "post /classes/new": "class#createClass",
+  "post /c/:id/newpage": "class#newPage",
+  "/edit/:docId": "class#showEtherpad",
 
-  "/org/:id": "org/showOrgOverview",
-  "post /org/:id/join": "org/joinUserToOrg",
-  "post /org/:id/leave": "org/unjoinUserFromOrg",
+  "/org/:id": "org#showOrgOverview",
+  "post /org/:id/join": "org#joinUserToOrg",
+  "post /org/:id/leave": "org#unjoinUserFromOrg",
 
-  "/about": "help/showAboutPage",
-  "/feedback": "help/showFeedbackPage",
-  "/contribute": "help/showContributePage",
-  "/help": "help/showHelpPage"
+  "/about": "help#showAboutPage",
+  "/feedback": "help#showFeedbackPage",
+  "/contribute": "help#showContributePage",
+  "/help": "help#showHelpPage"
 }

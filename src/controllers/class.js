@@ -13,13 +13,13 @@ function ClassController(configure) {
   configure('showFollowingPage').requireLogin();
   configure('showCreatePage').requireLogin();
   configure('createClass').requireLogin();
+  configure('newPage').requireLogin();
   configure('subscribeUser').requireLogin();
   configure('unsubscribeUser').requireLogin();
 }
 
 ClassController.prototype.showClassPage = function(req, res) {
   var classId = req.params.id;
-  var membershipChanged = 'changed' in req.query;
   var getClassNameAndDesc = function(callback) {
     classModel.getNameAndDescription(classId, callback);
   };
@@ -30,7 +30,10 @@ ClassController.prototype.showClassPage = function(req, res) {
       classModel.isUserSubscribed(classId, req.user.id, callback);
     }
   };
-  async.map([getClassNameAndDesc, isSubscribed],
+  var getClassPages = function(callback) {
+    classModel.getClassPages(classId, callback);
+  };
+  async.map([getClassNameAndDesc, isSubscribed, getClassPages],
     function(item, cb) { item(cb); },
     function(err, results) {
       if (err) {
@@ -41,7 +44,7 @@ ClassController.prototype.showClassPage = function(req, res) {
         description: results[0].description,
         id: classId,
         joined: results[1],
-        membershipChanged: membershipChanged
+        pages: results[2]
       });
     }
   );
@@ -72,18 +75,39 @@ ClassController.prototype.createClass = function(req, res) {
   );
 };
 
-ClassController.prototype.showEtherpad = function(req, res) {
+ClassController.prototype.showEtherpad = function(req, res, next) {
   var docId = req.params.docId;
 
-  res.render('classes/etherpad.html', {
-    padUrl: process.env.PAD_URL || 'http://pad.uanotes.com',
-    noContentContainer: true,
-    sections: [
-      { name: 'Classes', url: '/classes/following' },
-      { name: docId, url: '/c/' + docId }
-    ],
-    title: 'Edit',
-    id: docId
+  classModel.getPage(docId, function(err, page) {
+    if (err) {
+      logger.error(err);
+    }
+    if (!page) {
+      return next();
+    }
+
+    res.render('classes/etherpad.html', {
+      padUrl: process.env.PAD_URL || 'http://pad.uanotes.com',
+      noContentContainer: true,
+      sections: [
+        { name: 'Classes', url: '/classes/following' },
+        { name: page.className, url: '/c/' + docId }
+      ],
+      title: 'Edit',
+      id: docId
+    });
+  });
+};
+
+ClassController.prototype.newPage = function(req, res) {
+  var classId = req.params.id;
+
+  classModel.createPage(classId, function(err, pageId) {
+    if (err) {
+      logger.error(err);
+      return res.redirect('/c/' + classId);
+    }
+    res.redirect('/edit/' + pageId);
   });
 };
 

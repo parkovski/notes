@@ -2,29 +2,23 @@
 <div class="alignCenter container">
   {{#if user}}
     {{#if joined}}
-      <form method="post" action="/org/{{id}}/leave" class="rightCornerAdjusted">
-        {{#if membershipChanged}}
-          <span class="success">&#x2713; Joined</span>
-        {{/if}}
-        <button type="submit">Leave school</button>
+      <form method="post" action="/org/{{id}}/leave" class="rightCorner">
+        <button type="submit" class="link lightText">Leave school</button>
       </form>
     {{else}}
       <form method="post" action="/org/{{id}}/join" class="rightCornerAdjusted">
-        {{#if membershipChanged}}
-          <span class="success">&#x2713; Left</span>
-        {{/if}}
         <button type="submit">Join school</button>
       </form>
     {{/if}}
   {{else}}
     <a href="/login?r=%2Forg%2F{{id}}" class="rightCorner">Log in to join</a>
   {{/if}}
-  <h5>{{title}}</h5>
+  <h3>{{title}}</h3>
 </div>
-<div class="vspace"></div>
+<div class="hline"></div>
 All the classes in this school:
 {{#if classes.length}}
-  <ul class="bulletList">
+  <ul class="bulletList para">
   {{#each classes}}
     <li><a href="/c/{{this.id}}">{{this.name}}</a></li>
   {{/each}}

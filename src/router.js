@@ -85,11 +85,11 @@ Router.prototype.getConfigFunctionFor = function(controllerName) {
 // This method may return an array of methods, if the controller configured
 // before and after for the specified route.
 Router.prototype.getRouterFor = function(routePath) {
-  var parts = routePath.split('/');
+  var parts = routePath.split('#');
   if (parts.length !== 2) {
     throw new Error('invalid route path ' + routePath);
   }
-  var controllerName = parts[0];
+  var controllerName = parts[0].replace('.', '/');
   var methodName = parts[1];
 
   var controller = this.controllers[controllerName];
@@ -180,9 +180,10 @@ function getModifiersAndRoute(routeStr) {
 
 // routes object:
 // {
-//  '/': 'index/showHomePage',
-//  '/login': 'login/showLoginPage',
-//  'post /login': 'login/login'
+//  '/': 'index#showHomePage',
+//  '/login': 'login#showLoginPage',
+//  'post /login': 'login#login',
+//  '/ajax/user/:id': 'ajax.user#getInfo'
 // }
 // default verb is get.
 Router.prototype.configureRoutes = function(routes) {

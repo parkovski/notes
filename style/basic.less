@@ -81,7 +81,6 @@ span.selectedOption {
 
 p, .para {
   line-height: 135%;
-  //margin: 1em;
 }
 
 ul.smallIndentList {
@@ -279,6 +278,7 @@ a, a:hover, a:active,
   padding: 0;
   margin: 0;
   text-decoration: none;
+  cursor: pointer;
   &:hover {
     text-decoration: underline;
   }
@@ -385,6 +385,7 @@ iframe.fullPageContent {
   padding: @inputPadding;
   border-radius: @borderRadius;
   border-top-right-radius: 0;
+  z-index: 100;
 }
 
 .dropdown > ul > li {
@@ -394,7 +395,6 @@ iframe.fullPageContent {
 .dropdown input.link {
   font-size: 100%;
   padding-bottom: 1px;
-  cursor: pointer;
 }
 
 // -----

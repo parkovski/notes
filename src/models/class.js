@@ -34,6 +34,14 @@ module.exports = {
       }
     );
   },
+  // cb = function(err)
+  setDescription: function(classId, description, cb) {
+    db.query(
+      'UPDATE `classes` SET description = ? WHERE `id` = ?;',
+      [description, classId],
+      cb
+    );
+  },
   // cb = function(err, isSubscribed)
   isUserSubscribed: function(classId, userId, cb) {
     db.query(
@@ -104,5 +112,59 @@ module.exports = {
       }
       cb(null, result[0].id);
     });
+  },
+  // cb = function(err, pageId)
+  createPage: function(classId, cb) {
+    var start = function(callback) {
+      db.query('START TRANSACTION;', function(err) { callback(err); });
+    };
+    var create = function(callback) {
+      db.query('INSERT INTO `note_pages` (`classid`) VALUES (?);',
+        [classId],
+        function(err) { callback(err); }
+      );
+    };
+    var selectId = function(callback) {
+      db.query('SELECT LAST_INSERT_ID() AS `id`;',
+        function(err, result) { callback(err, result); });
+    };
+    var commit = function(result, callback) {
+      db.query('COMMIT;', function(err) { callback(err, result); });
+    };
+
+    async.waterfall([start, create, selectId, commit], function(err, result) {
+      if (err) {
+        logger.error(err);
+        return db.query('ROLLBACK;', function() {
+          cb(err);
+        });
+      }
+      cb(null, result[0].id);
+    });
+  },
+  // cb = function(err)
+  setPageName: function(id, name, cb) {
+    db.query('UPDATE `note_pages` SET `name` = ? WHERE `id` = ?;',
+      [name, id],
+      cb
+    );
+  },
+  // cb = function(err, page)
+  getPage: function(id, cb) {
+    db.query('SELECT `classid`, `note_pages`.`name`, `classes`.`name` AS `className` FROM `note_pages`'
+      + ' INNER JOIN `classes` ON `classes`.`id` = `note_pages`.`classid`'
+      + ' WHERE `note_pages`.`id` = ?;',
+      [id],
+      function(err, rows) {
+        cb(null, rows && rows[0]);
+      }
+    );
+  },
+  // cb = function(err, pages)
+  getClassPages: function(classId, cb) {
+    db.query('SELECT * FROM `note_pages` WHERE `classid` = ?;',
+      [classId],
+      cb
+    );
   }
 };
