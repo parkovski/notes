@@ -91,7 +91,7 @@ ClassController.prototype.showEtherpad = function(req, res, next) {
       noContentContainer: true,
       sections: [
         { name: 'Classes', url: '/classes/following' },
-        { name: page.className, url: '/c/' + docId }
+        { name: page.classname, url: '/c/' + page.classid }
       ],
       title: 'Edit',
       id: docId
@@ -118,7 +118,7 @@ ClassController.prototype.subscribeUser = function(req, res) {
     if (err) {
       logger.error(err);
     }
-    res.redirect('/c/' + classId + '/?changed');
+    res.redirect('/c/' + classId);
   });
 };
 
@@ -129,7 +129,7 @@ ClassController.prototype.unsubscribeUser = function(req, res) {
     if (err) {
       logger.error(err);
     }
-    res.redirect('/c/' + classId + '/?changed');
+    res.redirect('/c/' + classId);
   });
 };
 

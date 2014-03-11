@@ -151,7 +151,7 @@ module.exports = {
   },
   // cb = function(err, page)
   getPage: function(id, cb) {
-    db.query('SELECT `classid`, `note_pages`.`name`, `classes`.`name` AS `className` FROM `note_pages`'
+    db.query('SELECT `classid`, `note_pages`.`name`, `classes`.`name` AS `classname` FROM `note_pages`'
       + ' INNER JOIN `classes` ON `classes`.`id` = `note_pages`.`classid`'
       + ' WHERE `note_pages`.`id` = ?;',
       [id],

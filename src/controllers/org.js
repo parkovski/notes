@@ -48,7 +48,7 @@ OrgController.prototype.joinUserToOrg = function(req, res) {
     if (err) {
       logger.error(err);
     }
-    res.redirect('/org/' + orgId + '/?changed');
+    res.redirect('/org/' + orgId);
   });
 };
 
@@ -59,7 +59,7 @@ OrgController.prototype.unjoinUserFromOrg = function(req, res) {
     if (err) {
       logger.error(err);
     }
-    res.redirect('/org/' + orgId + '/?changed');
+    res.redirect('/org/' + orgId);
   });
 };
 
