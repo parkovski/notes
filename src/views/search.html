@@ -1,7 +1,46 @@
 {{>header}}
-<div class="alignCenter">
-  <span class="h3">Search results for &quot;</span><span class="h4">{{query}}</span><span class="h3">&quot;:</span>
-</div>
+<h1 class="alignCenter">Search.</h1>
 <div class="vspace"></div>
-<div>Not implemented yet!</div>
+<div>
+  <form method="get" action="/search">
+    <div class="floatRight">
+      <input type="submit" value="Search"></input>
+    </div>
+    <div class="expandContainer">
+      <input type="text" class="expand" name="q" placeholder="Search for a class or topic"></input>
+    </div>
+  </form>
+</div>
+{{#if query}}
+  <div class="vspace"></div>
+  <div>
+    <span class="h3">Results for &quot;</span><span class="h4">{{query}}</span><span class="h3">&quot;</span>
+  </div>
+  <div class="vspace"></div>
+  {{#if orgResults.length}}
+  <div>
+    <h5>Matching schools</h5>
+    <div class="vspace"></div>
+    <ul class="para">
+    {{#each orgResults}}
+      <li><a href="/org/{{this.id}}">{{this.name}}</a></li>
+    {{/each}}
+    </ul>
+  </div>
+  {{/if}}
+  {{#if classResults.length}}
+  <div>
+    <h5>Matching classes</h5>
+    <div class="vspace"></div>
+    <ul class="para">
+    {{#each classResults}}
+      <li><a href="/c/{{this.id}}">{{this.name}}</a></li>
+    {{/each}}
+    </ul>
+  </div>
+  {{/if}}
+  {{#if nothingFound}}
+    Oh no! No results were found :(.
+  {{/if}}
+{{/if}}
 {{>footer}}
