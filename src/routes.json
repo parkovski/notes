@@ -34,6 +34,8 @@
   "post /org/:id/join": "org#joinUserToOrg",
   "post /org/:id/leave": "org#unjoinUserFromOrg",
 
+  "post /ajax/org/setdescription/:id": "ajax.org#setDescription",
+
   "/about": "help#showAboutPage",
   "/feedback": "help#showFeedbackPage",
   "/contribute": "help#showContributePage",

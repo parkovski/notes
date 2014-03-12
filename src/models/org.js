@@ -23,6 +23,28 @@ var functions = {
       }
     );
   },
+  // cb = function(err, {name, description})
+  getNameAndDescription: function(orgId, cb) {
+    db.query(
+      'SELECT `name`, `description` FROM `orgs` WHERE `id` = ? LIMIT 1;',
+      [orgId],
+      function(err, rows) {
+        if (rows.length === 0) {
+          cb(err, null);
+        } else {
+          cb(err, rows[0]);
+        }
+      }
+    );
+  },
+  // cb = function(err)
+  setDescription: function(orgId, description, cb) {
+    db.query(
+      'UPDATE `orgs` SET description = ? WHERE `id` = ?;',
+      [description, orgId],
+      cb
+    );
+  },
   // cb = function(err, isJoined)
   isUserJoined: function(orgId, userId, cb) {
     db.query(

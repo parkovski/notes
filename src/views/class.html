@@ -36,10 +36,7 @@
 </div>
 {{/if}}
 <div class="hline"></div>
-<form method="post" action="/c/{{id}}/newpage">
-  <span class="h5">Notes</span>
-  <button type="submit" class="link lightText">create</button>
-</form>
+<h5>Notes</h5>
 <div class="vspace"></div>
 <ul class="para">
   {{#each pages}}
@@ -52,6 +49,11 @@
     {{/if}}
   </li>
   {{/each}}
+  <li>
+    <form method="post" action="/c/{{id}}/newpage">
+      <button type="submit" class="link lightText">New note page</button>
+    </form>
+  </li>
 </ul>
 <script src="/clientjs/classdescription.js"></script>
 <script>

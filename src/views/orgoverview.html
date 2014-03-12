@@ -15,15 +15,37 @@
   {{/if}}
   <h3>{{title}}</h3>
 </div>
-<div class="hline"></div>
-All the classes in this school:
-{{#if classes.length}}
-  <ul class="bulletList para">
-  {{#each classes}}
-    <li><a href="/c/{{this.id}}">{{this.name}}</a></li>
-  {{/each}}
-  </ul>
-{{else}}
-  There are no classes. Would you like to <a href="/classes/new">create one</a>?
+<div class="vspace"></div>
+<p id="description">
+  <span id="descSpan">
+    {{#if description}}
+      {{description}}
+    {{else}}
+      This school has no description.
+    {{/if}}
+  </span>
+  <span class="lightText">
+    {{#if user}}(<a id="editDesc" class="lightText" href="#">edit</a>){{/if}}
+  </span>
+</p>
+{{#if user}}
+<div id="descriptionEditor" style="display: none;">
+  <textarea id="descTA">{{description}}</textarea>
+  <button id="saveDescription" class="submitButton">Save</button>
+  <button id="cancelDescription">Cancel</button>
+</div>
 {{/if}}
+<div class="hline"></div>
+<h5>Classes</h5>
+<div class="vspace"></div>
+<ul class="para">
+{{#each classes}}
+  <li><a href="/c/{{this.id}}">{{this.name}}</a></li>
+{{/each}}
+  <li><a href="/classes/new" class="lightText">Create new class</a></li>
+</ul>
+<script src="/clientjs/classdescription.js"></script>
+<script>
+  var global_orgId = {{id}};
+</script>
 {{>footer}}

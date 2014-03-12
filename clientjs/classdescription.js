@@ -1,5 +1,13 @@
 (function() {
   $(function() {
+    var getUrl = function() {
+      if (typeof global_classId !== 'undefined') {
+        return '/ajax/class/setdescription/' + global_classId;
+      } else if (typeof global_orgId !== 'undefined') {
+        return '/ajax/org/setdescription/' + global_orgId;
+      }
+      return '';
+    };
     $('#editDesc').click(function() {
       $('#description').hide();
       $('#descriptionEditor').show();
@@ -13,7 +21,7 @@
         return;
       }
       $.ajax({
-        url: '/ajax/class/setdescription/' + global_classId,
+        url: getUrl(),
         type: 'POST',
         cache: false,
         data: { description: desc },

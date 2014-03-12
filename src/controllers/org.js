@@ -11,8 +11,8 @@ function OrgController(configure) {
 
 OrgController.prototype.showOrgOverview = function(req, res) {
   var orgId = req.params.id;
-  var getOrgName = function(callback) {
-    orgModel.getName(orgId, callback);
+  var getOrgNameAndDesc = function(callback) {
+    orgModel.getNameAndDescription(orgId, callback);
   };
   var getClasses = function(callback) {
     orgModel.getClasses(orgId, callback);
@@ -24,14 +24,15 @@ OrgController.prototype.showOrgOverview = function(req, res) {
       orgModel.isUserJoined(orgId, req.user.id, callback);
     }
   };
-  async.map([getOrgName, getClasses, isJoined],
+  async.map([getOrgNameAndDesc, getClasses, isJoined],
     function(item, cb) { item(cb); },
     function(err, results) {
       if (err) {
         logger.error(err);
       }
       res.render('orgoverview.html', {
-        title: results[0],
+        title: results[0].name,
+        description: results[0].description,
         id: orgId,
         sections: [{ name: 'Schools', url: '/org' }],
         classes: results[1],
