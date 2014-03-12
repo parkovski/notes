@@ -37,9 +37,9 @@
   <li>
     {{#if this.name}}
       <a href="/edit/{{this.id}}">{{this.name}}</a>
-      <span class="lightText">(March 9, 2014)</span>
+      <span class="lightText">{{this.createddate}}</span>
     {{else}}
-      <a href="/edit/{{this.id}}">March 9, 2014</a>
+      <a href="/edit/{{this.id}}">{{this.createddate}}</a>
     {{/if}}
   </li>
   {{/each}}

@@ -2,4 +2,10 @@
 <div class="fullPageContentContainer">
   <iframe class="fullPageContent" src="{{padUrl}}/p/{{id}}?showChat=false"></iframe>
 </div>
+<script src="/clientjs/padtitlebar.js"></script>
+<script>
+  $(function() {
+    $('#titleBar').val('{{padName}}');
+  });
+</script>
 {{>footer}}

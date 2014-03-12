@@ -94,6 +94,7 @@ ClassController.prototype.showEtherpad = function(req, res, next) {
         { name: page.classname, url: '/c/' + page.classid }
       ],
       title: 'Edit',
+      padName: page.name || 'Untitled',
       id: docId
     });
   });
