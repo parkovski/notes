@@ -38,7 +38,7 @@ $(function() {
     }
   };
 
-  $('#username').keydown(function() {
+  $('#username').bind('input', function() {
     var text = $(this).val();
     if (text.length === 0) {
       hide('#usernameCheckmark');
@@ -63,7 +63,7 @@ $(function() {
       });
     }, 500);
   });
-  $('#password').keydown(function() {
+  $('#password').bind('input', function() {
     validate(
       'password',
       $(this).val().length >= 6,
@@ -71,7 +71,7 @@ $(function() {
       $(this).val()
     );
   });
-  $('#email').keydown(function() {
+  $('#email').bind('input', function() {
     var isemail = function(text) {
       var at = text.indexOf('@');
       var dot = text.lastIndexOf('.');

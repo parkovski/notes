@@ -27,6 +27,9 @@
   "post /c/:id/newpage": "class#newPage",
   "/edit/:docId": "class#showEtherpad",
 
+  "post /ajax/class/setpagename/:id": "ajax.class#setPageName",
+  "post /ajax/class/setdescription/:id": "ajax.class#setDescription",
+
   "/org/:id": "org#showOrgOverview",
   "post /org/:id/join": "org#joinUserToOrg",
   "post /org/:id/leave": "org#unjoinUserFromOrg",

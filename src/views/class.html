@@ -16,16 +16,25 @@
   <h3>{{title}}</h3>
 </div>
 <div class="vspace"></div>
-<p>
-{{#if description}}
-  {{description}}
-{{else}}
-  This class has no description.
-{{/if}}
-{{#if user}}
-  <span class="lightText">(<a class="lightText" href="/c/{{id}}/editdesc">edit</a>)</span>
-{{/if}}
+<p id="description">
+  <span id="descSpan">
+  {{#if description}}
+    {{description}}
+  {{else}}
+    This class has no description.
+  {{/if}}
+  </span>
+  <span class="lightText">
+    {{#if user}}(<a id="editDesc" class="lightText" href="#">edit</a>){{/if}}
+  </span>
 </p>
+{{#if user}}
+<div id="descriptionEditor" style="display: none;">
+  <textarea id="descTA">{{description}}</textarea>
+  <button id="saveDescription" class="submitButton">Save</button>
+  <button id="cancelDescription">Cancel</button>
+</div>
+{{/if}}
 <div class="hline"></div>
 <form method="post" action="/c/{{id}}/newpage">
   <span class="h5">Notes</span>
@@ -44,4 +53,8 @@
   </li>
   {{/each}}
 </ul>
+<script src="/clientjs/classdescription.js"></script>
+<script>
+  var global_classId = {{id}};
+</script>
 {{>footer}}

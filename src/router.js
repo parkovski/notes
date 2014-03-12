@@ -25,6 +25,15 @@ RouteConfiguration.prototype.requireLogin = function() {
   });
 };
 
+RouteConfiguration.prototype.failOnNoAuth = function() {
+  this.before(function(req, res, next) {
+    if (!req.user) {
+      return res.end('no authentication');
+    }
+    next();
+  });
+};
+
 RouteConfiguration.prototype.setRenderVar = function(name, value) {
   this.before(function(req, res, next) {
     res.setRenderVar(name, value);
