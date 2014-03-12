@@ -6,6 +6,13 @@ module.exports.setupAppForHandlebars = function setupAppForHandlebars(app) {
   app.set('views', __dirname + '/views');
   app.set('view engine', 'handlebars');
   app.engine('html', require('consolidate').handlebars);
+
+  Handlebars.registerHelper('date', function(date) {
+    // TODO: better date handling
+    var datePart = date.toDateString();
+    datePart = datePart.substring(datePart.indexOf(' ') + 1);
+    return datePart;
+  });
 };
 
 module.exports.registerPartials = function registerPartials() {

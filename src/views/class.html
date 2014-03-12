@@ -46,9 +46,9 @@
   <li>
     {{#if this.name}}
       <a href="/edit/{{this.id}}">{{this.name}}</a>
-      <span class="lightText">{{this.createddate}}</span>
+      <span class="lightText">{{date this.createddate}}</span>
     {{else}}
-      <a href="/edit/{{this.id}}">{{this.createddate}}</a>
+      <a href="/edit/{{this.id}}">{{date this.createddate}}</a>
     {{/if}}
   </li>
   {{/each}}
