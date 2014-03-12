@@ -17,8 +17,10 @@ module.exports = function() {
     
     'orgs (id serial PRIMARY KEY,'
       + ' name varchar(128),'
+      + ' description text,'
       + ' createddate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,'
-      + ' lastmodifieddate TIMESTAMP ON UPDATE CURRENT_TIMESTAMP)',
+      + ' lastmodifieddate TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,'
+      + ' FULLTEXT INDEX name_ind (name))',
 
     'classes (id serial PRIMARY KEY,'
       + ' name varchar(128),'
@@ -27,6 +29,7 @@ module.exports = function() {
       + ' createddate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,'
       + ' lastmodifieddate TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,'
       + ' INDEX orgid_ind (orgid),'
+      + ' FULLTEXT INDEX name_ind (name),'
       + ' FOREIGN KEY (orgid) REFERENCES orgs(id) ON DELETE CASCADE)',
 
     'topic_tags (id serial PRIMARY KEY,'
@@ -45,6 +48,7 @@ module.exports = function() {
       + ' createddate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,'
       + ' lastmodifieddate TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,'
       + ' INDEX classid_ind (classid),'
+      + ' FULLTEXT INDEX name_ind (name),'
       + ' FOREIGN KEY (classid) REFERENCES classes(id) ON DELETE SET NULL)',
 
     'user_class_membership (userid bigint unsigned not null,'
