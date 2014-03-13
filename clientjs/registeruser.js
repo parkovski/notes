@@ -83,4 +83,26 @@ $(function() {
       $(this).val()
     );
   });
+  $('#name').bind('blur', function() {
+    validate(
+      'name',
+      ~$(this).val().indexOf(' '),
+      'Please use your full name.',
+      $(this).val()
+    );
+  });
+
+  var typedUsername = false;
+  $('#username').bind('input', function() {
+    typedUsername = true;
+  });
+  $('#email').bind('input', function() {
+    if ($('#username').val().length === 0) {
+      typedUsername = false;
+    }
+    if (typedUsername) {
+      return;
+    }
+    $('#username').val($(this).val());
+  });
 });

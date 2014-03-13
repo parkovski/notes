@@ -86,61 +86,40 @@ module.exports = {
   },
   // cb = function(err, classId)
   create: function(orgId, name, topicTag, cb) {
-    var start = function(callback) {
-      db.query('START TRANSACTION;', function(err) { callback(err); });
-    };
-    var create = function(callback) {
-      db.query('INSERT INTO `classes` (`orgid`, `name`) VALUES (?, ?);',
-        [orgId, name],
-        function(err) { callback(err); }
-      );
-    };
-    var selectId = function(callback) {
-      db.query('SELECT LAST_INSERT_ID() AS `id`;',
-        function(err, result) { callback(err, result); });
-    };
-    var commit = function(result, callback) {
-      db.query('COMMIT;', function(err) { callback(err, result); });
-    };
-
-    async.waterfall([start, create, selectId, commit], function(err, result) {
-      if (err) {
-        logger.error(err);
-        return db.query('ROLLBACK;', function() {
-          cb(err);
-        });
+    db.transaction(
+      [
+        {
+          query: 'INSERT INTO `classes` (`orgid`, `name`) VALUES (?, ?);',
+          vars: [orgId, name]
+        },
+        { query: 'SELECT LAST_INSERT_ID() AS `id`;' }
+      ],
+      function(err, results) {
+        if (err) {
+          return cb(err);
+        }
+        cb(null, results[1][0].id);
       }
-      cb(null, result[0].id);
-    });
+    );
   },
   // cb = function(err, pageId)
   createPage: function(classId, cb) {
-    var start = function(callback) {
-      db.query('START TRANSACTION;', function(err) { callback(err); });
-    };
-    var create = function(callback) {
-      db.query('INSERT INTO `note_pages` (`classid`) VALUES (?);',
-        [classId],
-        function(err) { callback(err); }
-      );
-    };
-    var selectId = function(callback) {
-      db.query('SELECT LAST_INSERT_ID() AS `id`;',
-        function(err, result) { callback(err, result); });
-    };
-    var commit = function(result, callback) {
-      db.query('COMMIT;', function(err) { callback(err, result); });
-    };
-
-    async.waterfall([start, create, selectId, commit], function(err, result) {
-      if (err) {
-        logger.error(err);
-        return db.query('ROLLBACK;', function() {
-          cb(err);
-        });
+    db.transaction(
+      [
+        {
+          query: 'INSERT INTO `note_pages` (`classid`) VALUES (?);',
+          vars: [classId]
+        },
+        { query: 'SELECT LAST_INSERT_ID() AS `id`;' }
+      ],
+      function(err, results) {
+        if (err) {
+          logger.error(err);
+          return cb(err);
+        }
+        cb(null, results[1][0].id);
       }
-      cb(null, result[0].id);
-    });
+    );
   },
   // cb = function(err)
   setPageName: function(id, name, cb) {

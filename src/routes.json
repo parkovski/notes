@@ -13,6 +13,7 @@
   "post /register": "login#registerUser",
 
   "/settings": "settings#showSettingsHomePage",
+  "post /settings/update": "settings#update",
   "/settings/theme": "settings#showThemePicker",
   "post /settings/theme": "settings#changeTheme",
 

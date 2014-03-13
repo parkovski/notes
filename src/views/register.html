@@ -3,17 +3,45 @@
 <div id="loginContainer">
   <div><h1 class="alignCenter">Welcome.</h1></div>
   <div class="vspace"></div>
-  <div><p class="alignCenter">Please fill out the fields below to create your account.</p></div>
+  {{#if error}}
+    <div><p class="alignCenter warning">An error occurred. Please try again.</p></div>
+  {{else}}
+    <div><p class="alignCenter">Please fill out the fields below to create your account.</p></div>
+  {{/if}}
   <div class="vspace"></div>
   <div class="alignCenter inlineBlock">
     <form method="post" action="/register">
-      <div class="alignRight smallMargin"><label>Username: <input type="text" id="username" name="username" class="loginFixedSizeInput" /></label> <span id="usernameCheckmark" style="visibility: hidden; color: red;">&#x2717;</span></div>
-      <div class="alignRight smallMargin" style="display: none;" id="usernameMessage"><span id="usernameMessageSpan"></span> <span style="visibility: hidden;">&#x2713;</span></div>
-      <div class="alignRight smallMargin"><label>Password: <input type="password" id="password" name="password" class="loginFixedSizeInput" /></label> <span id="passwordCheckmark" style="visibility: hidden; color: red;">&#x2717;</span></div>
-      <div class="alignRight smallMargin" style="display: none;" id="passwordMessage"><span id="passwordMessageSpan"></span> <span style="visibility: hidden;">&#x2713;</span></div>
-      <div class="alignRight smallMargin"><label>Email: <input type="text" id="email" name="email" class="loginFixedSizeInput" /></label> <span id="emailCheckmark" style="visibility: hidden; color: green;">&#x2713;</span></div>
-      <div class="alignRight smallMargin" style="display: none;" id="emailMessage"><span id="emailMessageSpan"></span> <span style="visibility: hidden;">&#x2713;</span></div>
-      <div class="alignRight smallMargin"><input type="submit" value="Register" /> <span style="visibility: hidden;">&#x2713;</span></div>
+      <div class="alignRight smallMargin">
+        <label>Name: <input type="text" id="name" name="displayname" class="loginFixedSizeInput" /></label>
+        <span id="nameCheckmark" style="visibility: hidden; color: green;">&#x2713;</span>
+      </div>
+      <div class="alignRight smallMargin" style="display: none;" id="nameMessage">
+        <span id="nameMessageSpan"></span> <span style="visibility: hidden;">&#x2713;</span>
+      </div>
+      <div class="alignRight smallMargin">
+        <label>Email: <input type="text" id="email" name="email" class="loginFixedSizeInput" /></label>
+        <span id="emailCheckmark" style="visibility: hidden; color: green;">&#x2713;</span>
+      </div>
+      <div class="alignRight smallMargin" style="display: none;" id="emailMessage">
+        <span id="emailMessageSpan"></span> <span style="visibility: hidden;">&#x2713;</span>
+      </div>
+      <div class="alignRight smallMargin">
+        <label>Username: <input type="text" id="username" name="username" class="loginFixedSizeInput" /></label>
+        <span id="usernameCheckmark" style="visibility: hidden; color: red;">&#x2717;</span>
+      </div>
+      <div class="alignRight smallMargin" style="display: none;" id="usernameMessage">
+        <span id="usernameMessageSpan"></span> <span style="visibility: hidden;">&#x2713;</span>
+      </div>
+      <div class="alignRight smallMargin">
+        <label>Password: <input type="password" id="password" name="password" class="loginFixedSizeInput" /></label>
+        <span id="passwordCheckmark" style="visibility: hidden; color: red;">&#x2717;</span>
+      </div>
+      <div class="alignRight smallMargin" style="display: none;" id="passwordMessage">
+        <span id="passwordMessageSpan"></span> <span style="visibility: hidden;">&#x2713;</span>
+      </div>
+      <div class="alignRight smallMargin">
+        <input type="submit" value="Register" /> <span style="visibility: hidden;">&#x2713;</span>
+      </div>
     </form>
   </div>
 </div>

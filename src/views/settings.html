@@ -5,7 +5,11 @@
   <div class="inlineBlock alignLeft">
     <h5>Account details</h5>
     <div class="vspace"></div>
-    <form method="post" action="/settings">
+    {{#if error}}
+      <p class="alignCenter warning">{{error}}</p>
+      <div class="vspace"></div>
+    {{/if}}
+    <form method="post" action="/settings/update">
       <fieldset class="settingsFormRow">
         <label for="username" class="floatLeft settingsFormLabel">Username:</label>
         <div class="settingsFormRight">
@@ -15,25 +19,31 @@
       <fieldset class="settingsFormRow">
         <label for="displayname" class="floatLeft settingsFormLabel">Display name:</label>
         <div class="settingsFormRight">
-          <input id="displayname" type="text" value="doesn't work yet">
-        </div>
-      </fieldset>
-      <fieldset class="settingsFormRow">
-        <label for="password" class="floatLeft settingsFormLabel">Password:</label>
-        <div class="settingsFormRight">
-          <input id="password" type="password">
-        </div>
-      </fieldset>
-      <fieldset class="settingsFormRow">
-        <label for="password" class="floatLeft settingsFormLabel">Confirm password:</label>
-        <div class="settingsFormRight">
-          <input id="password" type="password">
+          <input id="displayname" name="displayname" type="text" value="{{user.displayname}}">
         </div>
       </fieldset>
       <fieldset class="settingsFormRow">
         <label for="email" class="floatLeft settingsFormLabel">Email:</label>
         <div class="settingsFormRight">
-          <input id="email" type="text" value="{{user.email}}">
+          <input id="email" name="email" type="text" value="{{user.email}}">
+        </div>
+      </fieldset>
+      <fieldset class="settingsFormRow">
+        <label for="password" class="floatLeft settingsFormLabel">New password:</label>
+        <div class="settingsFormRight">
+          <input id="password" name="password" type="password">
+        </div>
+      </fieldset>
+      <fieldset class="settingsFormRow">
+        <label for="confirmPassword" class="floatLeft settingsFormLabel">Confirm new password:</label>
+        <div class="settingsFormRight">
+          <input id="confirmPassword" name="confirmPassword" type="password">
+        </div>
+      </fieldset>
+      <fieldset class="settingsFormRow">
+        <label for="currentPassword" class="floatLeft settingsFormLabel">Current password:</label>
+        <div class="settingsFormRight">
+          <input id="currentPassword" name="currentPassword" type="password">
         </div>
       </fieldset>
       <div class="settingsFormRight settingsFormRow">

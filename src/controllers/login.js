@@ -17,6 +17,10 @@ function LoginController(configure) {
 }
 
 LoginController.prototype.showLoginPage = function(req, res) {
+  if (req.user) {
+    return res.redirect('/');
+  }
+
   res.render('login.html', {
     title: 'Log in',
     suppressLoginHeaderLink: true,
@@ -64,6 +68,7 @@ LoginController.prototype.showRegisterPage = function(req, res) {
 
   res.render('register.html', {
     title: 'Register',
+    error: 'error' in req.params,
     suppressLoginHeaderLink: true
   });
 };
@@ -72,13 +77,14 @@ LoginController.prototype.registerUser = function(req, res) {
   userModel.createUser(
     {
       name: req.body.username,
+      displayname: req.body.displayname,
       password: req.body.password,
       email: req.body.email
     },
-    function(err, result) {
+    function(err) {
       if (err) {
         console.log(err);
-        return res.redirect('/register');
+        return res.redirect('/register?error');
       } else {
         return res.redirect('/login');
       }

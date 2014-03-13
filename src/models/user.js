@@ -8,15 +8,17 @@ var getUserFields = function(dbresult) {
   return {
     id: dbresult.id,
     name: dbresult.name,
+    displayname: dbresult.displayname,
     email: dbresult.email,
     theme: dbresult.theme
   };
 };
 
+var getPasswordHash = function(username, password) {
+  return sha1(password + db.getSalt() + username.toLowerCase());
+};
+
 var functions = {
-  getPasswordHash: function(username, password) {
-    return sha1(password + db.getSalt() + username.toLowerCase());
-  },
   // cb = function(isUser)
   isUser: function(name, cb) {
     db.query(
@@ -38,7 +40,7 @@ var functions = {
   getUser: function(name, password, cb) {
     db.query(
       'SELECT * FROM `users` WHERE LCASE(`name`) = LCASE(?) AND `password` = UNHEX(?);',
-      [name, this.getPasswordHash(name, password)],
+      [name, getPasswordHash(name, password)],
       function(err, rows) {
         if (err) {
           cb(err, null);
@@ -66,34 +68,79 @@ var functions = {
       }
     );
   },
-  // cb = function(err, result)
+  // cb = function(err)
   createUser: function(fields, cb) {
-    db.query(
-      'INSERT INTO `users` (`name`, `password`, `email`)'
-      + ' SELECT ?, UNHEX(?), ? FROM `users`'
-      + ' WHERE NOT EXISTS ('
-      + '   SELECT * FROM `users` WHERE LCASE(`name`)=LCASE(?)'
-      + ') LIMIT 1;',
-      [
+    var createUserQuery = {
+      query: 'INSERT INTO `users` (`name`, `displayname`, `password`, `email`)'
+        + ' SELECT ?, ?, UNHEX(?), ? FROM `users`'
+        + ' WHERE NOT EXISTS ('
+        + '   SELECT * FROM `users` WHERE LCASE(`name`)=LCASE(?)'
+        + ') LIMIT 1;',
+      vars: [
         fields.name,
-        this.getPasswordHash(fields.name, fields.password),
+        fields.displayname,
+        getPasswordHash(fields.name, fields.password),
         fields.email || '',
         fields.name
+      ]
+    };
+
+    db.transaction(
+      [
+        createUserQuery,
+        {
+          query: 'INSERT INTO `user_org_membership` (`userid`, `orgid`)'
+            + ' VALUES (LAST_INSERT_ID(), 1);'
+        }
       ],
-      cb
+      function(err, results) {
+        cb(err);
+      }
+    );
+  },
+  // cb = function(err, passwordOk)
+  changeFields: function(id, name, password, fields, cb) {
+    db.query('SELECT COUNT(*) AS `count` FROM `users`'
+      + ' WHERE `id` = ?'
+      + ' AND `password` = UNHEX(?);',
+      [id, getPasswordHash(name, password)],
+      function(err, rows) {
+        if (err) return cb(err);
+        if (rows.length === 0) return cb(null, false);
+        if (rows[0].count !== 1) return cb(null, false);
+        functions.changeFieldsWithoutPassword(id, name, fields,
+          function(err) {
+            cb(err, true);
+          }
+        );
+      }
     );
   },
   // cb = function(err)
-  changeFields: function(id, fields, cb) {
+  changeFieldsWithoutPassword: function(id, name, fields, cb) {
     var query = 'UPDATE `users` SET ';
     var allowedFields = getUserFields();
     var values = [];
+    var firstField = true;
     Object.keys(allowedFields).forEach(function(key) {
       if (fields.hasOwnProperty(key)) {
+        if (firstField) {
+          firstField = false;
+        } else {
+          query += ', ';
+        }
         query += '`' + key + '` = ? ';
         values.push(fields[key]);
       }
     });
+    // special case
+    if ('password' in fields) {
+      if (!firstField) {
+        query += ', ';
+      }
+      query += '`password` = UNHEX(?) ';
+      values.push(getPasswordHash(name, fields.password));
+    }
     if (!values.length) {
       throw new Error('No valid fields were specified!');
     }

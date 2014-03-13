@@ -11,7 +11,7 @@ module.exports = function() {
     'users (id serial PRIMARY KEY,'
       + ' name varchar(32) UNIQUE,'
       + ' password binary(20),'
-      + ' email varchar(48),'
+      + ' email varchar(48) UNIQUE,'
       + ' theme tinyint DEFAULT 0,'
       + ' joindate TIMESTAMP DEFAULT CURRENT_TIMESTAMP)',
     
