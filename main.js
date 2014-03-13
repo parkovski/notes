@@ -36,7 +36,7 @@ app.use(cookieParser());
 app.use(session({
   store: redisStore,
   secret: 'omgwtfbbq',
-  cookie: { maxAge: 3600000 }
+  cookie: { maxAge: null }
 }));
 app.use(bodyParser());
 app.use(passport.initialize());

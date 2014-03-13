@@ -26,15 +26,21 @@ LoginController.prototype.showLoginPage = function(req, res) {
 };
 
 LoginController.prototype.processLogin = function(req, res, next) {
+  var rememberMe = req.body.rememberMe;
+  var redirectUrl = validateRedirectUrl(req.body.redirectUrl);
   var failureUrl = '/login/?error='
     + encodeURIComponent('Wrong username or password.');
-  if (req.body.redirectUrl) {
-    failureUrl += '&r=' + encodeURIComponent(req.body.redirectUrl);
+  if (redirectUrl) {
+    failureUrl += '&r=' + encodeURIComponent(redirectUrl);
   }
   passport.authenticate('local', {
-    successRedirect: validateRedirectUrl(req.body.redirectUrl),
     failureRedirect: failureUrl
-  })(req, res, next);
+  })(req, res, function() {
+    if (req.body.rememberMe) {
+      req.session.cookie.maxAge = 1000 * 60 * 60 * 24 * 30;
+    }
+    res.redirect(redirectUrl);
+  });
 };
 
 LoginController.prototype.logout = function(req, res) {
