@@ -38,6 +38,5 @@
 
   "/about": "help#showAboutPage",
   "/feedback": "help#showFeedbackPage",
-  "/contribute": "help#showContributePage",
-  "/help": "help#showHelpPage"
+  "/contribute": "help#showContributePage"
 }
