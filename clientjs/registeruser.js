@@ -38,7 +38,7 @@ $(function() {
     }
   };
 
-  $('#username').bind('input', function() {
+  $('#username').bind('blur', function() {
     var text = $(this).val();
     if (text.length === 0) {
       hide('#usernameCheckmark');
@@ -63,7 +63,7 @@ $(function() {
       });
     }, 500);
   });
-  $('#password').bind('input', function() {
+  $('#password').bind('blur', function() {
     validate(
       'password',
       $(this).val().length >= 6,
@@ -71,17 +71,15 @@ $(function() {
       $(this).val()
     );
   });
-  $('#email').bind('input', function() {
+  $('#email').bind('blur', function() {
     var isemail = function(text) {
-      var at = text.indexOf('@');
-      var dot = text.lastIndexOf('.');
-      return text.length >= 5 && ~at && dot > at;
+      return /.+@.+\..+/.test(text);
     };
 
     validate(
       'email',
       isemail($(this).val()),
-      'That is not an email. Note that this field is optional.',
+      'You can\'t fool me. Please use a real email address.',
       $(this).val()
     );
   });
