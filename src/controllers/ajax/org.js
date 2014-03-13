@@ -1,6 +1,7 @@
 var orgModel = require('../../models/org');
 
 function AjaxOrgController(configure) {
+  configure('setDescription').failOnNoAuth();
 }
 
 AjaxOrgController.prototype.setDescription = function(req, res) {
