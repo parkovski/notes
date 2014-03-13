@@ -1,3 +1,9 @@
 {{>header}}
-These are the classes that you're following lol.
+<h1 class="alignCenter">Classes.</h1>
+<div class="vspace"></div>
+<ul class="para">
+{{#each classMembership}}
+  <li><a href="/c/{{this.id}}">{{this.name}}</a></li>
+{{/each}}
+</ul>
 {{>footer}}
