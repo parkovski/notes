@@ -35,7 +35,7 @@ app.use('/clientjs', express.static(__dirname + '/clientjs'));
 app.use(cookieParser());
 app.use(session({
   store: redisStore,
-  secret: 'omgwtfbbq',
+  secret: process.env.SESSION_SECRET || 'omgwtfbbq',
   cookie: { maxAge: null }
 }));
 app.use(bodyParser());
