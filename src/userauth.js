@@ -21,10 +21,31 @@ module.exports = function() {
         callbackURL: 'http://www.uanotes.com/connect/facebook/callback'
       },
       function(accessToken, refreshToken, profile, done) {
-        console.dir(accessToken);
-        console.dir(refreshToken);
-        console.dir(profile);
-        done('what do i do now?');
+        userModel.fromFacebookId(profile.id, function(err, user) {
+          // TODO: what do I do with the tokens?
+          if (err) {
+            return done(err);
+          }
+          if (user) {
+            return done(null, user);
+          }
+
+          userModel.createFacebookUser(
+            {
+              name: 'fb:' + profile.id,
+              displayname: profile.displayName,
+              password: '',
+              email: 'fb-' + profile.id + '@fixme.uanotes.com',
+              facebookId: profile.id
+            },
+            function(err, user) {
+              if (err || !user) {
+                return done(err);
+              }
+              done(null, user);
+            }
+          );
+        });
       }
     ));
   } else {

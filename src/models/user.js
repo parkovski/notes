@@ -84,17 +84,91 @@ var functions = {
         fields.name
       ]
     };
+    var addToHelpOrgQuery = {
+      query: 'INSERT INTO `user_org_membership` (`userid`, `orgid`)'
+        + ' VALUES (LAST_INSERT_ID(), 1);'
+    };
+    var addToGettingStartedQuery = {
+      query: 'INSERT INTO `user_class_membership` (`userid`, `classid`)'
+        + ' VALUES (LAST_INSERT_ID(), 1);'
+    };
 
-    db.transaction(
-      [
+    db.transaction([
         createUserQuery,
-        {
-          query: 'INSERT INTO `user_org_membership` (`userid`, `orgid`)'
-            + ' VALUES (LAST_INSERT_ID(), 1);'
-        }
+        addToHelpOrgQuery,
+        addToGettingStartedQuery
       ],
       function(err, results) {
         cb(err);
+      }
+    );
+  },
+  // cb = function(err, user)
+  fromFacebookId: function(fbid, cb) {
+    db.query('SELECT * FROM `users` WHERE `id` = '
+      + '(SELECT `userid` FROM `facebook_users` WHERE `fbid` = ?);',
+      [fbid],
+      function(err, rows) {
+        if (err) {
+          return cb(err);
+        }
+        if (!rows || !rows.length) {
+          return cb(null);
+        }
+        return cb(null, getUserFields(rows[0]));
+      }
+    );
+  },
+  // cb = function(err)
+  linkFacebook: function(userId, facebookId, cb) {
+    db.query(
+      'INSERT INTO `facebook_users` (`fbid`, `userid`)'
+      + ' VALUES (?, ?);',
+      [facebookId, userId],
+      cb
+    );
+  },
+  // cb = function(err, user)
+  createFacebookUser: function(fields, cb) {
+    var createUserQuery = {
+      query: 'INSERT INTO `users` (`name`, `displayname`, `password`, `email`)'
+        + ' SELECT ?, ?, UNHEX(\'\'), ? FROM `users`'
+        + ' WHERE NOT EXISTS ('
+        + '   SELECT * FROM `users` WHERE LCASE(`name`)=LCASE(?)'
+        + ') LIMIT 1;',
+      vars: [
+        fields.name,
+        fields.displayname,
+        fields.email || '',
+        fields.name
+      ]
+    };
+    var createFacebookLinkQuery = {
+      query: 'INSERT INTO `facebook_users` (`fbid`, `userid`)'
+        + ' VALUES (?, LAST_INSERT_ID());',
+      vars: [fields.facebookId]
+    };
+    var addToHelpOrgQuery = {
+      query: 'INSERT INTO `user_org_membership` (`userid`, `orgid`)'
+        + ' VALUES (LAST_INSERT_ID(), 1);'
+    };
+    var addToGettingStartedQuery = {
+      query: 'INSERT INTO `user_class_membership` (`userid`, `classid`)'
+        + ' VALUES (LAST_INSERT_ID(), 1);'
+    };
+    var selectUserQuery = {
+      query: 'SELECT * FROM `users` WHERE `id` = LAST_INSERT_ID();'
+    };
+
+    db.transaction([
+        createUserQuery,
+        createFacebookLinkQuery,
+        addToHelpOrgQuery,
+        addToGettingStartedQuery,
+        selectUserQuery
+      ],
+      function(err, results) {
+        cb(err, results && getUserFields(results[4]));
       }
     );
   },

@@ -63,6 +63,12 @@ module.exports = function() {
       + ' createddate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,'
       + ' INDEX userid_ind (userid),'
       + ' FOREIGN KEY (userid) REFERENCES users(id) ON DELETE CASCADE,'
-      + ' FOREIGN KEY (orgid) REFERENCES orgs(id) ON DELETE CASCADE)'
+      + ' FOREIGN KEY (orgid) REFERENCES orgs(id) ON DELETE CASCADE)',
+
+    'facebook_users (fbid bigint unsigned not null unique,'
+      + ' userid bigint unsigned not null,'
+      + ' INDEX userid_ind (userid),'
+      + ' INDEX fbid_ind (fbid),'
+      + 'FOREIGN KEY (userid) REFERENCES users(id) ON DELETE CASCADE)'
   ].map(makeSureTableExists);
 };
