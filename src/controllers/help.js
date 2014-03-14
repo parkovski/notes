@@ -13,4 +13,8 @@ HelpController.prototype.showContributePage = function(req, res) {
   res.render('contribute.html', { title: 'Contribute' });
 };
 
+HelpController.prototype.facebook = function(req, res) {
+  res.render('facebook.html', { title: 'Facebook' });
+};
+
 module.exports = HelpController;
