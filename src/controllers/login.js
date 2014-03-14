@@ -69,7 +69,7 @@ LoginController.prototype.linkFacebook
 LoginController.prototype.linkFacebookCallback = function(req, res) {
   passport.authorize('facebook-authorize', {
     failureRedirect: '/settings?error=Facebook authentication failed.'
-  })(req, res, function(req, res) {
+  })(req, res, function() {
     userModel.linkFacebook(req.user.id, req.account.id, function(err) {
       if (err) {
         console.log(err);
