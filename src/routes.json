@@ -12,6 +12,9 @@
   "/register": "login#showRegisterPage",
   "post /register": "login#registerUser",
 
+  "/connect/facebook": "login#facebookLogin",
+  "/connect/facebook/callback": "login#facebookCallback",
+
   "/settings": "settings#showSettingsHomePage",
   "post /settings/update": "settings#update",
   "/settings/theme": "settings#showThemePicker",
