@@ -52,6 +52,15 @@ LoginController.prototype.logout = function(req, res) {
   res.redirect('/');
 };
 
+LoginController.prototype.facebookLogin = passport.authenticate('facebook');
+
+LoginController.prototype.facebookCallback
+  = passport.authenticate('facebook', { 
+    successRedirect: '/',
+    failureRedirect: '/login'
+  }
+);
+
 LoginController.prototype.isUser = function(req, res) {
   if (!req.params.user) {
     return res.end('false');
