@@ -168,7 +168,7 @@ var functions = {
         selectUserQuery
       ],
       function(err, results) {
-        cb(err, results && getUserFields(results[4]));
+        cb(err, results && results[4] && getUserFields(results[4][0]));
       }
     );
   },

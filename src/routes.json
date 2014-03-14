@@ -14,6 +14,8 @@
 
   "/connect/facebook": "login#facebookLogin",
   "/connect/facebook/callback": "login#facebookCallback",
+  "/connect/link/facebook": "login#linkFacebook",
+  "/connect/link/facebook/callback": "login#linkFacebookCallback",
 
   "/settings": "settings#showSettingsHomePage",
   "post /settings/update": "settings#update",
