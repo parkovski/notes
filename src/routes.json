@@ -37,8 +37,6 @@
 
   "post /ajax/org/setdescription/:id": "ajax.org#setDescription",
 
-  "/facebook": "help#facebook",
-
   "/about": "help#showAboutPage",
   "/feedback": "help#showFeedbackPage",
   "/contribute": "help#showContributePage"
