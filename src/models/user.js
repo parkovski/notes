@@ -139,7 +139,7 @@ var functions = {
   // cb = function(err, isLinked)
   hasLinkedFacebook: function(userId, cb) {
     db.query(
-      'SEELCT COUNT(*) AS `count` FROM `facebook_users` WHERE `userid` = ?;',
+      'SELECT COUNT(*) AS `count` FROM `facebook_users` WHERE `userid` = ?;',
       [userId],
       function(err, rows) {
         if (err) {
