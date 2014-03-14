@@ -56,7 +56,9 @@
     <div class="settingsFormRight">
       {{#if hasFacebook}}
         Facebook
-        <span class="lightText">(<a href="/connect/unlink/facebook" class="lightText">unlink</a>)</span>
+        <form method="post" action="/connect/unlink/facebook">
+          <span class="lightText">(<button type="submit" class="link lightText">unlink</button>)</span>
+        </form>
       {{else}}
         None | <a href="/connect/link/facebook">link facebook</a>
       {{/if}}
