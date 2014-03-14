@@ -19,7 +19,7 @@ module.exports = function() {
         clientID: process.env.FACEBOOK_APPID,
         clientSecret: process.env.FACEBOOK_APPSECRET,
         callbackURL: 'http://www.uanotes.com/connect/facebook/callback'
-      },
+      }),
       function(accessToken, refreshToken, profile, done) {
         console.dir(accessToken);
         console.dir(refreshToken);
