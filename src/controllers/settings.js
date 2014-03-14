@@ -6,9 +6,12 @@ function SettingsController(configure) {
 }
 
 SettingsController.prototype.showSettingsHomePage = function(req, res) {
-  res.render('settings.html', {
-    title: 'Settings',
-    error: req.query.error
+  userModel.hasLinkedFacebook(req.user.id, function(err, hasFb) {
+    res.render('settings.html', {
+      title: 'Settings',
+      hasFacebook: hasFb,
+      error: req.query.error
+    });
   });
 };
 

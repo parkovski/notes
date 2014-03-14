@@ -61,6 +61,34 @@ LoginController.prototype.facebookCallback
   }
 );
 
+LoginController.prototype.linkFacebook
+  = passport.authorize('facebook-authorize', {
+    failureRedirect: '/settings?error=Facebook authentication failed.'
+  });
+
+LoginController.prototype.linkFacebookCallback = function(req, res) {
+  passport.authorize('facebook-authorize', {
+    failureRedirect: '/settings?error=Facebook authentication failed.'
+  })(req, res, function(req, res) {
+    userModel.linkFacebook(req.user.id, req.account.id, function(err) {
+      if (err) {
+        console.log(err);
+        return res.redirect('/settings?error=Account linking failed.');
+      }
+      res.redirect('/settings');
+    });
+  });
+};
+
+LoginController.prototype.unlinkFacebook = function(req, res) {
+  userModel.unlinkFacebook(req.user.id, function(err) {
+    if (err) {
+      return res.redirect('/settings?error=Couldn\'t unlink facebook account.');
+    }
+    res.redirect('/settings');
+  });
+};
+
 LoginController.prototype.isUser = function(req, res) {
   if (!req.params.user) {
     return res.end('false');

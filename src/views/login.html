@@ -7,18 +7,14 @@
     {{#if errorMessage}}
       <p class="alignCenter warning">{{errorMessage}}</p>
     {{else}}
-      <!--
       <p class="alignCenter">How would you like to access your notes?</p>
-      -->
     {{/if}}
   </div>
   <div class="vspace"></div>
-  <div class="alignCenter"><!--<div class="optionControl">
+  <div class="alignCenter"><div class="optionControl">
     <span class="selectedOption">Notes account</span>
     <span class="option">Facebook</span>
-    <span class="option">Twitter</span>
-    <span class="option">Google</span>
-  </div>-->More login options coming soon.</div>
+  </div></div>
   <div class="vspace"></div>
   <div class="alignCenter inlineBlock loginPanel" id="panel0">
     <form method="post" action="/login">
@@ -35,12 +31,9 @@
       </div>
     </form>
   </div>
-  <div class="alignCenter inlineBlock loginPanel" style="display: none;" id="panel1">Facebook!</div>
-  <div class="alignCenter inlineBlock loginPanel" style="display: none;" id="panel2">Twitter!</div>
-  <div class="alignCenter inlineBlock loginPanel" style="display: none;" id="panel3">Google!</div>
+  <div class="alignCenter inlineBlock loginPanel" style="display: none;" id="panel1"><a href="/connect/facebook">Log in with Facebook</a></div>
 </div>
 <div class="tallVspace"></div>
-<!--
 <script src="/clientjs/optioncontrol.js"></script>
 <script>
   $(function() {
@@ -55,5 +48,4 @@
     });
   });
 </script>
--->
 {{>footer}}

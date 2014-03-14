@@ -48,6 +48,16 @@ module.exports = function() {
         });
       }
     ));
+
+    passport.use('facebook-authorize', new FacebookStrategy({
+        clientID: process.env.FACEBOOK_APPID,
+        clientSecret: process.env.FACEBOOK_APPSECRET,
+        callbackURL: 'http://www.uanotes.com/connect/link/facebook/callback'
+      },
+      function(accessToken, refreshToken, profile, done) {
+        done(null, profile);
+      }
+    ));
   } else {
     console.log('facebook login not supported. add id and secret to enable.');
   }

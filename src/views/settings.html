@@ -50,6 +50,19 @@
         <button type="submit">Update</button>
       </div>
     </form>
+    <div class="hline"></div>
+    <div class="vspace"></div>
+    <h5 class="floatLeft">Linked accounts</h5>
+    <div class="settingsFormRight">
+      {{#if hasFacebook}}
+        Facebook
+        <span class="lightText">(<a href="/connect/unlink/facebook" class="lightText">unlink</a>)</span>
+      {{else}}
+        None | <a href="/connect/link/facebook">link facebook</a>
+      {{/if}}
+    </div>
+    <div class="vspace"></div>
+    <div class="hline"></div>
     <div class="vspace"></div>
     <h5 class="floatLeft">Color theme</h5>
     <div class="settingsFormRight">

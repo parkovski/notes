@@ -128,6 +128,27 @@ var functions = {
       cb
     );
   },
+  // cb = function(err)
+  unlinkFacebook: function(userId, cb) {
+    db.query(
+      'DELETE FROM `facebook_users` WHERE `userid` = ?;',
+      [userId],
+      cb
+    );
+  },
+  // cb = function(err, isLinked)
+  hasLinkedFacebook: function(userId, cb) {
+    db.query(
+      'SEELCT COUNT(*) AS `count` FROM `facebook_users` WHERE `userid` = ?;',
+      [userId],
+      function(err, rows) {
+        if (err) {
+          return cb(err);
+        }
+        cb(null, rows && rows[0] && rows[0].count === 1);
+      }
+    );
+  },
   // cb = function(err, user)
   createFacebookUser: function(fields, cb) {
     var createUserQuery = {
