@@ -19,14 +19,14 @@ module.exports = function() {
         clientID: process.env.FACEBOOK_APPID,
         clientSecret: process.env.FACEBOOK_APPSECRET,
         callbackURL: 'http://www.uanotes.com/connect/facebook/callback'
-      }),
+      },
       function(accessToken, refreshToken, profile, done) {
         console.dir(accessToken);
         console.dir(refreshToken);
         console.dir(profile);
         done('what do i do now?');
       }
-    );
+    ));
   } else {
     console.log('facebook login not supported. add id and secret to enable.');
   }
