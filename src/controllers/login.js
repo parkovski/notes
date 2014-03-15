@@ -54,36 +54,49 @@ LoginController.prototype.logout = function(req, res) {
 
 LoginController.prototype.facebookLogin = passport.authenticate('facebook');
 
-LoginController.prototype.facebookCallback
-  = passport.authenticate('facebook', { 
-    successRedirect: '/',
-    failureRedirect: '/login'
+LoginController.prototype.facebookCallback = function(req, res, next) {
+  var success = '/';
+  var failure = '/login?error=Facebook login failed.';
+  // if we were authenticated, we're linking accounts from the settings page.
+  if (req.user) {
+    success = '/settings';
+    failure = '/settings?error=Linking facebook account failed.';
+  }
+  passport.authenticate('facebook', { 
+    successRedirect: success,
+    failureRedirect: failure
   }
 );
-
-LoginController.prototype.linkFacebook
-  = passport.authorize('facebook-authorize', {
-    failureRedirect: '/settings?error=Facebook authentication failed.'
-  });
-
-LoginController.prototype.linkFacebookCallback = function(req, res) {
-  passport.authorize('facebook-authorize', {
-    failureRedirect: '/settings?error=Facebook authentication failed.'
-  })(req, res, function() {
-    userModel.linkFacebook(req.user.id, req.account.id, function(err) {
-      if (err) {
-        console.log(err);
-        return res.redirect('/settings?error=Account linking failed.');
-      }
-      res.redirect('/settings');
-    });
-  });
-};
 
 LoginController.prototype.unlinkFacebook = function(req, res) {
   userModel.unlinkFacebook(req.user.id, function(err) {
     if (err) {
       return res.redirect('/settings?error=Couldn\'t unlink facebook account.');
+    }
+    res.redirect('/settings');
+  });
+};
+
+LoginController.prototype.googleLogin = passport.authenticate('google');
+
+LoginController.prototype.googleCallback = function(req, res, next) {
+  var success = '/';
+  var failure = '/login?error=Google login failed.';
+  // if we were authenticated, we're linking accounts from the settings page.
+  if (req.user) {
+    success = '/settings';
+    failure = '/settings?error=Linking google account failed.';
+  }
+  passport.authenticate('google', { 
+    successRedirect: success,
+    failureRedirect: failure
+  }
+);
+
+LoginController.prototype.unlinkGoogle = function(req, res) {
+  userModel.unlinkGoogle(req.user.id, function(err) {
+    if (err) {
+      return res.redirect('/settings?error=Couldn\'t unlink google account.');
     }
     res.redirect('/settings');
   });
