@@ -74,6 +74,8 @@ module.exports = function() {
       },
       function(req, accessToken, refreshToken, profile, done) {
         if (req.user) {
+          console.log('google!');
+          console.dir(accessToken, refreshToken, profile);
           //userModel.linkGoogle(req.user.id, profile.id, function(err) {
           done(/*err*/null, profile);
           //});
