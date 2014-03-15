@@ -90,8 +90,8 @@ LoginController.prototype.googleCallback = function(req, res, next) {
   passport.authenticate('google', { 
     successRedirect: success,
     failureRedirect: failure
-  }
-);
+  });
+};
 
 LoginController.prototype.unlinkGoogle = function(req, res) {
   userModel.unlinkGoogle(req.user.id, function(err) {
