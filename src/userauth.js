@@ -26,7 +26,7 @@ module.exports = function() {
         if (req.user) {
           userModel.linkFacebook(req.user.id, profile.id, function(err) {
             done(err, profile);
-          );
+          });
         } else {
           userModel.fromFacebookId(profile.id, function(err, user) {
             // TODO: what do I do with the tokens?
