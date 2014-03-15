@@ -65,6 +65,11 @@ module.exports = function() {
         clientID: process.env.GOOGLE_APPID,
         clientSecret: process.env.GOOGLE_APPSECRET,
         callbackURL: 'http://www.uanotes.com/connect/google/callback',
+        scope: [
+          'https://www.googleapis.com/auth/plus.me',
+          'https://www.googleapis.com/auth/userinfo.email',
+          'https://www.googleapis.com/auth/userinfo.profile'
+        ],
         passReqToCallback: true
       },
       function(req, accessToken, refreshToken, profile, done) {
