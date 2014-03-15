@@ -65,8 +65,8 @@ LoginController.prototype.facebookCallback = function(req, res, next) {
   passport.authenticate('facebook', { 
     successRedirect: success,
     failureRedirect: failure
-  }
-);
+  });
+};
 
 LoginController.prototype.unlinkFacebook = function(req, res) {
   userModel.unlinkFacebook(req.user.id, function(err) {
