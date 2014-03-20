@@ -20,6 +20,7 @@
     "body-parser": "^1.0.0",
     "connect-redis": "^1.5.0",
     "passport-facebook": "^1.0.3",
-    "passport-google-oauth": "^0.1.5"
+    "passport-google-oauth": "^0.1.5",
+    "hat": "0.0.3"
   }
 }
