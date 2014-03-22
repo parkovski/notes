@@ -32,6 +32,8 @@
         </div>
       </div> {# page #}
     </div> {# centeredContentBox #}
+    {% else %}
+      {% block content %}{% endblock %}
     {% endif %}
   </body>
 </html>
