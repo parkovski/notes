@@ -1,31 +1,32 @@
-{{>header}}
+{% extends 'partials/layout.html' %}
+{% block content %}
 <h1 class="alignCenter">Settings.</h1>
 <div class="vspace"></div>
 <div class="alignCenter">
   <div class="inlineBlock alignLeft">
     <h5>Account details</h5>
     <div class="vspace"></div>
-    {{#if error}}
-      <p class="alignCenter warning">{{error}}</p>
+    {% if error %}
+      <p class="alignCenter warning">{{ error }}</p>
       <div class="vspace"></div>
-    {{/if}}
+    {% endif %}
     <form method="post" action="/settings/update">
       <fieldset class="settingsFormRow">
         <label for="username" class="floatLeft settingsFormLabel">Username:</label>
         <div class="settingsFormRight">
-          <input id="username" type="text" value="{{user.name}}" readonly="true" class="readonly">
+          <input id="username" type="text" value="{{ user.name }}" readonly="true" class="readonly">
         </div>
       </fieldset>
       <fieldset class="settingsFormRow">
         <label for="displayname" class="floatLeft settingsFormLabel">Display name:</label>
         <div class="settingsFormRight">
-          <input id="displayname" name="displayname" type="text" value="{{user.displayname}}">
+          <input id="displayname" name="displayname" type="text" value="{{ user.displayname }}">
         </div>
       </fieldset>
       <fieldset class="settingsFormRow">
         <label for="email" class="floatLeft settingsFormLabel">Email:</label>
         <div class="settingsFormRight">
-          <input id="email" name="email" type="text" value="{{user.email}}">
+          <input id="email" name="email" type="text" value="{{ user.email }}">
         </div>
       </fieldset>
       <fieldset class="settingsFormRow">
@@ -54,14 +55,14 @@
     <div class="vspace"></div>
     <h5 class="floatLeft">Linked accounts</h5>
     <div class="settingsFormRight">
-      {{#if hasFacebook}}
+      {% if hasFacebook %}
         <form method="post" action="/connect/unlink/facebook">
           Facebook
           <span class="lightText">(<button type="submit" class="link lightText">unlink</button>)</span>
         </form>
-      {{else}}
+      {% else %}
         None | <a href="/connect/link/facebook">link facebook</a>
-      {{/if}}
+      {% endif %}
     </div>
     <div class="vspace"></div>
     <div class="hline"></div>
@@ -72,4 +73,4 @@
     </div>
   </div>
 </div>
-{{>footer}}
+{% endblock %}

@@ -1,4 +1,5 @@
-{{>header}}
+{% extends 'partials/layout.html' %}
+{% block content %}
 <h1 class="alignCenter">Search.</h1>
 <div class="vspace"></div>
 <div>
@@ -11,36 +12,36 @@
     </div>
   </form>
 </div>
-{{#if query}}
+{% if query %}
   <div class="vspace"></div>
   <div>
-    <span class="h3">Results for &quot;</span><span class="h4">{{query}}</span><span class="h3">&quot;</span>
+    <span class="h3">Results for &quot;</span><span class="h4">{{ query }}</span><span class="h3">&quot;</span>
   </div>
   <div class="vspace"></div>
-  {{#if orgResults.length}}
+  {% if orgResults.length %}
   <div>
     <h5>Matching schools</h5>
     <div class="vspace"></div>
     <ul class="para">
-    {{#each orgResults}}
-      <li><a href="/org/{{this.id}}">{{this.name}}</a></li>
-    {{/each}}
+    {% for org in orgResults %}
+      <li><a href="/org/{{ org.id }}">{{ org.name }}</a></li>
+    {% endfor %}
     </ul>
   </div>
-  {{/if}}
-  {{#if classResults.length}}
+  {% endif %}
+  {% if classResults.length %}
   <div>
     <h5>Matching classes</h5>
     <div class="vspace"></div>
     <ul class="para">
-    {{#each classResults}}
-      <li><a href="/c/{{this.id}}">{{this.name}}</a></li>
-    {{/each}}
+    {% for cr in classResults %}
+      <li><a href="/c/{{ cr.id }}">{{ cr.name }}</a></li>
+    {% endfor %}
     </ul>
   </div>
-  {{/if}}
-  {{#if nothingFound}}
+  {% endif %}
+  {% if nothingFound %}
     Oh no! No results were found :(.
-  {{/if}}
-{{/if}}
-{{>footer}}
+  {% endif %}
+{% endif %}
+{% endblock %}

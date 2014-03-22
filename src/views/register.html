@@ -1,13 +1,14 @@
-{{>header}}
+{% extends 'partials/layout.html' %}
+{% block content %}
 <div class="tallVspace"></div>
 <div id="loginContainer">
   <div><h1 class="alignCenter">Welcome.</h1></div>
   <div class="vspace"></div>
-  {{#if error}}
+  {% if error %}
     <div><p class="alignCenter warning">An error occurred. Please try again.</p></div>
-  {{else}}
+  {% else %}
     <div><p class="alignCenter">Please fill out the fields below to create your account.</p></div>
-  {{/if}}
+  {% endif %}
   <div class="vspace"></div>
   <div class="alignCenter inlineBlock">
     <form method="post" action="/register">
@@ -48,4 +49,4 @@
 <div class="tallVspace"></div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="/clientjs/registeruser.js"></script>
-{{>footer}}
+{% endblock %}

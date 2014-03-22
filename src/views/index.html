@@ -1,12 +1,13 @@
-{{>header}}
+{% extends 'partials/layout.html' %}
+{% block content %}
 <h1 class="alignCenter">Welcome to Notes.</h1>
 <div class="vspace"></div>
-{{#unless user}}
-<p>Don't know what this is? Read the <a href="/about">about page</a>.</p>
-<div class="vspace"></div>
-<p>You are not logged in. You are welcome to browse anonymously, but if you want to contribute, please <a href="/login">log in first</a>.</p>
-<div class="vspace"></div>
-{{/unless}}
+{% if !user %}
+  <p>Don't know what this is? Read the <a href="/about">about page</a>.</p>
+  <div class="vspace"></div>
+  <p>You are not logged in. You are welcome to browse anonymously, but if you want to contribute, please <a href="/login">log in first</a>.</p>
+  <div class="vspace"></div>
+{% endif %}
 <div>
   <form method="get" action="/search">
     <div class="floatRight">
@@ -17,4 +18,4 @@
     </div>
   </form>
 </div>
-{{>footer}}
+{% endblock %}

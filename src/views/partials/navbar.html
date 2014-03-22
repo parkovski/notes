@@ -1,18 +1,20 @@
 <div class="box sidebar">
   <h6 class="phalf">My classes</h6>
   <ul class="smallIndentList">
-    {{#each classMembership}}
-      <li class="hoverLink"><a href="/c/{{this.id}}">{{this.name}}</a></li>
-    {{else}}
+    {% if classMembership.length %}
+      {% for cm in classMembership %}
+        <li class="hoverLink"><a href="/c/{{ cm.id }}">{{ cm.name }}</a></li>
+      {% endfor %}
       <li class="hoverLink"><a href="/search">Find a class</a></li>
-    {{/each}}
+    {% endif %}
   </ul>
   <h6 class="phalf">My schools</h6>
   <ul class="smallIndentList">
-    {{#each orgMembership}}
-      <li class="hoverLink"><a href="/org/{{this.id}}">{{this.name}}</a></li>
-    {{else}}
+    {% if orgMembership.length %}
+      {% for om in orgMembership %}
+        <li class="hoverLink"><a href="/org/{{ om.id }}">{{ om.name }}</a></li>
+      {% endfor %}
       <li class="hoverLink"><a href="/search">Find your school</a></li>
-    {{/each}}
+    {% endif %}
   </ul>
 </div>

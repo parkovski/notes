@@ -1,9 +1,10 @@
-{{>header}}
+{% extends '../partials/layout.html' %}
+{% block content %}
 <h1 class="alignCenter">Classes.</h1>
 <div class="vspace"></div>
 <ul class="para">
-{{#each classMembership}}
-  <li><a href="/c/{{this.id}}">{{this.name}}</a></li>
-{{/each}}
+{% for cm in classMembership %}
+  <li><a href="/c/{{ cm.id }}">{{ cm.name }}</a></li>
+{% endfor %}
 </ul>
-{{>footer}}
+{% endblock %}

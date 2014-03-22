@@ -1,29 +1,10 @@
 var fs = require('fs');
-var Handlebars = require('handlebars');
 var less = require('less');
 
-module.exports.setupAppForHandlebars = function setupAppForHandlebars(app) {
+module.exports.setupAppForSwig = function setupAppForSwig(app) {
   app.set('views', __dirname + '/views');
-  app.set('view engine', 'handlebars');
-  app.engine('html', require('consolidate').handlebars);
-
-  Handlebars.registerHelper('date', function(date) {
-    // TODO: better date handling
-    var datePart = date.toDateString();
-    datePart = datePart.substring(datePart.indexOf(' ') + 1);
-    return datePart;
-  });
-};
-
-module.exports.registerPartials = function registerPartials() {
-  fs.readdirSync(__dirname + '/views/partials/').forEach(function (viewName) {
-    if (viewName.substr(viewName.length - 5) === '.html') {
-      Handlebars.registerPartial(
-        viewName.substr(0, viewName.length - 5),
-        '' + fs.readFileSync(__dirname + '/views/partials/' + viewName)
-      );
-    }
-  });
+  app.set('view engine', 'swig');
+  app.engine('html', require('consolidate').swig);
 };
 
 // Only use this in functions called by compileLessFiles,

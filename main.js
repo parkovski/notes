@@ -19,8 +19,7 @@ if (process.env.CHECK_DB_SETUP) {
 var app = express();
 
 viewhelpers.compileLessFiles();
-viewhelpers.setupAppForHandlebars(app);
-viewhelpers.registerPartials();
+viewhelpers.setupAppForSwig(app);
 
 var redisStore;
 if (process.env.REDIS_CONFIG) {

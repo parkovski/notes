@@ -1,14 +1,15 @@
-{{>header}}
+{% extends 'partials/layout.html' %}
+{% block content %}
 <div class="tallVspace"></div>
 <div id="loginContainer">
   <div><h1 class="alignCenter">Hi.</h1></div>
   <div class="vspace"></div>
   <div>
-    {{#if errorMessage}}
-      <p class="alignCenter warning">{{errorMessage}}</p>
-    {{else}}
+    {% if errorMessage %}
+      <p class="alignCenter warning">{{ errorMessage }}</p>
+    {% else %}
       <p class="alignCenter">How would you like to access your notes?</p>
-    {{/if}}
+    {% endif %}
   </div>
   <div class="vspace"></div>
   <div class="alignCenter"><div class="optionControl">
@@ -18,9 +19,9 @@
   <div class="vspace"></div>
   <div class="alignCenter inlineBlock loginPanel" id="panel0">
     <form method="post" action="/login">
-      {{#if redirectUrl}}
+      {% if redirectUrl %}
       <input type="hidden" name="redirectUrl" value="{{redirectUrl}}"></input>
-      {{/if}}
+      {% endif %}
       <div class="alignRight smallMargin"><label>Username: <input type="text" id="username" name="username" class="loginFixedSizeInput" /></label></div>
       <div class="alignRight smallMargin"><label>Password: <input type="password" id="password" name="password" class="loginFixedSizeInput" /></label></div>
       <div class="alignRight smallMargin">
@@ -48,4 +49,4 @@
     });
   });
 </script>
-{{>footer}}
+{% endblock %}

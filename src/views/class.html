@@ -1,62 +1,63 @@
-{{>header}}
+{% extends 'partials/layout.html' %}
+{% block content %}
 <div class="alignCenter container">
-  {{#if user}}
-    {{#if joined}}
-      <form method="post" action="/c/{{id}}/unsub" class="rightCorner">
+  {% if user %}
+    {% if joined %}
+      <form method="post" action="/c/{{ id }}/unsub" class="rightCorner">
         <button type="submit" class="link lightText">Leave class</button>
       </form>
-    {{else}}
-      <form method="post" action="/c/{{id}}/sub" class="rightCornerAdjusted">
+    {% else %}
+      <form method="post" action="/c/{{ id }}/sub" class="rightCornerAdjusted">
         <button type="submit">Join class</button>
       </form>
-    {{/if}}
-  {{else}}
-    <a href="/login?r=%2Fc%2F{{id}}" class="rightCorner">Log in to join</a>
-  {{/if}}
-  <h3>{{title}}</h3>
+    {% endif %}
+  {% else %}
+    <a href="/login?r=%2Fc%2F{{ id }}" class="rightCorner">Log in to join</a>
+  {% endif %}
+  <h3>{{ title }}</h3>
 </div>
 <div class="vspace"></div>
 <p id="description">
   <span id="descSpan">
-  {{#if description}}
-    {{description}}
-  {{else}}
+  {% if description %}
+    {{ description }}
+  {% else %}
     This class has no description.
-  {{/if}}
+  {% endif %}
   </span>
   <span class="lightText">
-    {{#if user}}(<a id="editDesc" class="lightText" href="#">edit</a>){{/if}}
+    {% if user %}(<a id="editDesc" class="lightText" href="#">edit</a>){% endif %}
   </span>
 </p>
-{{#if user}}
+{% if user %}
 <div id="descriptionEditor" style="display: none;">
-  <textarea id="descTA">{{description}}</textarea>
+  <textarea id="descTA">{{ description }}</textarea>
   <button id="saveDescription" class="submitButton">Save</button>
   <button id="cancelDescription">Cancel</button>
 </div>
-{{/if}}
+{% endif %}
 <div class="hline"></div>
 <h5>Notes</h5>
 <div class="vspace"></div>
 <ul class="para">
-  {{#each pages}}
+  {% for page in pages %}
   <li>
-    {{#if this.name}}
-      <a href="/edit/{{this.id}}">{{this.name}}</a>
-      <span class="lightText">{{date this.createddate}}</span>
-    {{else}}
-      <a href="/edit/{{this.id}}">{{date this.createddate}}</a>
-    {{/if}}
+    {% if page.name %}
+      <a href="/edit/{{ page.id }}">{{ page.name }}</a>
+      <span class="lightText">{{ page.createddate|date('M j, Y') }}</span>
+    {% else %}
+      <a href="/edit/{{ page.id }}">{{ page.createddate|date('M j, Y') }}</a>
+    {% endif %}
   </li>
-  {{/each}}
+  {% endfor %}
   <li>
-    <form method="post" action="/c/{{id}}/newpage">
+    <form method="post" action="/c/{{ id }}/newpage">
       <button type="submit" class="link lightText">New note page</button>
     </form>
   </li>
 </ul>
 <script src="/clientjs/classdescription.js"></script>
 <script>
-  var global_classId = {{id}};
+  var global_classId = {{ id }};
 </script>
-{{>footer}}
+{% endblock %}

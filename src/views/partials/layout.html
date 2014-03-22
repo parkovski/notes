@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %}{{ title }}{% endblock %}</title>
+    <link rel="stylesheet" href="/style/reset.css" />
+    <link rel="stylesheet" href="/style/basic.css" />
+    {% if user %}
+      <link rel="stylesheet" href="/style/theme{{user.theme}}.css" id="themecss" />
+    {% else %}
+      <link rel="stylesheet" href="/style/theme0.css" id="themecss" />
+    {% endif %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  </head>
+  <body>
+    {% include './topbar.html' %}
+    {% if !noContentContainer %}
+    <div id="contentContainer">
+      {% if user %}
+        {% include './navbar.html' %}
+      {% else %}
+        <div class="box sidebar" style="visibility: hidden;"></div>
+      {% endif %}
+      <div id="page">
+        <div id="centeredContentBox">
+          {% block content %}{% endblock %}
+        </div>
+        <div id="pageFooter" class="alignCenter">
+          <a href="/about">about</a> -
+          <a href="/feedback">feedback</a> -
+          <a href="/contribute">contribute</a> -
+          <a href="/org/1">help</a>
+        </div>
+      </div> {# page #}
+    </div> {# centeredContentBox #}
+    {% endif %}
+  </body>
+</html>

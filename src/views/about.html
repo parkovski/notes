@@ -1,4 +1,5 @@
-{{>header}}
+{% extends 'partials/layout.html' %}
+{% block content %}
 <h1 class="alignCenter">About.</h1>
 <div class="vspace"></div>
 <h5>What is this site?</h5>
@@ -6,4 +7,4 @@
 <p>You can look around and see that there's a collaborative document editor and school organization pages. Some other features are planned and coming soon.</p>
 <div class="vspace"></div>
 <p>These observations are accurate, but they are not the whole story. I created this site because I was frustrated with the school system, in a lot of different ways. If there is something I can improve, or an area of education you think I should look into, please <a href="/feedback">let me know</a>. Thanks for using the site.</p>
-{{>footer}}
+{% endblock %}

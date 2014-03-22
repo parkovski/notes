@@ -1,4 +1,5 @@
-{{>header}}
+{% extends 'partials/layout.html' %}
+{% block content %}
 <style>
   div.optionControl {
     margin: 20px 0;
@@ -28,14 +29,14 @@
 <div class="alignCenter">
   <div class="inlineBlock">
     <div class="optionControl">
-      {{#each themes}}
+      {% for theme in themes %}
       <span
         class="option"
-        id="picktheme{{@key}}"
-        data-themeid="{{@key}}"
-        data-textcolor="{{textcolor}}"
-        style="background-color: {{color}}; color: {{color}}">&#x2713;</span>
-      {{/each}}
+        id="picktheme{{ loop.key }}"
+        data-themeid="{{ loop.key }}"
+        data-textcolor="{{ theme.textcolor }}"
+        style="background-color: {{ theme.color }}; color: {{ theme.color }};">&#x2713;</span>
+      {% endfor %}
     </div>
     <div class="alignRight">
       <form method="post" action="/settings/theme">
@@ -62,7 +63,7 @@
         }
       }
     });
-    $('#picktheme{{user.theme}}').click();
+    $('#picktheme{{ user.theme }}').click();
   });
 </script>
-{{>footer}}
+{% endblock %}

@@ -1,4 +1,5 @@
-{{>header}}
+{% extends 'partials/layout.html' %}
+{% block content %}
 <h1 class="alignCenter">Feedback.</h1>
 <div class="vspace"></div>
 <p>If you have any feedback, please <a href="mailto:parkersnell@outlook.com">email me</a>.</p>
@@ -6,4 +7,4 @@
 <p>This site is not run by a big corporation that will send you a form response and ignore your emails. I really want this site to help students as much as possible, and I can't do that without your help, so I will take all feedback seriously and try my best to get back to you.</p>
 <div class="vspace"></div>
 <p>Thanks for using my site.</p>
-{{>footer}}
+{% endblock %}
