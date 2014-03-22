@@ -5,6 +5,7 @@
       {% for cm in classMembership %}
         <li class="hoverLink"><a href="/c/{{ cm.id }}">{{ cm.name }}</a></li>
       {% endfor %}
+    {% else %}
       <li class="hoverLink"><a href="/search">Find a class</a></li>
     {% endif %}
   </ul>
@@ -14,6 +15,7 @@
       {% for om in orgMembership %}
         <li class="hoverLink"><a href="/org/{{ om.id }}">{{ om.name }}</a></li>
       {% endfor %}
+    {% else %}
       <li class="hoverLink"><a href="/search">Find your school</a></li>
     {% endif %}
   </ul>
