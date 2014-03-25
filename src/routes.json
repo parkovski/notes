@@ -42,6 +42,8 @@
   "post /org/:id/leave": "org#unjoinUserFromOrg",
 
   "post /ajax/org/setdescription/:id": "ajax.org#setDescription",
+  
+  "/ajax/token/:token": "ajax.token#get",
 
   "/about": "help#showAboutPage",
   "/feedback": "help#showFeedbackPage",

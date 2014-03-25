@@ -1,5 +1,8 @@
 var express = require('express');
 var passport = require('passport');
+var log4js = require('log4js');
+log4js.replaceConsole();
+
 var Router = require('./src/router');
 var viewhelpers = require('./src/viewhelpers');
 
