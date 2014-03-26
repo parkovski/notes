@@ -194,6 +194,96 @@ var functions = {
       }
     );
   },
+  // cb = function(err, user)
+  fromGoogleId: function(googleid, cb) {
+    db.query('SELECT * FROM `users` WHERE `id` = '
+      + '(SELECT `userid` FROM `google_users` WHERE `googleid` = ?);',
+      [googleid],
+      function(err, rows) {
+        if (err) {
+          return cb(err);
+        }
+        if (!rows || !rows.length) {
+          return cb(null);
+        }
+        return cb(null, getUserFields(rows[0]));
+      }
+    );
+  },
+  // cb = function(err)
+  linkGoogle: function(userId, googleId, cb) {
+    db.query(
+      'INSERT INTO `google_users` (`googleid`, `userid`)'
+      + ' VALUES (?, ?);',
+      [googleId, userId],
+      cb
+    );
+  },
+  // cb = function(err)
+  unlinkGoogle: function(userId, cb) {
+    db.query(
+      'DELETE FROM `google_users` WHERE `userid` = ?;',
+      [userId],
+      cb
+    );
+  },
+  // cb = function(err, isLinked)
+  hasLinkedGoogle: function(userId, cb) {
+    db.query(
+      'SELECT COUNT(*) AS `count` FROM `google_users` WHERE `userid` = ?;',
+      [userId],
+      function(err, rows) {
+        if (err) {
+          return cb(err);
+        }
+        cb(null, rows && rows[0] && rows[0].count === 1);
+      }
+    );
+  },
+  // cb = function(err, user)
+  createGoogleUser: function(fields, cb) {
+    var createUserQuery = {
+      query: 'INSERT INTO `users` (`name`, `displayname`, `password`, `email`)'
+        + ' SELECT ?, ?, UNHEX(\'\'), ? FROM `users`'
+        + ' WHERE NOT EXISTS ('
+        + '   SELECT * FROM `users` WHERE LCASE(`name`)=LCASE(?)'
+        + ') LIMIT 1;',
+      vars: [
+        fields.name,
+        fields.displayname,
+        fields.email || '',
+        fields.name
+      ]
+    };
+    var createGoogleLinkQuery = {
+      query: 'INSERT INTO `google_users` (`googleid`, `userid`)'
+        + ' VALUES (?, LAST_INSERT_ID());',
+      vars: [fields.googleId]
+    };
+    var addToHelpOrgQuery = {
+      query: 'INSERT INTO `user_org_membership` (`userid`, `orgid`)'
+        + ' VALUES (LAST_INSERT_ID(), 1);'
+    };
+    var addToGettingStartedQuery = {
+      query: 'INSERT INTO `user_class_membership` (`userid`, `classid`)'
+        + ' VALUES (LAST_INSERT_ID(), 1);'
+    };
+    var selectUserQuery = {
+      query: 'SELECT * FROM `users` WHERE `id` = LAST_INSERT_ID();'
+    };
+
+    db.transaction([
+        createUserQuery,
+        createGoogleLinkQuery,
+        addToHelpOrgQuery,
+        addToGettingStartedQuery,
+        selectUserQuery
+      ],
+      function(err, results) {
+        cb(err, results && results[4] && getUserFields(results[4][0]));
+      }
+    );
+  },
   // cb = function(err, passwordOk)
   changeFields: function(id, name, password, fields, cb) {
     db.query('SELECT COUNT(*) AS `count` FROM `users`'

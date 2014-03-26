@@ -69,6 +69,12 @@ module.exports = function() {
       + ' userid bigint unsigned not null,'
       + ' INDEX userid_ind (userid),'
       + ' INDEX fbid_ind (fbid),'
-      + 'FOREIGN KEY (userid) REFERENCES users(id) ON DELETE CASCADE)'
+      + ' FOREIGN KEY (userid) REFERENCES users(id) ON DELETE CASCADE)',
+    
+    'google_users (googleid bigint unsigned not null unique,'
+      + ' userid bigint unsigned not null,'
+      + ' INDEX userid_ind (userid),'
+      + ' INDEX googleid_ind (googleid),'
+      + ' FOREIGN KEY (userid) REFERENCES users(id) ON DELETE CASCADE)'
   ].map(makeSureTableExists);
 };

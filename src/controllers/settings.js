@@ -1,3 +1,5 @@
+var async = require('async');
+
 var userModel = require('../models/user');
 
 function SettingsController(configure) {
@@ -6,10 +8,19 @@ function SettingsController(configure) {
 }
 
 SettingsController.prototype.showSettingsHomePage = function(req, res) {
-  userModel.hasLinkedFacebook(req.user.id, function(err, hasFb) {
+  async.parallel([
+    function(callback) {
+      userModel.hasLinkedFacebook(req.user.id, callback);
+    },
+    function(callback) {
+      userModel.hasLinkedGoogle(req.user.id, callback);
+    }
+  ],
+  function(err, accounts) {
     res.render('settings.html', {
       title: 'Settings',
-      hasFacebook: hasFb,
+      hasFacebook: accounts[0],
+      hasGoogle: accounts[1],
       error: req.query.error
     });
   });

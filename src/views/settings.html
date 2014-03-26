@@ -55,13 +55,24 @@
     <div class="vspace"></div>
     <h5 class="floatLeft">Linked accounts</h5>
     <div class="settingsFormRight">
+      {% if !hasFacebook && !hasGoogle %}
+        None |
+      {% endif %}
       {% if hasFacebook %}
         <form method="post" action="/connect/unlink/facebook">
           Facebook
+          <span class="lightText">(<button type="submit" class="link lightText">unlink</button>)</span> |
+        </form>
+      {% else %}
+        <a href="/connect/link/facebook">link facebook</a> |
+      {% endif %}
+      {% if hasGoogle %}
+        <form method="post" action="/connect/unlink/google">
+          Google
           <span class="lightText">(<button type="submit" class="link lightText">unlink</button>)</span>
         </form>
       {% else %}
-        None | <a href="/connect/link/facebook">link facebook</a>
+        <a href="/connect/link/google">link google</a>
       {% endif %}
     </div>
     <div class="vspace"></div>

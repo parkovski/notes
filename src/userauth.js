@@ -57,7 +57,7 @@ module.exports = function() {
       }
     ));
   } else {
-    console.warn('facebook login not supported. add id and secret to enable.');
+    console.warn('Facebook login not supported. Add id and secret to enable.');
   }
 
   if (process.env.GOOGLE_APPID && process.env.GOOGLE_APPSECRET) {
@@ -74,15 +74,10 @@ module.exports = function() {
       },
       function(req, accessToken, refreshToken, profile, done) {
         if (req.user) {
-          console.log('google!');
-          console.dir(accessToken, refreshToken, profile);
-          //userModel.linkGoogle(req.user.id, profile.id, function(err) {
-          done(/*err*/null, profile);
-          //});
+          userModel.linkGoogle(req.user.id, profile.id, function(err) {
+            done(err, profile);
+          });
         } else {
-          console.log('google!');
-          console.dir(accessToken, refreshToken, profile);
-          /*
           userModel.fromGoogleId(profile.id, function(err, user) {
             // TODO: what do I do with the tokens?
             if (err) {
@@ -98,7 +93,7 @@ module.exports = function() {
                 displayname: profile.displayName,
                 password: '',
                 email: 'goog-' + profile.id + '@fixme.uanotes.com',
-                facebookId: profile.id
+                googleId: profile.id
               },
               function(err, user) {
                 if (err || !user) {
@@ -108,12 +103,11 @@ module.exports = function() {
               }
             );
           });
-          */
         }
       }
     ));
   } else {
-    console.warn('google login not supported. add id and secret to enable.');
+    console.warn('Google login not supported. Add id and secret to enable.');
   }
 
   passport.serializeUser(function(user, done) {
