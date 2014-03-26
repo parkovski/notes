@@ -57,7 +57,7 @@ module.exports = function() {
       }
     ));
   } else {
-    console.log('facebook login not supported. add id and secret to enable.');
+    console.warn('facebook login not supported. add id and secret to enable.');
   }
 
   if (process.env.GOOGLE_APPID && process.env.GOOGLE_APPSECRET) {
@@ -113,7 +113,7 @@ module.exports = function() {
       }
     ));
   } else {
-    console.log('google login not supported. add id and secret to enable.');
+    console.warn('google login not supported. add id and secret to enable.');
   }
 
   passport.serializeUser(function(user, done) {

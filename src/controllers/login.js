@@ -52,51 +52,65 @@ LoginController.prototype.logout = function(req, res) {
   res.redirect('/');
 };
 
-LoginController.prototype.facebookLogin = passport.authenticate('facebook');
+LoginController.prototype.facebookLogin = function(req, res, next) {
+  if (req.user) {
+    passport.authorize('facebook')(req, res, next);
+  } else {
+    passport.authenticate('facebook')(req, res, next);
+  }
+}
 
 LoginController.prototype.facebookCallback = function(req, res, next) {
-  var success = '/';
-  var failure = '/login?error=Facebook login failed.';
   // if we were authenticated, we're linking accounts from the settings page.
   if (req.user) {
-    success = '/settings';
-    failure = '/settings?error=Linking facebook account failed.';
+    passport.authorize('facebook', {
+      successRedirect: '/settings',
+      failureRedirect: '/settings?error=Linking Facebook account failed.'
+    })(req, res, next);
+  } else {
+    passport.authenticate('facebook', { 
+      successRedirect: '/',
+      failureRedirect: '/login?error=Facebook login failed.'
+    })(req, res, next);
   }
-  passport.authenticate('facebook', { 
-    successRedirect: success,
-    failureRedirect: failure
-  });
 };
 
 LoginController.prototype.unlinkFacebook = function(req, res) {
   userModel.unlinkFacebook(req.user.id, function(err) {
     if (err) {
-      return res.redirect('/settings?error=Couldn\'t unlink facebook account.');
+      return res.redirect('/settings?error=Couldn\'t unlink Facebook account.');
     }
     res.redirect('/settings');
   });
 };
 
-LoginController.prototype.googleLogin = passport.authenticate('google');
+LoginController.prototype.googleLogin = function(req, res, next) {
+  if (req.user) {
+    passport.authorize('google')(req, res, next);
+  } else {
+    passport.authenticate('google')(req, res, next);
+  }
+}
 
 LoginController.prototype.googleCallback = function(req, res, next) {
-  var success = '/';
-  var failure = '/login?error=Google login failed.';
   // if we were authenticated, we're linking accounts from the settings page.
   if (req.user) {
-    success = '/settings';
-    failure = '/settings?error=Linking google account failed.';
+    passport.authorize('google', {
+      successRedirect: '/settings',
+      failureRedirect: '/settings?error=Linking Google account failed.'
+    })(req, res, next);
+  } else {
+    passport.authenticate('google', { 
+      successRedirect: '/',
+      failureRedirect: '/login?error=Google login failed.'
+    })(req, res, next);
   }
-  passport.authenticate('google', { 
-    successRedirect: success,
-    failureRedirect: failure
-  });
 };
 
 LoginController.prototype.unlinkGoogle = function(req, res) {
   userModel.unlinkGoogle(req.user.id, function(err) {
     if (err) {
-      return res.redirect('/settings?error=Couldn\'t unlink google account.');
+      return res.redirect('/settings?error=Couldn\'t unlink Google account.');
     }
     res.redirect('/settings');
   });
