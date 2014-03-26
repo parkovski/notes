@@ -7,6 +7,7 @@ var makeSureTableExists = function(query) {
 }
 
 module.exports = function() {
+  console.log('Checking if DB tables exist.');
   [
     'users (id serial PRIMARY KEY,'
       + ' name varchar(32) UNIQUE,'
