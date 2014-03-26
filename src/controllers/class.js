@@ -1,9 +1,7 @@
 var async = require('async');
-var log4js = require('log4js');
 
 var classModel = require('../models/class');
-
-var logger = log4js.getLogger();
+var tokenModel = require('../models/token');
 
 function ClassController(configure) {
   configure('*').setRenderVar('sections', [{
@@ -37,7 +35,7 @@ ClassController.prototype.showClassPage = function(req, res) {
     function(item, cb) { item(cb); },
     function(err, results) {
       if (err) {
-        logger.error(err);
+        console.error(err);
       }
       res.render('class.html', {
         title: results[0].name,
@@ -68,7 +66,7 @@ ClassController.prototype.createClass = function(req, res) {
     null, 
     function(err, classId) {
       if (err) {
-        logger.error(err);
+        console.error(err);
       }
       return res.redirect('/c/' + classId);
     }
@@ -77,15 +75,33 @@ ClassController.prototype.createClass = function(req, res) {
 
 ClassController.prototype.showEtherpad = function(req, res, next) {
   var docId = req.params.docId;
-
-  classModel.getPage(docId, function(err, page) {
+  
+  async.parallel([
+    function(callback) {
+      tokenModel.putIfNotExists(
+        req.user.id,
+        'etherpadAuth',
+        req.user.displayname,
+        1800, // half hour
+        function(err, tokenId) {
+          callback(err, tokenId);
+        }
+      );
+    },
+    function(callback) {
+      classModel.getPage(docId, callback);
+    },
+  ],
+  function(err, results) {
     if (err) {
-      logger.error(err);
+      console.error(err);
     }
+    var tokenId = results[0];
+    var page = results[1];
     if (!page) {
       return next();
     }
-
+    
     res.render('classes/etherpad.html', {
       padUrl: process.env.PAD_URL || 'http://pad.uanotes.com',
       noContentContainer: true,
@@ -95,7 +111,8 @@ ClassController.prototype.showEtherpad = function(req, res, next) {
       ],
       title: 'Edit',
       padName: page.name || 'Untitled',
-      id: docId
+      id: docId,
+      authToken: tokenId
     });
   });
 };
@@ -105,7 +122,7 @@ ClassController.prototype.newPage = function(req, res) {
 
   classModel.createPage(classId, function(err, pageId) {
     if (err) {
-      logger.error(err);
+      console.error(err);
       return res.redirect('/c/' + classId);
     }
     res.redirect('/edit/' + pageId);
@@ -117,7 +134,7 @@ ClassController.prototype.subscribeUser = function(req, res) {
   var userId = req.user.id;
   classModel.subscribe(classId, userId, function(err, success) {
     if (err) {
-      logger.error(err);
+      console.error(err);
     }
     res.redirect('/c/' + classId);
   });
@@ -128,7 +145,7 @@ ClassController.prototype.unsubscribeUser = function(req, res) {
   var userId = req.user.id;
   classModel.unsubscribe(classId, userId, function(err, success) {
     if (err) {
-      logger.error(err);
+      console.error(err);
     }
     res.redirect('/c/' + classId);
   });

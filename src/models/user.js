@@ -10,7 +10,8 @@ var getUserFields = function(dbresult) {
     name: dbresult.name,
     displayname: dbresult.displayname,
     email: dbresult.email,
-    theme: dbresult.theme
+    theme: dbresult.theme,
+    ep_authorid: dbresult.ep_authorid
   };
 };
 

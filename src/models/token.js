@@ -50,14 +50,14 @@ module.exports = {
     }
     
     var tokenId = hat();
-    var userTokenKey = 'usertokens:' + userId + ':' + tokenName;
     var tokenKey = 'token:' + tokenId;
+    var userTokenKey = 'usertokens:' + userId + ':' + tokenName;
     var multi = redisClient.multi()
-      .set(userTokenKey, tokenId)
-      .set(tokenKey, data);
+      .set(tokenKey, data)
+      .set(userTokenKey, tokenId);
     if (~expire) {
-      multi.expire(userTokenKey, expire);
       multi.expire(tokenKey, expire);
+      multi.expire(userTokenKey, expire);
     }
     multi.exec(function(err) {
       callback(err, tokenId);
@@ -66,18 +66,18 @@ module.exports = {
     return tokenId;
   },
   // putIfNotExists does not return the token ID.
-  // callback = function(err, tokenId, alreadyExisted)
+  // callback = function(err, tokenId, isNew)
   // callback is not optional.
   putIfNotExists: function(userId, tokenName, data, expire, callback) {
-    redisClient.get('usertokens:' + userId + ':' + tokenName, function(err, data) {
+    redisClient.get('usertokens:' + userId + ':' + tokenName, function(err, tokenId) {
       if (err) {
         return callback(err);
       }
-      if (data) {
-        return callback(err, data, true);
+      if (tokenId) {
+        return callback(err, tokenId, false);
       }
-      module.exports.putForUser(userId, tokenName, data, expire, function(err, data) {
-        callback(err, data, false);
+      module.exports.putForUser(userId, tokenName, data, expire, function(err, newTokenId) {
+        callback(err, newTokenId, true);
       });
     });
   },

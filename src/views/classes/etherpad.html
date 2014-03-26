@@ -1,7 +1,7 @@
 {% extends '../partials/layout.html' %}
 {% block content %}
 <div class="fullPageContentContainer">
-  <iframe class="fullPageContent" src="{{ padUrl }}/p/{{ id }}?showChat=false"></iframe>
+  <iframe class="fullPageContent" src="{{ padUrl }}/p/{{ id }}?showChat=false&token={{ authToken }}"></iframe>
 </div>
 <script src="/clientjs/padtitlebar.js"></script>
 <script src="/clientjs/notify.js"></script>
