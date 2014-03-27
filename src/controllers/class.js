@@ -81,7 +81,11 @@ ClassController.prototype.showEtherpad = function(req, res, next) {
       tokenModel.putIfNotExists(
         req.user.id,
         'etherpadAuth',
-        req.user.displayname,
+        JSON.stringify({
+          id: req.user.id,
+          name: req.user.name,
+          displayname: req.user.displayname
+        }),
         1800, // half hour
         function(err, tokenId) {
           callback(err, tokenId);
