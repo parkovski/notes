@@ -11,6 +11,8 @@
   "/isuser/:user": "login#isUser",
   "/register": "login#showRegisterPage",
   "post /register": "login#registerUser",
+  
+  "/login_as_ycombinator": "login#yclogin",
 
   "/connect/facebook": "login#facebookLogin",
   "/connect/facebook/callback": "login#facebookCallback",
