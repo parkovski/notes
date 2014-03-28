@@ -11,6 +11,8 @@
   "/isuser/:user": "login#isUser",
   "/register": "login#showRegisterPage",
   "post /register": "login#registerUser",
+  "/registerlinked": "login#showLinkedRegisterPage",
+  "post /registerlinked": "login#registerLinkedUser",
   
   "/login_as_ycombinator": "login#yclogin",
 

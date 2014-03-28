@@ -3,6 +3,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var userModel = require('./models/user');
+var tokenModel = require('./models/token');
 
 module.exports = function() {
   passport.use('local', new LocalStrategy(function(username, password, done) {
@@ -37,21 +38,19 @@ module.exports = function() {
               return done(null, user);
             }
 
-            userModel.createFacebookUser(
-              {
-                name: 'fb:' + profile.id,
-                displayname: profile.displayName,
-                password: '',
-                email: 'fb-' + profile.id + '@fixme.uanotes.com',
-                facebookId: profile.id
-              },
-              function(err, user) {
-                if (err || !user) {
-                  return done(err);
-                }
-                done(null, user);
+            tokenModel.put({
+              provider: 'Facebook',
+              id: profile.id,
+              displayname: profile.displayName,
+              email: profile.email,
+            }, function(err, tokenId) {
+              if (err) {
+                return done(err);
               }
-            );
+              // TODO: This is probably wrong.
+              // See the rest of this hack in login.js.
+              done(null, tokenId);
+            });
           });
         }
       }
@@ -87,21 +86,18 @@ module.exports = function() {
               return done(null, user);
             }
 
-            userModel.createGoogleUser(
-              {
-                name: 'goog:' + profile.id,
-                displayname: profile.displayName,
-                password: '',
-                email: 'goog-' + profile.id + '@fixme.uanotes.com',
-                googleId: profile.id
-              },
-              function(err, user) {
-                if (err || !user) {
-                  return done(err);
-                }
-                done(null, user);
+            tokenModel.put({
+              provider: 'Google',
+              id: profile.id,
+              displayname: profile.displayName,
+              email: profile.email,
+            }, function(err, tokenId) {
+              if (err) {
+                return done(err);
               }
-            );
+              // TODO: This is probably wrong.
+              done(null, tokenId);
+            });
           });
         }
       }

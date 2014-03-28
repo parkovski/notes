@@ -1,5 +1,6 @@
 var passport = require('passport');
 var userModel = require('../models/user');
+var tokenModel = require('../models/token');
 
 // So that you can't redirect to another website.
 function validateRedirectUrl(url) {
@@ -74,10 +75,27 @@ LoginController.prototype.facebookCallback = function(req, res, next) {
       failureRedirect: '/settings?error=Linking Facebook account failed.'
     })(req, res, next);
   } else {
-    passport.authenticate('facebook', { 
-      successRedirect: '/',
+    passport.authenticate('facebook', {
+      successRedirect: '/registerlinked',
       failureRedirect: '/login?error=Facebook login failed.'
-    })(req, res, next);
+    })(req, res, function() {
+      // This is such a hack, but I don't know how to get around it.
+      // If passport succeeds but the account doesn't exist yet,
+      // req.user will be set to a token that can be used to retrieve
+      // the linked account fields, so we should clear it so
+      // nobody thinks it's a real logged in user.
+      var linkedAccountToken;
+      if (typeof req.user === 'string') {
+        linkedAccountToken = req.user;
+        req.logout();
+      }
+      
+      if (linkedAccountToken) {
+        res.redirect('/registerlinked?token=' + linkedAccountToken);
+      } else {
+        res.redirect('/');
+      }
+    });
   }
 };
 
@@ -106,10 +124,22 @@ LoginController.prototype.googleCallback = function(req, res, next) {
       failureRedirect: '/settings?error=Linking Google account failed.'
     })(req, res, next);
   } else {
-    passport.authenticate('google', { 
-      successRedirect: '/',
+    passport.authenticate('google', {
       failureRedirect: '/login?error=Google login failed.'
-    })(req, res, next);
+    })(req, res, function() {
+      // Hack. See facebookCallback.
+      var linkedAccountToken;
+      if (typeof req.user === 'string') {
+        linkedAccountToken = req.user;
+        req.logout();
+      }
+      
+      if (linkedAccountToken) {
+        res.redirect('/registerlinked?token=' + linkedAccountToken);
+      } else {
+        res.redirect('/');
+      }
+    });
   }
 };
 
@@ -160,6 +190,95 @@ LoginController.prototype.registerUser = function(req, res) {
       }
     }
   );
+};
+
+LoginController.prototype.showLinkedRegisterPage = function(req, res) {
+  if (req.user) {
+    return res.redirect('/');
+  }
+  if (!req.params.token) {
+    return res.redirect('/login?error=Couldn\'t find linked account data.');
+  }
+
+  tokenModel.get(req.params.token, function(err, data) {
+    if (err) {
+      console.error(err);
+      return res.redirect('/login?error=Linked account error.');
+    }
+    
+    var linkedData = null;
+    try {
+      linkedData = JSON.parse(data);
+    } catch (e) {
+    } finally {
+      if (!linkedData
+          || !linkedData.provider
+          || !linkedData.id
+          || !linkedData.displayname
+          || !linkedData.email) {
+        
+        return res.redirect('/login?error=Linked account error.');
+      }
+    }
+    
+    linkedData.token = req.params.token;
+    
+    res.render('register.html', {
+      title: 'Register',
+      error: 'error' in req.params,
+      suppressLoginHeaderLink: true,
+      linkedData: linkedData
+    });
+  });
+};
+
+LoginController.prototype.registerLinkedUser = function(req, res) {
+  tokenModel.get(req.body.token, function(err, data) {
+    if (err) {
+      console.error(err);
+      return res.redirect('/login?error=Linked account error.');
+    }
+    
+    var linkedData = null;
+    try {
+      linkedData = JSON.parse(data);
+    } catch (e) {
+    } finally {
+      if (!linkedData
+          || !linkedData.provider
+          || !linkedData.id
+          || !linkedData.displayname) {
+        
+        return res.redirect('/login?error=Linked account error.');
+      }
+    }
+    
+    var userObj = {
+      name: req.body.username,
+      displayname: linkedData.displayname,
+      email: req.body.email,
+      password: req.body.password
+    };
+    var createUserMethod;
+    if (linkedData.provider === 'Facebook') {
+      userObj.facebookId = linkedData.id;
+      createUserMethod = 'createFacebookUser';
+    } else if (linkedData.provider === 'Google') {
+      userObj.googleId = linkedData.id;
+      createUserMethod = 'createGoogleUser';
+    } else {
+      console.error('Unknown account provider');
+      return res.redirect('/login?error=Unknown account provider.');
+    }
+    
+    userModel[createUserMethod](userObj, function(err, user) {
+      if (err) {
+        console.error(err);
+      }
+      // TODO: Auto login as the new user.
+      res.redirect('/login');
+    });
+  });
 };
 
 module.exports = LoginController;

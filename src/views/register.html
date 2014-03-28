@@ -2,32 +2,55 @@
 {% block content %}
 <div class="tallVspace"></div>
 <div id="loginContainer">
-  <div><h1 class="alignCenter">Welcome.</h1></div>
+  {% if linkedData %}
+    <div><h1 class="alignCenter">You're almost there.</h1></div>
+  {% else %}
+    <div><h1 class="alignCenter">Welcome.</h1></div>
+  {% endif %}
   <div class="vspace"></div>
   {% if error %}
     <div><p class="alignCenter warning">An error occurred. Please try again.</p></div>
   {% else %}
-    <div><p class="alignCenter">Please fill out the fields below to create your account.</p></div>
+    {% if linkedData %}
+      <div><p class="alignCenter">
+        Just fill out this form, and we'll create your account.
+        Since you chose to link your account, you'll be able to log in with
+          {% linkedData.provider %} in the future.
+      </p></div>
+    {% else %}
+      <div><p class="alignCenter">Please fill out the fields below to create your account.</p></div>
+    {% endif %}
   {% endif %}
   <div class="vspace"></div>
   <div class="alignCenter inlineBlock">
+    {% if linkedData %}
+    <form method="post" action="/registerlinked">
+      <input type="hidden" name="token" value="{% linkedData.token %}" />
+    {% else %}
     <form method="post" action="/register">
+    {% endif %}
       <div class="alignRight smallMargin">
-        <label>Name: <input type="text" id="name" name="displayname" class="loginFixedSizeInput" /></label>
-        <span id="nameCheckmark" style="visibility: hidden; color: green;">&#x2713;</span>
+        {% if linkedData %}
+          <label>Name: <input type="text" id="name" readonly="true" class="loginFixedSizeInput readonly" value="{% linkedData.displayname %}" /></label>
+        {% else %}
+          <label>Name: <input type="text" id="name" name="displayname" class="loginFixedSizeInput" /></label>
+          <span id="nameCheckmark" style="visibility: hidden; color: green;">&#x2713;</span>
+        {% endif %}
       </div>
       <div class="alignRight smallMargin" style="display: none;" id="nameMessage">
         <span id="nameMessageSpan"></span> <span style="visibility: hidden;">&#x2713;</span>
       </div>
       <div class="alignRight smallMargin">
-        <label>Email: <input type="text" id="email" name="email" class="loginFixedSizeInput" /></label>
+        <label>Email: <input type="text" id="email" name="email" class="loginFixedSizeInput"
+                             {% if linkedData %}value="{% linkedData.email %}"{% endif %} /></label>
         <span id="emailCheckmark" style="visibility: hidden; color: green;">&#x2713;</span>
       </div>
       <div class="alignRight smallMargin" style="display: none;" id="emailMessage">
         <span id="emailMessageSpan"></span> <span style="visibility: hidden;">&#x2713;</span>
       </div>
       <div class="alignRight smallMargin">
-        <label>Username: <input type="text" id="username" name="username" class="loginFixedSizeInput" /></label>
+        <label>Username: <input type="text" id="username" name="username" class="loginFixedSizeInput"
+                                {% if linkedData %}value="{% linkedData.email %}"{% endif %} /></label>
         <span id="usernameCheckmark" style="visibility: hidden; color: red;">&#x2717;</span>
       </div>
       <div class="alignRight smallMargin" style="display: none;" id="usernameMessage">
