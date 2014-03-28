@@ -8,18 +8,20 @@ var hat = require('hat');
 
 var redisClient = redis.createClient();
 
+var DEFAULT_EXPIRE = 3600;
+
 module.exports = {
   // optional callback = function(err, tokenId)
   // put also returns the tokenId. Use whichever is most convenient.
   put: function(data, expire, callback) {
     if (typeof expire === 'function') {
       callback = expire;
-      expire = -1;
+      expire = DEFAULT_EXPIRE;
     }
     if (!callback) {
       callback = function(){};
       if (typeof expire === 'undefined') {
-        expire = -1;
+        expire = DEFAULT_EXPIRE;
       }
     }
     
@@ -40,12 +42,12 @@ module.exports = {
   putForUser: function(userId, tokenName, data, expire, callback) {
     if (typeof expire === 'function') {
       callback = expire;
-      expire = -1;
+      expire = DEFAULT_EXPIRE;
     }
     if (!callback) {
       callback = function(){};
       if (typeof expire === 'undefined') {
-        expire = -1;
+        expire = DEFAULT_EXPIRE;
       }
     }
     
