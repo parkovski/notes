@@ -19,7 +19,7 @@
           cache: false,
           data: { name: newText },
           success: function(data) {
-            // lol??
+            n_notify('Document title saved.');
           }
         });
       }, 500);
