@@ -1,3 +1,5 @@
+'use strict';
+
 var orgModel = require('../models/org');
 var async = require('async');
 var log4js = require('log4js');

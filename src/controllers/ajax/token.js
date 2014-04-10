@@ -1,3 +1,5 @@
+'use strict';
+
 var tokenModel = require('../../models/token');
 var hat = require('hat');
 

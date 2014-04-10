@@ -1,3 +1,5 @@
+'use strict';
+
 var redis = require('redis');
 
 var config = JSON.parse(process.env.REDIS_CONFIG || '{}');

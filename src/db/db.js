@@ -1,8 +1,12 @@
+'use strict';
+
 var mysql = require('mysql');
 
 var async = require('async');
 
 var config;
+var connection;
+
 if (process.env.DB_CONFIG) {
   config = JSON.parse(process.env.DB_CONFIG);
 } else {

@@ -1,3 +1,5 @@
+'use strict';
+
 /*
  * The token API generates a token that is used to access
  * pieces of data for a given user, for some period of time.

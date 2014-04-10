@@ -1,3 +1,5 @@
+'use strict';
+
 var async = require('async');
 
 var userModel = require('../models/user');

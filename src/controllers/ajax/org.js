@@ -1,3 +1,5 @@
+'use strict';
+
 var orgModel = require('../../models/org');
 
 function AjaxOrgController(configure) {

@@ -1,3 +1,5 @@
+'use strict';
+
 var classModel = require('../../models/class');
 
 function AjaxClassController(configure) {

@@ -1,3 +1,5 @@
+'use strict';
+
 var passport = require('passport');
 var userModel = require('../models/user');
 var tokenModel = require('../models/token');
