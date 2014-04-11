@@ -1,4 +1,4 @@
-(function() {
+require(['jquery'], function($) {
   function open(menu, button) {
     menu.css({display: 'block'});
     button.addClass('sel');
@@ -34,4 +34,4 @@
       $('.dropdownButton').removeClass('sel');
     });
   });
-})();
+});

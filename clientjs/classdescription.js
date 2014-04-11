@@ -1,4 +1,4 @@
-(function() {
+require(['jquery'], function($) {
   $(function() {
     var getUrl = function() {
       if (typeof global_classId !== 'undefined') {
@@ -37,4 +37,4 @@
       $('#description').show();
     });
   });
-})();
+});

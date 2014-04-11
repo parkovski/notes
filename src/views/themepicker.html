@@ -47,23 +47,26 @@
   </div>
 </div>
 <div class="tallVspace"></div>
-<script src="/clientjs/optioncontrol.js"></script>
+{% endblock %}
+{% block extrajs %}
 <script>
-  $(function() {
-    $('.optionControl').optionControl(function(sel, index) {
-      var children = $('span', this);
-      $('#themecss').attr('href', '/style/theme' + index + '.css');
-      $('#themeid').val(index);
-      for (var i = 0; i < children.length; ++i) {
-        var child = $(children[i]);
-        if (i === index) {
-          child.css({color: child.data('textcolor')});
-        } else {
-          child.css({color: child.css('background-color')});
+  require(['jquery', 'optioncontrol'], function($, xx) {
+    $(function() {
+      $('.optionControl').optionControl(function(sel, index) {
+        var children = $('span', this);
+        $('#themecss').attr('href', '/style/theme' + index + '.css');
+        $('#themeid').val(index);
+        for (var i = 0; i < children.length; ++i) {
+          var child = $(children[i]);
+          if (i === index) {
+            child.css({color: child.data('textcolor')});
+          } else {
+            child.css({color: child.css('background-color')});
+          }
         }
-      }
+      });
+      $('#picktheme{{ user.theme }}').click();
     });
-    $('#picktheme{{ user.theme }}').click();
   });
 </script>
 {% endblock %}

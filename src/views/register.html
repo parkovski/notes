@@ -15,7 +15,7 @@
       <div><p class="alignCenter">
         Just fill out this form, and we'll create your account.
         Since you chose to link your account, you'll be able to log in with
-          {% linkedData.provider %} in the future.
+          {{ linkedData.provider }} in the future.
       </p></div>
     {% else %}
       <div><p class="alignCenter">Please fill out the fields below to create your account.</p></div>
@@ -25,13 +25,13 @@
   <div class="alignCenter inlineBlock">
     {% if linkedData %}
     <form method="post" action="/registerlinked">
-      <input type="hidden" name="token" value="{% linkedData.token %}" />
+      <input type="hidden" name="token" value="{{ linkedData.token }}" />
     {% else %}
     <form method="post" action="/register">
     {% endif %}
       <div class="alignRight smallMargin">
         {% if linkedData %}
-          <label>Name: <input type="text" id="name" readonly="true" class="loginFixedSizeInput readonly" value="{% linkedData.displayname %}" /></label>
+          <label>Name: <input type="text" id="name" readonly="true" class="loginFixedSizeInput readonly" value="{{ linkedData.displayname }}" /></label>
         {% else %}
           <label>Name: <input type="text" id="name" name="displayname" class="loginFixedSizeInput" /></label>
           <span id="nameCheckmark" style="visibility: hidden; color: green;">&#x2713;</span>
@@ -42,7 +42,7 @@
       </div>
       <div class="alignRight smallMargin">
         <label>Email: <input type="text" id="email" name="email" class="loginFixedSizeInput"
-                             {% if linkedData %}value="{% linkedData.email %}"{% endif %} /></label>
+                             {% if linkedData %}value="{{ linkedData.email }}"{% endif %} /></label>
         <span id="emailCheckmark" style="visibility: hidden; color: green;">&#x2713;</span>
       </div>
       <div class="alignRight smallMargin" style="display: none;" id="emailMessage">
@@ -50,7 +50,7 @@
       </div>
       <div class="alignRight smallMargin">
         <label>Username: <input type="text" id="username" name="username" class="loginFixedSizeInput"
-                                {% if linkedData %}value="{% linkedData.email %}"{% endif %} /></label>
+                                {% if linkedData %}value="{{ linkedData.email }}"{% endif %} /></label>
         <span id="usernameCheckmark" style="visibility: hidden; color: red;">&#x2717;</span>
       </div>
       <div class="alignRight smallMargin" style="display: none;" id="usernameMessage">
@@ -70,6 +70,4 @@
   </div>
 </div>
 <div class="tallVspace"></div>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="/clientjs/registeruser.js"></script>
 {% endblock %}

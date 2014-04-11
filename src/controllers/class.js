@@ -41,6 +41,7 @@ ClassController.prototype.showClassPage = function(req, res) {
       }
       res.render('class.html', {
         title: results[0].name,
+        jsmain: 'classdescription',
         description: results[0].description,
         id: classId,
         joined: results[1],
@@ -116,6 +117,7 @@ ClassController.prototype.showEtherpad = function(req, res, next) {
         { name: page.classname, url: '/c/' + page.classid }
       ],
       title: 'Edit',
+      jsmain: 'padtitlebar',
       padName: page.name || 'Untitled',
       id: docId,
       authToken: tokenId

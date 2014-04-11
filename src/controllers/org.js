@@ -34,6 +34,7 @@ OrgController.prototype.showOrgOverview = function(req, res) {
       }
       res.render('orgoverview.html', {
         title: results[0].name,
+        jsmain: 'classdescription',
         description: results[0].description,
         id: orgId,
         sections: [{ name: 'Schools', url: '/org' }],

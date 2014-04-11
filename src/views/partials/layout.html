@@ -9,7 +9,6 @@
     {% else %}
       <link rel="stylesheet" href="/style/theme0.css" id="themecss" />
     {% endif %}
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
   </head>
   <body>
     {% include './topbar.html' %}
@@ -35,5 +34,16 @@
     {% else %}
       {% block content %}{% endblock %}
     {% endif %}
+    
+    {# Every page needs the dropdown menu code, so use that as the main entry point. #}
+    <script src="/clientjs/require.config.js"></script>
+    <script data-main="dropdownmenu" src="/clientjs/require.js"></script>
+    {% if jsmain %}
+      <script>
+        require(['{{ jsmain }}']);
+      </script>
+    {% endif %}
+    {# TODO: get rid of this once we have no more inline js in pages #}
+    {% block extrajs %}{% endblock %}
   </body>
 </html>

@@ -170,6 +170,7 @@ LoginController.prototype.showRegisterPage = function(req, res) {
 
   res.render('register.html', {
     title: 'Register',
+    jsmain: 'registeruser',
     error: 'error' in req.params,
     suppressLoginHeaderLink: true
   });
@@ -227,6 +228,7 @@ LoginController.prototype.showLinkedRegisterPage = function(req, res) {
     
     res.render('register.html', {
       title: 'Register',
+      jsmain: 'registeruser',
       error: 'error' in req.params,
       suppressLoginHeaderLink: true,
       linkedData: linkedData

@@ -1,4 +1,4 @@
-(function($) {
+define('optioncontrol', ['jquery'], function($) {
   function attachOptionControl(div) {
     var jqDiv = $(div);
     var jqSpans = $('span', div);
@@ -44,4 +44,6 @@
   };
 
   $('div.optionControl').optionControl();
-})(jQuery);
+  
+  return 'fix me!';
+});

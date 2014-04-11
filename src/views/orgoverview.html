@@ -45,7 +45,8 @@
 {% endfor %}
   <li><a href="/classes/new" class="lightText">Create new class</a></li>
 </ul>
-<script src="/clientjs/classdescription.js"></script>
+{% endblock %}
+{% block extrajs %}
 <script>
   var global_orgId = {{ id }};
 </script>

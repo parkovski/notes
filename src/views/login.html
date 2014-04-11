@@ -37,17 +37,20 @@
   <div class="alignCenter inlineBlock loginPanel" style="display: none;" id="panel2"><a href="/connect/google">Log in with Google</a></div>
 </div>
 <div class="tallVspace"></div>
-<script src="/clientjs/optioncontrol.js"></script>
+{% endblock %}
+{% block extrajs %}
 <script>
-  $(function() {
-    $('.optionControl').optionControl(function(sel, index) {
-      for (var i = 0; i < 4; ++i) {
-        var vis = 'none';
-        if (index === i) {
-          vis = '';
+  require(['jquery', 'optioncontrol'], function($, xx) {
+    $(function() {
+      $('.optionControl').optionControl(function(sel, index) {
+        for (var i = 0; i < 4; ++i) {
+          var vis = 'none';
+          if (index === i) {
+            vis = '';
+          }
+          $('#panel' + i).css({display: vis});
         }
-        $('#panel' + i).css({display: vis});
-      }
+      });
     });
   });
 </script>

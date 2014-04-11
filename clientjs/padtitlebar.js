@@ -1,4 +1,4 @@
-(function() {
+require(['jquery', 'notify'], function($, notify) {
   $(function() {
     $('#topBar').append($('<input>', {
       type: 'text',
@@ -19,10 +19,10 @@
           cache: false,
           data: { name: newText },
           success: function(data) {
-            n_notify('Document title saved.');
+            notify('Document title saved.');
           }
         });
       }, 500);
     });
   });
-})();
+});
