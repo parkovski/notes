@@ -1,4 +1,6 @@
 require(['jquery'], function($) {
+  'use strict';
+
   $(function() {
     var showCheck = function(selector) {
       var obj = $(selector);

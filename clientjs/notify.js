@@ -1,4 +1,6 @@
 define('notify', ['jquery'], function($) {
+  'use strict';
+
   return function notify(message) {
     var box = $('<div/>', {
       class: 'box notifyBox themeBox'

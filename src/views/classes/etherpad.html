@@ -7,7 +7,7 @@
 {% block extrajs %}
 <script>
   var global_docId = {{ id }};
-  require(['jquery'], function($) {
+  require(['jquery', 'padtitlebar'], function($, xx) {
     $(function() {
       $('#titleBar').val('{{ padName }}');
     });

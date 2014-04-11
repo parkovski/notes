@@ -1,4 +1,6 @@
 define('optioncontrol', ['jquery'], function($) {
+  'use strict';
+
   function attachOptionControl(div) {
     var jqDiv = $(div);
     var jqSpans = $('span', div);

@@ -1,4 +1,6 @@
 require(['jquery'], function($) {
+  'use strict';
+  
   $(function() {
     var getUrl = function() {
       if (typeof global_classId !== 'undefined') {

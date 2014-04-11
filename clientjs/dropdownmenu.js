@@ -1,4 +1,6 @@
 require(['jquery'], function($) {
+  'use strict';
+  
   function open(menu, button) {
     menu.css({display: 'block'});
     button.addClass('sel');

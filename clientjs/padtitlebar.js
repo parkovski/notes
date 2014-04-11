@@ -1,4 +1,6 @@
-require(['jquery', 'notify'], function($, notify) {
+define('padtitlebar', ['jquery', 'notify'], function($, notify) {
+  'use strict';
+
   $(function() {
     $('#topBar').append($('<input>', {
       type: 'text',
@@ -25,4 +27,6 @@ require(['jquery', 'notify'], function($, notify) {
       }, 500);
     });
   });
+  
+  return 'fix me!';
 });
