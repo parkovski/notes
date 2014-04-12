@@ -4,6 +4,7 @@ var async = require('async');
 
 var classModel = require('../models/class');
 var tokenModel = require('../models/token');
+var etherpadModel = require('../models/etherpad');
 
 function ClassController(configure) {
   configure('*').setRenderVar('sections', [{
@@ -76,7 +77,49 @@ ClassController.prototype.createClass = function(req, res) {
   );
 };
 
+ClassController.prototype.showReadOnlyEtherpad = function(req, res, next) {
+  var docId = req.params.docId;
+  
+  async.parallel([
+    function(callback) {
+      etherpadModel.getReadOnlyUrl(docId, callback);
+    },
+    function(callback) {
+      classModel.getPage(docId, callback);
+    }
+  ],
+  function(err, results) {
+    if (err) {
+      console.error(err);
+      return next();
+    }
+    
+    var padUrl = results[0];
+    var page = results[1];
+    if (!page) {
+      return next(); // 404
+    }
+    
+    res.render('classes/etherpad.html', {
+      padUrl: padUrl,
+      noContentContainer: true,
+      sections: [
+        { name: 'Classes', url: '/classes/following' },
+        { name: page.classname, url: '/c/' + page.classid }
+      ],
+      title: 'View',
+      jsmain: 'padtitlebar',
+      padName: page.name || 'Untitled',
+      id: docId
+    });
+  });
+};
+
 ClassController.prototype.showEtherpad = function(req, res, next) {
+  if (!req.user) {
+    return this.showReadOnlyEtherpad(req, res, next);
+  }
+  
   var docId = req.params.docId;
   
   async.parallel([
@@ -102,15 +145,19 @@ ClassController.prototype.showEtherpad = function(req, res, next) {
   function(err, results) {
     if (err) {
       console.error(err);
+      return next();
     }
     var tokenId = results[0];
     var page = results[1];
     if (!page) {
-      return next();
+      return next(); // 404
     }
     
+    var padUrl = etherpadModel.getEtherpadUrl(docId);
+    padUrl += '?showChat=false&token=' + tokenId;
+    
     res.render('classes/etherpad.html', {
-      padUrl: process.env.PAD_URL || 'http://pad.uanotes.com',
+      padUrl: padUrl,
       noContentContainer: true,
       sections: [
         { name: 'Classes', url: '/classes/following' },
@@ -119,8 +166,7 @@ ClassController.prototype.showEtherpad = function(req, res, next) {
       title: 'Edit',
       jsmain: 'padtitlebar',
       padName: page.name || 'Untitled',
-      id: docId,
-      authToken: tokenId
+      id: docId
     });
   });
 };
