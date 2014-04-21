@@ -11,6 +11,9 @@
       <div class="dropdown" style="float: right; clear: both;" data-toggle="topbardropdowntoggle">
         <ul>
           <li><a class="link" href="/settings">Settings</a></li>
+          {% if isAdmin %}
+          <li><a class="link" href="/admin">Admin</a></li>
+          {% endif %}
           <li>
             <form method="post" action="/logout">
               <button type="submit" class="link">Log out</button>

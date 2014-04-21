@@ -32,12 +32,6 @@ LoginController.prototype.showLoginPage = function(req, res) {
   });
 };
 
-LoginController.prototype.yclogin = function(req, res, next) {
-  req.body.username = 'notanemail@ycombinator.com';
-  req.body.password = 'ycombinator';
-  this.processLogin(req, res, next);
-};
-
 LoginController.prototype.processLogin = function(req, res, next) {
   var rememberMe = req.body.rememberMe;
   var redirectUrl = validateRedirectUrl(req.body.redirectUrl);

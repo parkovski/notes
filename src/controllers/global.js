@@ -5,6 +5,7 @@ var log4js = require('log4js');
 
 var orgModel = require('../models/org');
 var classModel = require('../models/class');
+var adminModel = require('../models/admin');
 
 var logger = log4js.getLogger();
 
@@ -26,6 +27,7 @@ GlobalController.prototype.loadGlobalVars = function(req, res, next) {
       }
       res.setRenderVar('orgMembership', results[0]);
       res.setRenderVar('classMembership', results[1]);
+      res.setRenderVar('isAdmin', adminModel.isUserAdmin(req.user));
       next();
     }
   );

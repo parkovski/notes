@@ -13,8 +13,6 @@
   "post /register": "login#registerUser",
   "/registerlinked": "login#showLinkedRegisterPage",
   "post /registerlinked": "login#registerLinkedUser",
-  
-  "/login_as_ycombinator": "login#yclogin",
 
   "/connect/facebook": "login#facebookLogin",
   "/connect/facebook/callback": "login#facebookCallback",
@@ -45,6 +43,8 @@
   "/org/:id": "org#showOrgOverview",
   "post /org/:id/join": "org#joinUserToOrg",
   "post /org/:id/leave": "org#unjoinUserFromOrg",
+  
+  "/admin": "admin#showHomePage",
 
   "post /ajax/org/setdescription/:id": "ajax.org#setDescription",
   

@@ -3,3 +3,4 @@ node_modules/
 src/db/config.json
 style/basic.css
 style/theme*.css
+start.ps1
