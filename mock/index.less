@@ -1,0 +1,197 @@
+@color: #1d68e5;
+@color: #0229cc;
+@color: #0090aa;
+//@color: #127787;
+@color2: darken(@color, 5%);
+
+@black: #111;
+
+body {
+  font-family: Helvetica;
+  font-size: 12pt;
+  color: @black;
+}
+
+.vspace {
+  height: 1em;
+}
+
+.largeVspace {
+  height: 10em;
+}
+
+h1 {
+  font-size: 300%;
+}
+
+.alignCenter {
+  text-align: center;
+}
+
+.floatRight {
+  float: right;
+}
+
+.expandContainer {
+  overflow: hidden;
+  padding-right: 10px;
+}
+
+.expand {
+  width: 100%;
+}
+
+a {
+  text-decoration: none;
+  font-weight: bold;
+  color: @black;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+#topBar::before {
+  content: ' ';
+  position: absolute;
+  display: block;
+  z-index: -1;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: @color;
+  opacity: .5;
+  overflow: hidden;
+}
+
+#topBar {
+  position: fixed;
+  width: 100%;
+  height: 48px;
+  z-index: 2;
+  overflow: hidden;
+  border-bottom: 1px solid fade(@color, 65%);
+}
+
+#topBarContent {
+  position: relative;
+  width: 700px;
+  height: 48px;
+  font-size: 125%;
+  margin: 0 auto 0;
+  color: white;
+}
+
+.topBarSep {
+  color: fade(@color, 65%);
+}
+
+#topBarContent a, span {
+  position: relative;
+  padding-top: 24px;
+  top: -.5em;
+  font-weight: normal;
+}
+
+#topBarContent a {
+  text-decoration: none;
+  display: inline-block;
+  height: 100%;
+  color: white;
+  
+  &:hover {
+    background-color: fade(@color, 50%);
+  }
+}
+
+#topBarRightPanel {
+  float: right;
+  text-align: right;
+}
+
+#contentContainer {
+  position: relative;
+  width: 100%;
+  padding: 54px 0 10px 0;
+}
+
+#contentContainer h1 {
+  position: relative;
+  color: white;
+}
+
+#contentContainer::before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: block;
+  background: url(../media/desk3bl.jpg);
+  background-position: left top;
+  background-size: cover;
+  content: ' ';
+}
+
+.centeredContentBox {
+  position: relative;
+  width: 680px;
+  padding: 10px;
+  margin: 0 auto;
+}
+
+button, input {
+  position: relative;
+  border-radius: 6px;
+  border: 1px solid fade(@color, 65%);
+  border: 1px solid @black;
+  background: transparent;
+  font-size: 125%;
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 35%);
+  color: @black;
+}
+
+button::before, input::before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: block;
+  -webkit-filter: blur(0px);
+  content: ' ';
+}
+
+button:focus, input:focus, button:hover {
+  border-color: @color;
+  outline: none;
+}
+
+input::-webkit-input-placeholder {
+  color: lighten(saturate(@color, -50%), 15%);
+  color: fade(@black, 65%);
+}
+input::-moz-input-placeholder {
+  color: green;
+}
+input::-ms-input-placeholder {
+  color: green;
+}
+input::input-placeholder {
+  color: green;
+}
+
+button {
+  -color: @color;
+  border-color: @color;
+}
+
+button:hover {
+  background-color: @color;
+  -background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1e5799), color-stop(50%,fade(#2989d8,50%)), color-stop(51%,fade(#207cca,50%)), color-stop(100%,fade(#7db9e8,50%))); /* Chrome,Safari4+ */
+-background: -webkit-linear-gradient(top, fade(#1e5799,50%) 0%,fade(#2989d8,50%) 50%,fade(#207cca,50%) 51%,fade(#7db9e8,50%) 100%); /* Chrome10+,Safari5.1+ */
+  color: white;
+  cursor: pointer;
+}

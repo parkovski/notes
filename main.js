@@ -34,8 +34,9 @@ if (process.env.REDIS_CONFIG) {
   redisStore = new RedisStore();
 }
 
-app.use('/style', express.static(__dirname + '/style'));
-app.use('/clientjs', express.static(__dirname + '/clientjs'));
+app.use('/style', express.static(__dirname + '/style/css'));
+app.use('/clientjs', express.static(__dirname + '/src/clientjs'));
+app.use('/media', express.static(__dirname + '/media'));
 app.use(cookieParser());
 app.use(session({
   store: redisStore,

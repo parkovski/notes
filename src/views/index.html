@@ -1,21 +1,17 @@
 {% extends 'partials/layout.html' %}
 {% block content %}
-<h1 class="alignCenter">Welcome to Notes.</h1>
+<div class="xtallVspace"></div>
+<h1 class="alignCenter titleBgText">Notes</h1>
 <div class="vspace"></div>
-{% if !user %}
-  <p>Don't know what this is? Read the <a href="/about">about page</a>.</p>
-  <div class="vspace"></div>
-  <p>You are not logged in. You are welcome to browse anonymously, but if you want to contribute, please <a href="/login">log in first</a>.</p>
-  <div class="vspace"></div>
-{% endif %}
 <div>
   <form method="get" action="/search">
     <div class="floatRight">
-      <button type="submit">Search</button>
+      <button type="submit" class="big bg">Search</button>
     </div>
-    <div class="expandContainer">
-      <input type="text" class="expand" name="q" placeholder="Search for a school or class"></input>
+    <div class="expandContainer big">
+      <input type="text" class="expand big bg" name="q" placeholder="Search for a school or class"></input>
     </div>
   </form>
 </div>
+<div class="xtallVspace"></div>
 {% endblock %}

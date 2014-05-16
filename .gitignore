@@ -1,6 +1,6 @@
 node_modules/
 *.swp
 src/db/config.json
-style/basic.css
-style/theme*.css
+style/css/basic.css
+style/css/theme*.css
 start.ps1

@@ -15,22 +15,22 @@
     {% if !noContentContainer %}
     <div id="contentContainer">
       {% if user %}
-        {% include './navbar.html' %}
+        {#% include './navbar.html' %#}
       {% else %}
         <div class="box sidebar" style="visibility: hidden;"></div>
       {% endif %}
-      <div id="page">
+      <div id="page"{% if backgroundImage %} class="bg"{% endif %}>
         <div id="centeredContentBox">
           {% block content %}{% endblock %}
         </div>
-        <div id="pageFooter" class="alignCenter">
-          <a href="/about">about</a> -
-          <a href="/feedback">feedback</a> -
-          <a href="/contribute">contribute</a> -
-          <a href="/org/1">help</a>
-        </div>
       </div> {# page #}
     </div> {# centeredContentBox #}
+    <footer id="pageFooter" class="alignCenter">
+        <a href="/about">about</a> -
+        <a href="/feedback">feedback</a> -
+        <a href="/contribute">contribute</a> -
+        <a href="/org/1">help</a>
+      </footer>
     {% else %}
       {% block content %}{% endblock %}
     {% endif %}

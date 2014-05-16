@@ -8,12 +8,12 @@
 
 // Defaults - override these with lessc --modify-var="var=value"
 @bodybgcolor: #efefef;
-@controlBorderColor: #999;
+@controlBorderColor: #bbb;
 @controlBorderColorActive: black;
 @panelBorderColor: #e0e0e0;
 @warningTextColor: #c00;
 @successTextColor: #080;
-@showTopBarBottomBorder: false;
+@backgroundImage: '/media/desk3bl.jpg';
 
 // Derived variables - do not modify w/ command line
 @_modifyAmount: 8%;
@@ -22,54 +22,50 @@
 @bodybgcolorLight: lighten(@bodybgcolor, @_modifyAmount);
 @bodybgcolorDark: darken(@bodybgcolor, @_modifyAmount);
 
-.glass() {
-  @topc: lighten(desaturate(@color, 25%), 40%);
-  @midc: lighten(@color, 20%);
-  background: linear-gradient(to top, @topc, @midc, @topc);
-  border-color: desaturate(@color, 30%);
-}
-
-body {
-  background-color: @bodybgcolor;
-}
-
 input.readonly {
-  background-color: @bodybgcolor;
+  border: none;
 }
 
-input, button {
+input {
   border-color: @controlBorderColor;
+  border-bottom-color: @controlBorderColor;
 }
 
-input:active, input:focus {
-  border-color: black;
+input:active, input:focus, {
+  border-color: @color;
+  background-color: fade(@color, 10%);
 }
 
 input[type="submit"]:not(.link),
-button[type="submit"]:not(.link),
+input[type="button"]:not(.link),
+button:not(.link),
 .submitButton {
-  border-color: black;
-  background-color: @color;
-  color: @textcolor;
-  //.glass();
+  background-color: rgba(255, 255, 255, 0);
+  border-color: @color;
 
   &:hover {
-    background-color: @colorLight;
+    background-color: @color;
+    color: @textcolor;
   }
   &:active {
-    background-color: @colorDark;
+    background-color: @hlcolor;
+    color: @hltextcolor;
   }
 }
 
-input[type="button"], button {
-  background-color: @bodybgcolor;
+input.bg, button.bg {
+  background-color: rgba(255, 255, 255, 35%);
+  &:active, &:focus {
+    background-color: rgba(255, 255, 255, 35%);
+  }
+}
 
-  &:hover {
-    background-color: @bodybgcolorLight;
-  }
-  &:active {
-    background-color: @bodybgcolorDark;
-  }
+input.bg {
+  border-color: rgba(0, 0, 0, 50%);
+}
+
+input.bg:active, input.bg:focus {
+  border-color: @color;
 }
 
 span.option, span.selectedOption {
@@ -90,7 +86,7 @@ span.option {
   }
 }
 
-.box, #centeredContentBox {
+.box {
   background-color: white;
   border-color: @panelBorderColor;
 }
@@ -100,41 +96,36 @@ span.option {
   color: @textcolor;
 }
 
-.topBarBottomBorder() when (@showTopBarBottomBorder) {
-  border-bottom: 1px solid @panelBorderColor;
-}
-
-.topBarBottomBorder() {
+#page.bg::before {
+  background: url(@backgroundImage);
+  background-position: left top;
+  background-size: cover;
 }
 
 #topBar {
-  background-color: @color;
   color: @textcolor;
-  .topBarBottomBorder;
+  border-bottom: fade(@color, 65%);
+}
+
+#topBar::before {
+  background-color: @color;
 }
 
 span.topBarSep {
-  color: @hlcolor;
+  color: fade(@hlcolor, 65%);
 }
 
-#topBarContent > a,
-#topBarContent > a:active,
-#topBarContent > a:visited,
-#topBarRightPanel > a,
-#topBarRightPanel > a:active,
-#topBarRightPanel > a:visited {
-  color: @textcolor;
-}
-
-#topBarContent > a:hover,
-#topBarRightPanel > a:hover {
-  background-color: @hlcolor;
-  color: @hltextcolor;
+#topBarContent a {
+  color: white;
+  &:hover {
+    background-color: fade(@color, 50%);
+  }
 }
 
 #topbardropdowntoggle {
-  border-left-color: @hlcolor;
-  border-right-color: @color;
+  border-left-color: fade(@hlcolor, 65%);
+  border-right-color: fade(@color, 0%);
+  border-top-color: fade(@color, 0%);
 }
 
 #topbardropdowntoggle.sel {
@@ -156,6 +147,10 @@ span.topBarSep {
 
 div.hline {
   border-color: @panelBorderColor;
+}
+
+.titleBgText {
+  color: @textcolor;
 }
 
 a, a:hover, a:active, a:visited,

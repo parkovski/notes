@@ -5,6 +5,7 @@
 
 * {
   .fonts();
+  box-sizing: border-box;
 }
 
 body {
@@ -12,10 +13,42 @@ body {
 }
 
 @inputPadding: 3px;
+@bigInputPaddingX: 20px;
+@bigInputPaddingY: 10px;
 input, button {
   padding: @inputPadding;
   border: @borderWidth solid;
   border-radius: @borderRadius;
+  outline: none;
+}
+
+input.big, button.big {
+  font-size: 20px;
+}
+
+// stupid css precedence rules
+input.bg,
+button.bg,
+input[type="text"].bg,
+input[type="password"].bg,
+input[type="email"].bg {
+  border-radius: (2 * @borderRadius);
+  border-width: 1px;
+  border-style: solid;
+  padding: @bigInputPaddingY @bigInputPaddingX;
+}
+
+input.bg, #dummy {
+  border: 1px solid black;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-radius: 0;
 }
 
 input::-moz-focus-inner, button::-moz-focus-inner {
@@ -27,9 +60,9 @@ button,
 input[type="button"],
 input[type="submit"]:not(.link),
 .submitButton {
-  padding-left: 6px;
-  padding-right: 6px;
-  font-weight: bold;
+  padding-left: (@inputPadding * 2);
+  padding-right: (@inputPadding * 2);
+  cursor: pointer;
 }
 
 .rightCorner {
@@ -50,8 +83,7 @@ input[type="submit"]:not(.link),
 
 div.expandContainer {
   overflow: hidden;
-  // It seems to go up to the button text, not until the button border.
-  padding-right: (5px + @inputPadding * 2);
+  padding-right: 5px;
 }
 
 .expand {
@@ -92,10 +124,10 @@ ul.bulletList {
   margin-left: 20px;
 }
 
-h1, h2, h3, h4, h5, h6,
+/*h1, h2, h3, h4, h5, h6,
 span.h1, span.h2, span.h3, span.h4, span.h5, span.h6 {
   font-weight: bold;
-}
+}*/
 
 h6, span.h6 {
   font-size: 110%;
@@ -148,8 +180,12 @@ div.hline {
   margin-bottom: .5em;
 }
 
+.titleBgText {
+  font-size: 44px;
+}
+
 @borderWidth: 1px;
-@borderRadius: 2px;
+@borderRadius: 3px;
 @pageContentWidth: 700px;
 @contentBoxPadding: 10px;
 @sidebarWidth: 150px;
@@ -162,8 +198,8 @@ div.hline {
   + @sidebarWidth * 2;
 
 #contentContainer {
-  width: @totalContentWidth;
-  margin: 10px auto;
+  position: relative;
+  width: 100%;
 }
 
 .box {
@@ -191,13 +227,14 @@ div.hline {
 }
 
 #page {
-  float: left;
+  width: 100%;
   display: inline-block;
+  padding: 54px 0 10px 0;
 }
 
 #pageFooter {
   margin-top: 0.5em;
-  font-size: 85%;
+  font-size: 75%;
 }
 
 #pageFooter a {
@@ -210,11 +247,21 @@ div.hline {
 }
 
 #centeredContentBox {
+  position: relative;
   width: (@pageContentWidth - 10px * 2); // subtract padding to align with top bar
   padding: @contentBoxPadding;
-  margin: 0 10px;
-  border: @borderWidth solid;
-  border-radius: @borderRadius;
+  margin: 0 auto;
+}
+
+#page.bg::before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: block;
+  content: ' ';
+  z-index: -1;
 }
 
 .vspace {
@@ -229,6 +276,13 @@ div.hline {
   visibility: hidden;
   position: relative;
   height: 100px;
+}
+
+.xtallVspace {
+  content: "x";
+  visibility: hidden;
+  position: relative;
+  height: 15em;
 }
 
 .formLeftSide {
@@ -329,21 +383,40 @@ iframe.fullPageContent {
 
 // -----
 
-@topBarHeight: 36px;
+@topBarHeight: 48px;
 @topBarContentHeight: 20px;
-@topBarTextSizeMultiplier: 125%;
-#topBar {
+@topBarTextSize: 20px;
+#topBar, #topBarDropdownContainer1 {
   position: fixed;
   width: 100%;
-  height: @topBarHeight;
   z-index: 2;
 }
 
+#topBar {
+  overflow: hidden;
+  border-bottom: 1px solid;
+  height: @topBarHeight;
+}
+
+#topBar::before {
+  content: ' ';
+  position: absolute;
+  display: block;
+  z-index: -1;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  opacity: .5;
+  overflow: hidden;
+}
+
 #topBarContent {
-  height: @topBarContentHeight;
+  position: relative;
+  height: @topBarHeight;
   width: @pageContentWidth;
-  font-size: @topBarTextSizeMultiplier;
-  margin: ((@topBarHeight - @topBarContentHeight) / 2) auto 0;
+  font-size: @topBarTextSize;
+  margin: 0 auto;
 }
 
 #topBarContent.unrestrictedWidth {
@@ -351,21 +424,23 @@ iframe.fullPageContent {
   padding: 0 5px;
 }
 
-#topBarFixedPlaceholder {
-  height: @topBarHeight;
+#topBarContent a, #topBarContent span {
+  position: relative;
+  display: inline-block;
+  font-weight: normal;
 }
 
-#topBarContent > a,
-#topBarContent > a:active,
-#topBarRightPanel > a,
-#topBarRightPanel > a:active {
+#topBarContent a, #topBarContent span {
+  padding-top: (@topBarHeight / 2 - @topBarTextSize / 2);
   text-decoration: none;
-  font-weight: normal;
+  display: inline-block;
+  height: 100%;
 }
 
 #topBarRightPanel {
   float: right;
   text-align: right;
+  height: 100%;
 }
 
 #topbardropdowntoggle {
@@ -373,6 +448,7 @@ iframe.fullPageContent {
   margin-left: @inputPadding;
   border-left: @borderWidth solid;
   border-right: @borderWidth solid;
+  border-top: @borderWidth solid;
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -381,28 +457,31 @@ iframe.fullPageContent {
 }
 
 #topbardropdowntoggle.sel {
-  border-left: @borderWidth solid;
-  border-right: @borderWidth solid;
-  border-top: @borderWidth solid;
-
   border-top-left-radius: @borderRadius;
   border-top-right-radius: @borderRadius;
 
-  padding-bottom: 3px;
+  padding-bottom: (@topBarHeight / 2);
+}
+
+#topBarDropdownContainer2 {
+  position: relative;
+  width: @pageContentWidth;
+  margin: 0 auto;
 }
 
 .dropdown {
   float: right;
   clear: both;
   position: relative;
-  top: 3px;
   display: none;
   text-align: left;
+  font-size: @topBarTextSize;
   border: @borderWidth solid;
   border-top: 0;
   padding: @inputPadding;
   border-radius: @borderRadius;
   border-top-right-radius: 0;
+  margin-top: @topBarHeight;
   z-index: 100;
 }
 
@@ -410,7 +489,7 @@ iframe.fullPageContent {
   margin: 5px;
 }
 
-.dropdown button.link {
+.dropdown a, .dropdown button.link {
   font-size: 100%;
   padding-bottom: 1px;
 }

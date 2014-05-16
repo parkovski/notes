@@ -9,15 +9,13 @@ module.exports.setupAppForSwig = function setupAppForSwig(app) {
   app.engine('html', require('consolidate').swig);
 };
 
-// Only use this in functions called by compileLessFiles,
-// since it uses blocking apis.
 var _writeCss = function(where) {
   return function(err, css) {
     if (err) {
       console.log(err);
       return;
     }
-    fs.writeFileSync(where, css);
+    fs.writeFile(where, css);
   };
 };
 
@@ -56,6 +54,7 @@ var compileLess = function(lessFile, cssFile) {
 // This is called once on startup so we are allowed to use blocking apis.
 module.exports.compileLessFiles = function compileLessFiles() {
   var styleDir = __dirname + '/../style/';
+  var cssDir = styleDir + 'css/';
   fs.readdirSync(styleDir).forEach(function(file) {
     if (!/\.less$/.test(file)) return;
     var fullLess = styleDir + file;
@@ -66,7 +65,7 @@ module.exports.compileLessFiles = function compileLessFiles() {
       css = 'theme0.css';
       isThemebase = true;
     }
-    var fullCss = styleDir + css;
+    var fullCss = cssDir + css;
     var lessTime = fs.statSync(fullLess).mtime;
     var cssTime = fs.existsSync(fullCss)
       ? fs.statSync(fullCss).mtime
@@ -80,7 +79,7 @@ module.exports.compileLessFiles = function compileLessFiles() {
 
     if (lessTime > cssTime) {
       if (isThemebase) {
-        compileThemes(fullLess, styleDir);
+        compileThemes(fullLess, cssDir);
       } else {
         compileLess(fullLess, fullCss);
       }
