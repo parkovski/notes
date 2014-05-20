@@ -12,28 +12,28 @@
   </head>
   <body>
     {% include './topbar.html' %}
-    {% if !noContentContainer %}
-    <div id="contentContainer">
-      {% if user %}
-        {#% include './navbar.html' %#}
-      {% else %}
-        <div class="box sidebar" style="visibility: hidden;"></div>
-      {% endif %}
-      <div id="page"{% if backgroundImage %} class="bg"{% endif %}>
-        <div id="centeredContentBox">
-          {% block content %}{% endblock %}
-        </div>
-      </div> {# page #}
-    </div> {# centeredContentBox #}
-    <footer id="pageFooter" class="alignCenter">
+    {% if user %}
+      {% include './navbar.html' %}
+    {% endif %}
+    <div id="main">
+      {% if !noContentContainer %}
+      <div id="contentContainer">
+        <div id="page"{% if backgroundImage %} class="bg"{% endif %}>
+          <div id="centeredContentBox">
+            {% block content %}{% endblock %}
+          </div>
+        </div> {# page #}
+      </div> {# centeredContentBox #}
+      <footer id="pageFooter" class="alignCenter">
         <a href="/about">about</a> -
         <a href="/feedback">feedback</a> -
         <a href="/contribute">contribute</a> -
         <a href="/org/1">help</a>
       </footer>
-    {% else %}
-      {% block content %}{% endblock %}
-    {% endif %}
+      {% else %}
+        {% block content %}{% endblock %}
+      {% endif %}
+    </div>
     
     {# Every page needs the dropdown menu code, so use that as the main entry point. #}
     <script src="/clientjs/require.config.js"></script>

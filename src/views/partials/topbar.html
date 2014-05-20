@@ -1,29 +1,22 @@
-<div id="topBarDropdownContainer1">
-  <div id="topBarDropdownContainer2">
-    <div class="dropdown" style="float: right; clear: both;" data-toggle="topbardropdowntoggle">
-      <ul>
-        <li><a class="link" href="/settings">Settings</a></li>
-        {% if isAdmin %}
-        <li><a class="link" href="/admin">Admin</a></li>
-        {% endif %}
-        <li>
-          <form method="post" action="/logout">
-            <button type="submit" class="link">Log out</button>
-          </form>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
 <div id="topBar">
-  {# If noContentContainer is set, the page width isn't restricted #}
-  {# So we shouldn't restrict the top bar's width either #}
-  {# This is set with a special CSS style #}
-  <div id="topBarContent"{% if noContentContainer %} class="unrestrictedWidth"{% endif %}>
+  {% if noContentContainer %}
+  <div id="topBarContent" class="unrestrictedWidth">
+    {% if user %}
+      <div id="topBarLeftPanel">
+        <a href="#" id="toggleSidebar">&#x2261;</a>
+      </div>
+    {% endif %}
+  {% else %}
+    {% if user %}
+      <div id="topBarLeftPanel">
+        <a href="#" id="toggleSidebar">&#x2261;</a>
+      </div>
+    {% endif %}
+  <div id="topBarContent">
+  {% endif %}
     {% if user %}
       <div id="topBarRightPanel">
         <span>{{ user.displayname }}</span>
-        <span id="topbardropdowntoggle" class="dropdownButton">&nbsp;&#x25BE;&nbsp;</span>
       </div>
     {% else %}
       {% if !suppressLoginHeaderLink %}

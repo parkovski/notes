@@ -107,10 +107,6 @@ span.option, span.selectedOption {
   border-radius: @borderRadius;
 }
 
-span.selectedOption {
-  font-weight: bold;
-}
-
 p, .para {
   line-height: 135%;
 }
@@ -188,7 +184,7 @@ div.hline {
 @borderRadius: 3px;
 @pageContentWidth: 700px;
 @contentBoxPadding: 10px;
-@sidebarWidth: 150px;
+@sidebarWidth: 200px;
 // [ subscriptions panel ] [ content panel ]
 // [ 10px content 10px ] 10px [ 10px content 10px ]
 // + borders
@@ -221,9 +217,36 @@ div.hline {
   z-index: 100;
 }
 
-.sidebar {
-  float: left;
+#sidebar {
+  position: fixed;
+  padding-top: (@topBarHeight + 10px);
+  width: 0;
+  height: 100%;
+  overflow-x: hidden;
+  
+  -webkit-transition: width .2s;
+  -moz-transition: width .2s;
+  -ms-transition: width .2s;
+  transition: width .2s;
+}
+
+#sidebar.out {
   width: @sidebarWidth;
+}
+
+#main {
+  -webkit-transition: -webkit-transform .2s;
+  -moz-transition: -moz-transform .2s;
+  -ms-transition: -ms-transform .2s;
+  transition: transform .2s;
+}
+
+#main.out {
+  -webkit-transform: translateX(@sidebarWidth);
+  -moz-transform: translateX(@sidebarWidth);
+  -ms-transform: translateX(@sidebarWidth);
+  transform: translateX(@sidebarWidth);
+  overflow-x: hidden;
 }
 
 #page {
@@ -386,13 +409,13 @@ iframe.fullPageContent {
 @topBarHeight: 48px;
 @topBarContentHeight: 20px;
 @topBarTextSize: 20px;
-#topBar, #topBarDropdownContainer1 {
+@topBarPadding: (@topBarHeight / 2 - @topBarTextSize / 2);
+@topBarTextSizeBig: 32px;
+@topBarPaddingBig: (@topBarHeight / 2 - @topBarTextSizeBig / 2);
+#topBar {
   position: fixed;
   width: 100%;
   z-index: 2;
-}
-
-#topBar {
   overflow: hidden;
   border-bottom: 1px solid;
   height: @topBarHeight;
@@ -424,17 +447,22 @@ iframe.fullPageContent {
   padding: 0 5px;
 }
 
-#topBarContent a, #topBarContent span {
+#topBarContent a, #topBarContent span,
+#topBarLeftPanel a {
   position: relative;
   display: inline-block;
   font-weight: normal;
-}
-
-#topBarContent a, #topBarContent span {
-  padding-top: (@topBarHeight / 2 - @topBarTextSize / 2);
   text-decoration: none;
   display: inline-block;
   height: 100%;
+}
+
+#topBarContent a, #topBarContent span {
+  padding-top: @topBarPadding;
+}
+
+#topBarLeftPanel a {
+  padding-top: @topBarPaddingBig;
 }
 
 #topBarRightPanel {
@@ -443,55 +471,17 @@ iframe.fullPageContent {
   height: 100%;
 }
 
-#topbardropdowntoggle {
-  padding: 0;
-  margin-left: @inputPadding;
-  border-left: @borderWidth solid;
-  border-right: @borderWidth solid;
-  border-top: @borderWidth solid;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-#topbardropdowntoggle.sel {
-  border-top-left-radius: @borderRadius;
-  border-top-right-radius: @borderRadius;
-
-  padding-bottom: (@topBarHeight / 2);
-}
-
-#topBarDropdownContainer2 {
-  position: relative;
-  width: @pageContentWidth;
-  margin: 0 auto;
-}
-
-.dropdown {
-  float: right;
-  clear: both;
-  position: relative;
-  display: none;
+#topBarLeftPanel {
+  float: left;
   text-align: left;
-  font-size: @topBarTextSize;
-  border: @borderWidth solid;
-  border-top: 0;
-  padding: @inputPadding;
-  border-radius: @borderRadius;
-  border-top-right-radius: 0;
-  margin-top: @topBarHeight;
-  z-index: 100;
+  height: @topBarHeight;
+  font-size: @topBarTextSizeBig;
+  padding-left: @topBarPadding;
 }
 
-.dropdown > ul > li {
-  margin: 5px;
-}
-
-.dropdown a, .dropdown button.link {
-  font-size: 100%;
-  padding-bottom: 1px;
+#topBarLeftPanel a {
+  padding-left: @topBarPadding;
+  padding-right: @topBarPadding;
 }
 
 #titleBar {
