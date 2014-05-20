@@ -1,22 +1,38 @@
 <div id="sidebar">
-  <h6 class="phalf">My classes</h6>
-  <ul class="smallIndentList">
+  <a class="h5 phalf" href="/">Home</a>
+  <div class="vspace"></div>
+  <h5 class="phalf">My classes</h5>
+  <ul>
     {% if classMembership.length %}
       {% for cm in classMembership %}
-        <li class="hoverLink"><a href="/c/{{ cm.id }}">{{ cm.name }}</a></li>
+        <li class="phalf"><a href="/c/{{ cm.id }}">{{ cm.name }}</a></li>
       {% endfor %}
     {% else %}
-      <li class="hoverLink"><a href="/search">Find a class</a></li>
+      <li class="phalf"><a href="/search">Find a class</a></li>
     {% endif %}
   </ul>
-  <h6 class="phalf">My schools</h6>
-  <ul class="smallIndentList">
+  <div class="vspace"></div>
+  <h5 class="phalf">My schools</h5>
+  <ul>
     {% if orgMembership.length %}
       {% for om in orgMembership %}
-        <li class="hoverLink"><a href="/org/{{ om.id }}">{{ om.name }}</a></li>
+        <li class="phalf"><a href="/org/{{ om.id }}">{{ om.name }}</a></li>
       {% endfor %}
     {% else %}
-      <li class="hoverLink"><a href="/search">Find your school</a></li>
+      <li class="phalf"><a href="/search">Find your school</a></li>
     {% endif %}
+  </ul>
+  <div class="vspace"></div>
+  <h5 class="phalf">Account</h5>
+  <ul>
+    <li class="phalf"><a href="/settings">Settings</a></li>
+    {% if isAdmin %}
+      <li class="phalf"><a href="/admin">Admin</a></li>
+    {% endif %}
+    <li class="phalf">
+      <form method="post" action="/logout">
+        <button type="submit" class="link">Log out</button>
+      </form>
+    </li>
   </ul>
 </div>

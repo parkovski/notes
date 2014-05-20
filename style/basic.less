@@ -111,41 +111,39 @@ p, .para {
   line-height: 135%;
 }
 
-ul.smallIndentList {
-  margin-left: 5px;
-}
-
 ul.bulletList {
   list-style-type: disc;
   margin-left: 20px;
 }
 
-/*h1, h2, h3, h4, h5, h6,
-span.h1, span.h2, span.h3, span.h4, span.h5, span.h6 {
-  font-weight: bold;
-}*/
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+.h1:hover, .h2:hover, .h3:hover, .h4:hover, .h5:hover, .h6:hover,
+.h1:active, .h2:active, .h3:active, .h4:active, .h5:active, .h6:active {
+  font-weight: normal;
+}
 
-h6, span.h6 {
+h6, .h6 {
   font-size: 110%;
 }
 
-h5, span.h5 {
+h5, .h5 {
   font-size: 125%;
 }
 
-h4, span.h4 {
+h4, .h4 {
   font-size: 150%;
 }
 
-h3, span.h3 {
+h3, .h3 {
   font-size: 200%;
 }
 
-h2, span.h2 {
+h2, .h2 {
   font-size: 250%;
 }
 
-h1, span.h1 {
+h1, .h1 {
   font-size: 300%;
 }
 
@@ -184,7 +182,7 @@ div.hline {
 @borderRadius: 3px;
 @pageContentWidth: 700px;
 @contentBoxPadding: 10px;
-@sidebarWidth: 200px;
+@sidebarWidth: 300px;
 // [ subscriptions panel ] [ content panel ]
 // [ 10px content 10px ] 10px [ 10px content 10px ]
 // + borders
@@ -232,6 +230,8 @@ div.hline {
 
 #sidebar.out {
   width: @sidebarWidth;
+  padding-left: (@topBarPadding * 2);
+  padding-right: @topBarPadding;
 }
 
 #main {
@@ -373,10 +373,6 @@ a, a:hover, a:active,
     text-decoration: underline;
   }
   // color is in themebase.less
-}
-
-.hoverLink {
-  padding: 3px 5px;
 }
 
 // Embed Etherpad:
