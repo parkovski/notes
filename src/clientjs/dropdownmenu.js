@@ -7,6 +7,7 @@ require(['jquery'], function($) {
     $('#toggleSidebar').click(function() {
       $main.toggleClass('out');
       $sidebar.toggleClass('out');
+      return false;
     });
   });
 });
