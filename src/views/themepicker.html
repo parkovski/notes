@@ -35,7 +35,7 @@
         id="picktheme{{ loop.key }}"
         data-themeid="{{ loop.key }}"
         data-textcolor="{{ theme.textcolor }}"
-        style="background-color: {{ theme.color }}; color: {{ theme.color }};">&#x2713;</span>
+        style="background-color: {{ theme.color }}; color: {{ theme.color }}; border-color: {{ theme.hlcolor }}">&#x2713;</span>
       {% endfor %}
     </div>
     <div class="alignRight">
