@@ -119,13 +119,13 @@ div.glass::before {
 }
 
 span.topBarSep {
-  color: fade(@hlcolor, 65%);
+  color: @hlcolor;//fade(@hlcolor, 65%);
 }
 
 #topBarContent a, #topBarLeftPanel a {
-  color: white;
+  color: @textcolor;
   &:hover {
-    background-color: fade(@color, 75%);
+    background-color: @color;//fade(@color, 75%);
   }
 }
 
