@@ -45,6 +45,7 @@
   "post /org/:id/leave": "org#unjoinUserFromOrg",
   
   "/admin": "admin#showHomePage",
+  "post /admin/restart": "admin#restart",
 
   "post /ajax/org/setdescription/:id": "ajax.org#setDescription",
   

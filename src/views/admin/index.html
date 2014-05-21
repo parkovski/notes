@@ -3,4 +3,17 @@
 <h1 class="alignCenter">Admin.</h1>
 <div class="vspace"></div>
 <p>There are {{ numUsers }} users.</p>
+<div class="vspace"></div>
+{% if canRestart %}
+  <p>
+    Restarting this server is supported. This will trigger a git pull, and may crash the site if a recent commit is buggy, so be careful.
+  </p>
+  <form method="post" action="/admin/restart">
+    <button type="submit">RESTART</button>
+  </form>
+{% else %}
+  <p>
+    Restarting this server is not supported. Provide a restart.sh file in the root directory to enable restarting.
+  </p>
+{% endif %}
 {% endblock %}
