@@ -206,6 +206,26 @@ div.hline {
   border-radius: @borderRadius;
 }
 
+div.glass {
+  position: relative;
+  border-radius: @borderRadius;
+  border-width: 1px;
+  border-style: solid;
+  padding: @contentBoxPadding;
+}
+
+div.glass::before {
+  position: absolute;
+  display: block;
+  content: ' ';
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  opacity: .5;
+  z-index: -1;
+}
+
 .themeBox {
   font-weight: bold;
 }

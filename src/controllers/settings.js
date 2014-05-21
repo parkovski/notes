@@ -65,7 +65,8 @@ SettingsController.prototype.showThemePicker = function(req, res) {
   res.render('themepicker.html', {
     title: 'Change theme',
     sections: [{ name: 'Settings', url: '/settings' }],
-    themes: this.themes
+    themes: this.themes,
+    backgroundImage: true
   });
 };
 

@@ -20,33 +20,35 @@
     margin-left: 0;
   }
 </style>
-<div class="tallVspace"></div>
-<div><h1 class="alignCenter">Pick a theme.</h1></div>
-<div class="vspace"></div>
-<div class="alignCenter">Themes are a way to create your own
-  personalized site using the color scheme you like best.</div>
-<div class="vspace"></div>
-<div class="alignCenter">
-  <div class="inlineBlock">
-    <div class="optionControl">
-      {% for theme in themes %}
-      <span
-        class="option"
-        id="picktheme{{ loop.key }}"
-        data-themeid="{{ loop.key }}"
-        data-textcolor="{{ theme.textcolor }}"
-        style="background-color: {{ theme.color }}; color: {{ theme.color }}; border-color: {{ theme.hlcolor }}">&#x2713;</span>
-      {% endfor %}
-    </div>
-    <div class="alignRight">
-      <form method="post" action="/settings/theme">
-        <input type="hidden" name="themeid" id="themeid" value=""></input>
-        <button type="submit">Change theme</button>
-      </form>
+<div class="xtallVspace"></div>
+<div class="glass">
+  <div><h1 class="alignCenter">Pick a theme.</h1></div>
+  <div class="vspace"></div>
+  <div class="alignCenter">Themes are a way to create your own
+    personalized site using the color scheme you like best.</div>
+  <div class="vspace"></div>
+  <div class="alignCenter">
+    <div class="inlineBlock">
+      <div class="optionControl">
+        {% for theme in themes %}
+        <span
+          class="option"
+          id="picktheme{{ loop.key }}"
+          data-themeid="{{ loop.key }}"
+          data-textcolor="{{ theme.textcolor }}"
+          style="background-color: {{ theme.color }}; color: {{ theme.color }}; border-color: {{ theme.hlcolor }}">&#x2713;</span>
+        {% endfor %}
+      </div>
+      <div class="alignRight">
+        <form method="post" action="/settings/theme">
+          <input type="hidden" name="themeid" id="themeid" value=""></input>
+          <button type="submit">Change theme</button>
+        </form>
+      </div>
     </div>
   </div>
 </div>
-<div class="tallVspace"></div>
+<div class="xtallVspace"></div>
 {% endblock %}
 {% block extrajs %}
 <script>
