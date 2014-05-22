@@ -19,7 +19,7 @@ SettingsController.prototype.showSettingsHomePage = function(req, res) {
     }
   ],
   function(err, accounts) {
-    res.render('settings.html', {
+    res.render('settings/index.html', {
       title: 'Settings',
       hasFacebook: accounts[0],
       hasGoogle: accounts[1],
@@ -62,7 +62,7 @@ SettingsController.prototype.update = function(req, res) {
 };
 
 SettingsController.prototype.showThemePicker = function(req, res) {
-  res.render('themepicker.html', {
+  res.render('settings/themepicker.html', {
     title: 'Change theme',
     sections: [{ name: 'Settings', url: '/settings' }],
     themes: this.themes,

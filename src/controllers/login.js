@@ -24,7 +24,7 @@ LoginController.prototype.showLoginPage = function(req, res) {
     return res.redirect('/');
   }
 
-  res.render('login.html', {
+  res.render('login/login.html', {
     title: 'Log in',
     suppressLoginHeaderLink: true,
     redirectUrl: req.query.r,
@@ -162,7 +162,7 @@ LoginController.prototype.showRegisterPage = function(req, res) {
     return res.redirect('/');
   }
 
-  res.render('register.html', {
+  res.render('login/register.html', {
     title: 'Register',
     jsmain: 'registeruser',
     error: 'error' in req.params,
@@ -220,7 +220,7 @@ LoginController.prototype.showLinkedRegisterPage = function(req, res) {
     
     linkedData.token = req.params.token;
     
-    res.render('register.html', {
+    res.render('login/register.html', {
       title: 'Register',
       jsmain: 'registeruser',
       error: 'error' in req.params,

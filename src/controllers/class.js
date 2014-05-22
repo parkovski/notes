@@ -40,7 +40,7 @@ ClassController.prototype.showClassPage = function(req, res) {
       if (err) {
         console.error(err);
       }
-      res.render('class.html', {
+      res.render('classes/index.html', {
         title: results[0].name,
         jsmain: 'classdescription',
         description: results[0].description,
