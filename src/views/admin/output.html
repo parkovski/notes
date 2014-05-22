@@ -1,0 +1,10 @@
+{% extends '../partials/layout.html' %}
+{% block content %}
+<h1 class="alignCenter">Command output</h1>
+<div class="vspace"></div>
+Stdout:
+<pre>{{ stdout }}</pre>
+<div class="vspace"></div>
+Stderr:
+<pre>{{ stderr }}</pre>
+{% endblock %}

@@ -4,16 +4,15 @@
 <div class="vspace"></div>
 <p>There are {{ numUsers }} users.</p>
 <div class="vspace"></div>
-{% if canRestart %}
-  <p>
-    Restarting this server is supported. This will trigger a git pull, and may crash the site if a recent commit is buggy, so be careful.
-  </p>
-  <form method="post" action="/admin/restart">
-    <button type="submit">RESTART</button>
-  </form>
-{% else %}
-  <p>
-    Restarting this server is not supported. Provide a restart.sh file in the root directory to enable restarting.
-  </p>
-{% endif %}
+<p>
+  This server has been running for {{ uptime.days }} days, {{ uptime.hours }} hours, {{ uptime.minutes }} minutes, {{ uptime.seconds }} seconds ({{ uptime.totalSeconds }} seconds total).
+</p>
+<div class="vspace"></div>
+<p>Warning: The crash button will cause the server to stop. It will only restart if it is running under a monitor like forever.</p>
+<form method="post" action="/admin/gitpull">
+  <button type="submit">GIT PULL</button>
+</form>
+<form method="post" action="/admin/crash">
+  <button type="submit">CRASH</button>
+</form>
 {% endblock %}
