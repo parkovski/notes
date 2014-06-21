@@ -16,7 +16,7 @@
   {% endif %}
     {% if user %}
       <div id="topBarRightPanel">
-        <span>{{ user.displayname }}</span>
+        <a href="/{{ user.name }}">{{ user.displayname }}</a>
       </div>
     {% else %}
       {% if !suppressLoginHeaderLink %}

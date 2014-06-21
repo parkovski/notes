@@ -37,6 +37,9 @@ if (process.env.REDIS_CONFIG) {
 app.use('/style', express.static(__dirname + '/style/css'));
 app.use('/clientjs', express.static(__dirname + '/src/clientjs'));
 app.use('/media', express.static(__dirname + '/media'));
+app.use('/favicon.ico', function(req, res) {
+  res.sendfile(__dirname + '/media/favicon.ico', { maxAge: 1000 * 60 * 60 * 24 });
+});
 app.use(cookieParser());
 app.use(session({
   store: redisStore,

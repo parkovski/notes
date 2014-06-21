@@ -80,22 +80,28 @@ function Router(app) {
   this.app = app;
   this.controllers = {};
   this.config = {};
+  this.routerFunctions = {};
   this._lastResort = null;
 
   upgradeReqAndRes(app);
 }
 
 Router.prototype.getConfigFunctionFor = function(controllerName) {
+  var self = this;
   var config = this.config[controllerName] || (this.config[controllerName] = {});
-  return function(methodName) {
+  var func = function(methodName) {
     return config[methodName] || (config[methodName] = new RouteConfiguration());
   };
+  func.getRouteFunction = function(routePath) {
+    return self.getRouterFor(routePath);
+  };
+  return func;
 };
 
 // Route path specifies a controller and method.
-// This method may return an array of methods, if the controller configured
-// before and after for the specified route.
 Router.prototype.getRouterFor = function(routePath) {
+  if (this.routerFunctions[routePath]) return this.routerFunctions[routePath];
+  
   var parts = routePath.split('#');
   if (parts.length !== 2) {
     throw new Error('invalid route path ' + routePath);
@@ -135,10 +141,21 @@ Router.prototype.getRouterFor = function(routePath) {
   afterAllList.forEach(function(fn) { allResponseFunctions.push(fn); });
 
   if (allResponseFunctions.length === 1) {
-    return allResponseFunctions[0];
+    return this.routerFunctions[routePath] = allResponseFunctions[0];
   }
 
-  return allResponseFunctions;
+  return this.routerFunctions[routePath] = function(req, res, next) {
+    var i = 0;
+    var last = allResponseFunctions.length - 1;
+    var callNextHandler = function() {
+      if (++i === last) {
+        return allResponseFunctions[i](req, res, next);
+      }
+      return allResponseFunctions[i](req, res, callNextHandler);
+    };
+    
+    allResponseFunctions[0](req, res, callNextHandler);
+  };
 };
 
 Router.prototype.handleSpecialRoute = function(routeName, controllerPath) {
