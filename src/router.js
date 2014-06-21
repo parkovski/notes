@@ -12,6 +12,8 @@ RouteConfiguration.prototype.before = function() {
   [].forEach.call(arguments, function(arg) { self.beforeList.push(arg); });
 };
 
+// To make this work, we'd have to replace the 'next' function that
+// express gives us with something that calls all the 'after' functions.
 RouteConfiguration.prototype.after = function() {
   throw 'This will never be called.';
   var self = this;
