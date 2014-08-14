@@ -31,9 +31,15 @@
           <ul class="dropdown-menu" role="menu">
             <li><a href="/settings">Settings</a></li>
             <li>
-              <form method="post" action="/logout">
-                <button type="submit">Log out</button>
-              </form>
+              {# Apparently bootstrap doesn't support buttons
+                styled as links inside dropdowns #}
+              <form method="post" action="/logout" id="logout-form"></form>
+              <a href="#" id="logout-link">Log out</a>
+              <script>
+                document.getElementById('logout-link').onclick = function() {
+                  document.getElementById('logout-form').submit();
+                };
+              </script>
             </li>
           </ul>
         </li>
@@ -45,44 +51,3 @@
     </div>
   </div>
 </nav>
-{#
-<div id="topBar">
-  {% if noContentContainer %}
-  <div id="topBarContent" class="unrestrictedWidth">
-    {% if user %}
-      <div id="topBarLeftPanel">
-        <a href="#" id="toggleSidebar">&#x2261;</a>
-      </div>
-    {% endif %}
-  {% else %}
-    {% if user %}
-      <div id="topBarLeftPanel">
-        <a href="#" id="toggleSidebar">&#x2261;</a>
-      </div>
-    {% endif %}
-  <div id="topBarContent">
-  {% endif %}
-    {% if user %}
-      <div id="topBarRightPanel">
-        <a href="/{{ user.name }}">{{ user.displayname }}</a>
-      </div>
-    {% else %}
-      {% if !suppressLoginHeaderLink %}
-        <div id="topBarRightPanel">
-          <a href="/register">Register</a>
-          <span class="topBarSep">|</span>
-          <a href="/login">Log in</a>
-          &nbsp;
-        </div>
-      {% endif %}
-    {% endif %}
-    &nbsp;<a href="/">Notes</a>
-    {% if sections %}
-      {% for section in sections %}
-      <span class="topBarSep">&#x25B8;</span> <a href="{{ section.url }}">{{ section.name }}</a>
-      {% endfor %}
-    {% endif %}
-    <span class="topBarSep">&#x25B8;</span> <span>{{ title }}</span>
-  </div>
-</div>
-#}

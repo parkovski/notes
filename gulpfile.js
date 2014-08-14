@@ -28,9 +28,9 @@ gulp.task('less', function() {
     .pipe(gulp.dest(paths.less.dest));
 });
 
-gulp.task('default', function() {
+gulp.task('dev', function() {
   gulp.watch(paths.components.src, ['less']);
   nodemon({ script: 'main.js', ext: 'js html' });
 });
 
-gulp.task('build', ['less']);
+gulp.task('default', ['less']);

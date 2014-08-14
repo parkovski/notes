@@ -15,38 +15,32 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <style>body { padding-top: 70px; }</style>
-    <!--link rel="stylesheet" href="/style/reset.css" />
-    <link rel="stylesheet" href="/style/basic.css" /-->
+    {#
     {% if user %}
       <link rel="stylesheet" href="/style/theme{{user.theme}}.css" id="themecss" />
     {% else %}
       <link rel="stylesheet" href="/style/theme1.css" id="themecss" />
     {% endif %}
+    #}
   </head>
   <body>
     {% include './topbar.html' %}
-    {% if user %}
+    {#% if user %}
       {% include './navbar.html' %}
+    {% endif %#}
+    {% if !noContentContainer %}
+    <div class="container">
+      {% block content %}{% endblock %}
+    </div> {# container #}
+    <footer id="pageFooter" class="text-center">
+      <a href="/about">about</a> -
+      <a href="/feedback">feedback</a> -
+      <a href="/contribute">contribute</a> -
+      <a href="/org/1">help</a>
+    </footer>
+    {% else %}
+      {% block content %}{% endblock %}
     {% endif %}
-    <div id="main">
-      {% if !noContentContainer %}
-      <div id="contentContainer">
-        <div id="page"{% if backgroundImage %} class="bg"{% endif %}>
-          <div id="centeredContentBox">
-            {% block content %}{% endblock %}
-          </div>
-        </div> {# page #}
-      </div> {# centeredContentBox #}
-      <footer id="pageFooter" class="alignCenter">
-        <a href="/about">about</a> -
-        <a href="/feedback">feedback</a> -
-        <a href="/contribute">contribute</a> -
-        <a href="/org/1">help</a>
-      </footer>
-      {% else %}
-        {% block content %}{% endblock %}
-      {% endif %}
-    </div>
     
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>

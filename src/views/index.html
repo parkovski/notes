@@ -1,17 +1,15 @@
 {% extends 'partials/layout.html' %}
 {% block content %}
-<div class="xtallVspace"></div>
-<h1 class="alignCenter titleBgText">Notes</h1>
-<div class="vspace"></div>
-<div>
+<div class="jumbotron">
+  <h1>Notes</h1>
+  <p>This is where I tell you what this site is for</p>
   <form method="get" action="/search">
-    <div class="floatRight">
-      <button type="submit" class="big bg">Search</button>
-    </div>
-    <div class="expandContainer big">
-      <input type="text" class="expand big bg" name="q" placeholder="Search for a school or class"></input>
+    <div class="input-group">
+      <input type="text" class="form-control" name="q" placeholder="Search for a school or class">
+      <span class="input-group-btn">
+        <button type="submit" class="btn btn-primary">Search</button>
+      </span>
     </div>
   </form>
 </div>
-<div class="xtallVspace"></div>
 {% endblock %}
