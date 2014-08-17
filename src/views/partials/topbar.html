@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle"
@@ -17,8 +17,9 @@
         {% for section in sections %}
         <li><a href="{{ section.url }}">{{ section.name }}</a></li>
         {% endfor %}
-        <li><p class="navbar-text">{{ title }}</p></li>
       </ul>
+      {# This doesn't align right on mobile if it's in the list #}
+      <p class="navbar-text">{{ title }}</p>
       {% endif %}
 
       <ul class="nav navbar-nav navbar-right">
