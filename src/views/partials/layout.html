@@ -32,7 +32,7 @@
     <div class="container">
       {% block content %}{% endblock %}
     </div> {# container #}
-    <footer id="pageFooter" class="text-center">
+    <footer class="text-center">
       <a href="/about">about</a> -
       <a href="/feedback">feedback</a> -
       <a href="/contribute">contribute</a> -
@@ -47,13 +47,9 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
-    {# Every page needs the dropdown menu code, so use that as the main entry point. #}
-    <script src="/clientjs/require.config.js"></script>
-    <script data-main="dropdownmenu" src="/clientjs/require.js"></script>
     {% if jsmain %}
-      <script>
-        require(['{{ jsmain }}']);
-      </script>
+      <script src="/clientjs/require.config.js"></script>
+      <script data-main="{{ jsmain }}" src="/clientjs/require.js"></script>
     {% endif %}
     {# TODO: get rid of this once we have no more inline js in pages #}
     {% block extrajs %}{% endblock %}

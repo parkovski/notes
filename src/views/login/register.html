@@ -1,73 +1,71 @@
 {% extends '../partials/layout.html' %}
 {% block content %}
-<div class="tallVspace"></div>
-<div id="loginContainer">
-  {% if linkedData %}
-    <div><h1 class="alignCenter">You're almost there.</h1></div>
-  {% else %}
-    <div><h1 class="alignCenter">Welcome.</h1></div>
-  {% endif %}
-  <div class="vspace"></div>
-  {% if error %}
-    <div><p class="alignCenter warning">An error occurred. Please try again.</p></div>
-  {% else %}
+<div>
+  <div class="text-center">
     {% if linkedData %}
-      <div><p class="alignCenter">
-        Just fill out this form, and we'll create your account.
-        Since you chose to link your account, you'll be able to log in with
-          {{ linkedData.provider }} in the future.
-      </p></div>
+    <h1>You're almost there.</h1>
     {% else %}
-      <div><p class="alignCenter">Please fill out the fields below to create your account.</p></div>
+    <h1>Welcome.</h1>
     {% endif %}
-  {% endif %}
-  <div class="vspace"></div>
-  <div class="alignCenter inlineBlock">
-    {% if linkedData %}
-    <form method="post" action="/registerlinked">
-      <input type="hidden" name="token" value="{{ linkedData.token }}" />
+    {% if error %}
+      <p class="text-danger">An error occurred. Please try again.</p>
     {% else %}
-    <form method="post" action="/register">
+      {% if linkedData %}
+        <p>
+          Just fill out this form, and we'll create your account.
+          Since you chose to link your account, you'll be able to log in with
+            {{ linkedData.provider }} in the future.
+        </p>
+      {% else %}
+        <p>Please fill out the fields below to create your account.</p>
+      {% endif %}
     {% endif %}
-      <div class="alignRight smallMargin">
-        {% if linkedData %}
-          <label>Name: <input type="text" id="name" readonly="true" class="loginFixedSizeInput readonly" value="{{ linkedData.displayname }}" /></label>
-        {% else %}
-          <label>Name: <input type="text" id="name" name="displayname" class="loginFixedSizeInput" /></label>
-          <span id="nameCheckmark" style="visibility: hidden; color: green;">&#x2713;</span>
-        {% endif %}
-      </div>
-      <div class="alignRight smallMargin" style="display: none;" id="nameMessage">
-        <span id="nameMessageSpan"></span> <span style="visibility: hidden;">&#x2713;</span>
-      </div>
-      <div class="alignRight smallMargin">
-        <label>Email: <input type="text" id="email" name="email" class="loginFixedSizeInput"
-                             {% if linkedData %}value="{{ linkedData.email }}"{% endif %} /></label>
-        <span id="emailCheckmark" style="visibility: hidden; color: green;">&#x2713;</span>
-      </div>
-      <div class="alignRight smallMargin" style="display: none;" id="emailMessage">
-        <span id="emailMessageSpan"></span> <span style="visibility: hidden;">&#x2713;</span>
-      </div>
-      <div class="alignRight smallMargin">
-        <label>Username: <input type="text" id="username" name="username" class="loginFixedSizeInput"
-                                {% if linkedData %}value="{{ linkedData.email }}"{% endif %} /></label>
-        <span id="usernameCheckmark" style="visibility: hidden; color: red;">&#x2717;</span>
-      </div>
-      <div class="alignRight smallMargin" style="display: none;" id="usernameMessage">
-        <span id="usernameMessageSpan"></span> <span style="visibility: hidden;">&#x2713;</span>
-      </div>
-      <div class="alignRight smallMargin">
-        <label>Password: <input type="password" id="password" name="password" class="loginFixedSizeInput" /></label>
-        <span id="passwordCheckmark" style="visibility: hidden; color: red;">&#x2717;</span>
-      </div>
-      <div class="alignRight smallMargin" style="display: none;" id="passwordMessage">
-        <span id="passwordMessageSpan"></span> <span style="visibility: hidden;">&#x2713;</span>
-      </div>
-      <div class="alignRight smallMargin">
-        <button type="submit">Register</button> <span style="visibility: hidden;">&#x2713;</span>
-      </div>
-    </form>
   </div>
+  {% if linkedData %}
+  <form method="post" action="/registerlinked" class="form-horizontal">
+    <input type="hidden" name="token" value="{{ linkedData.token }}">
+  {% else %}
+  <form method="post" action="/register" class="form-horizontal">
+  {% endif %}
+    <div class="form-group">
+      <label for="name" class="control-label col-lg-2 col-lg-offset-3">Name:</label>
+      <div class="col-lg-3">
+      {% if linkedData %}
+        <input type="text" id="name" readonly="true" class="form-control disabled" value="{{ linkedData.displayname }}">
+      {% else %}
+        <input type="text" id="name" name="displayname" class="form-control">
+      {% endif %}
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="email" class="control-label col-lg-2 col-lg-offset-3">Email:</label>
+      <div class="col-lg-3">
+        <input type="text" id="email" name="email" class="form-control"
+          {% if linkedData %}
+            value="{{ linkedData.email }}"
+          {% endif %}>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="username" class="control-label col-lg-2 col-lg-offset-3">Username:</label>
+      <div class="col-lg-3">
+        <input type="text" id="username" name="username" class="form-control"
+          {% if linkedData %}
+            value="{{ linkedData.email }}"
+          {% endif %}>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="password" class="control-label col-lg-2 col-lg-offset-3">Password:</label>
+      <div class="col-lg-3">
+        <input type="password" id="password" name="password" class="form-control">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-offset-5 col-lg-3">
+        <button class="btn btn-primary" type="submit">Register</button>
+      </div>
+    </div>
+  </form>
 </div>
-<div class="tallVspace"></div>
 {% endblock %}

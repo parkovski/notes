@@ -3,7 +3,7 @@
 var userModel = require('../models/user');
 
 function FourOhFourController(configure) {
-  //this.sendToUserPage = configure.getRouteFunction('user#showUserPage');
+  this.sendToUserPage = configure.getRouteFunction('user#showUserPage');
 }
 
 FourOhFourController.prototype.show404Page = function(req, res) {
@@ -11,8 +11,7 @@ FourOhFourController.prototype.show404Page = function(req, res) {
   var self = this;
   var render = function(isUser) {
     if (isUser) {
-      //return self.sendToUserPage(req, res);
-      res.render('404.html', { title: username + '\'s page' });
+      return self.sendToUserPage(req, res);
     } else {
       res.render('404.html', { title: 'Not found :(' });
     }
