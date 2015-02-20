@@ -60,4 +60,4 @@ router.configureRoutes(require('./src/routes'));
 app.use(expressRouter);
 
 app.listen(process.env.PORT || 4000);
-
+console.info('listening on port ' + (process.env.PORT || 4000));
