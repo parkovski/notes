@@ -4,4 +4,5 @@ src/db/config.json
 style/css/basic.css
 style/css/theme*.css
 start.ps1
+start
 restart.sh

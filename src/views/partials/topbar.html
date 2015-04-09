@@ -1,39 +1,54 @@
-<div id="topBar">
-  {% if noContentContainer %}
-  <div id="topBarContent" class="unrestrictedWidth">
-    {% if user %}
-      <div id="topBarLeftPanel">
-        <a href="#" id="toggleSidebar">&#x2261;</a>
-      </div>
-    {% endif %}
-  {% else %}
-    {% if user %}
-      <div id="topBarLeftPanel">
-        <a href="#" id="toggleSidebar">&#x2261;</a>
-      </div>
-    {% endif %}
-  <div id="topBarContent">
-  {% endif %}
-    {% if user %}
-      <div id="topBarRightPanel">
-        <a href="/{{ user.name }}">{{ user.displayname }}</a>
-      </div>
-    {% else %}
-      {% if !suppressLoginHeaderLink %}
-        <div id="topBarRightPanel">
-          <a href="/register">Register</a>
-          <span class="topBarSep">|</span>
-          <a href="/login">Log in</a>
-          &nbsp;
-        </div>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle"
+        data-toggle="collapse" data-target="#ua-navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Notes</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="ua-navbar-collapse">
+      {% if sections %}
+      <ul class="nav navbar-nav">
+        {% for section in sections %}
+        <li><a href="{{ section.url }}">{{ section.name }}</a></li>
+        {% endfor %}
+      </ul>
+      {# This doesn't align right on mobile if it's in the list #}
+      <p class="navbar-text">{{ title }}</p>
       {% endif %}
-    {% endif %}
-    &nbsp;<a href="/">Notes</a>
-    {% if sections %}
-      {% for section in sections %}
-      <span class="topBarSep">&#x25B8;</span> <a href="{{ section.url }}">{{ section.name }}</a>
-      {% endfor %}
-    {% endif %}
-    <span class="topBarSep">&#x25B8;</span> <span>{{ title }}</span>
+
+      <ul class="nav navbar-nav navbar-right">
+        {% if user %}
+        <li><a href="/{{ user.name }}">{{ user.displayname }}</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            Menu <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/settings">Settings</a></li>
+            <li>
+              {# Apparently bootstrap doesn't support buttons
+                styled as links inside dropdowns #}
+              <form method="post" action="/logout" id="logout-form"></form>
+              <a href="#" id="logout-link">Log out</a>
+              <script>
+                document.getElementById('logout-link').onclick = function() {
+                  document.getElementById('logout-form').submit();
+                };
+              </script>
+            </li>
+          </ul>
+        </li>
+        {% else %}
+        <li><a href="/register">Register</a></li>
+        <li><a href="/login">Log in</a></li>
+        {% endif %}
+      </ul>
+    </div>
   </div>
-</div>
+</nav>

@@ -1,57 +1,51 @@
 {% extends '../partials/layout.html' %}
 {% block content %}
-<div class="tallVspace"></div>
-<div id="loginContainer">
-  <div><h1 class="alignCenter">Hi.</h1></div>
-  <div class="vspace"></div>
-  <div>
+<div>
+  <div class="text-center">
+    <h1>Hi.</h1>
     {% if errorMessage %}
-      <p class="alignCenter warning">{{ errorMessage }}</p>
-    {% else %}
-      <p class="alignCenter">How would you like to access your notes?</p>
+    <p class="text-danger">{{ errorMessage }}</p>
     {% endif %}
   </div>
-  <div class="vspace"></div>
-  <div class="alignCenter"><div class="optionControl">
-    <span class="selectedOption">Notes account</span>
-    <span class="option">Facebook</span>
-    <span class="option">Google</span>
-  </div></div>
-  <div class="vspace"></div>
-  <div class="alignCenter inlineBlock loginPanel" id="panel0">
-    <form method="post" action="/login">
-      {% if redirectUrl %}
-      <input type="hidden" name="redirectUrl" value="{{redirectUrl}}"></input>
-      {% endif %}
-      <div class="alignRight smallMargin"><label>Username: <input type="text" id="username" name="username" class="loginFixedSizeInput" /></label></div>
-      <div class="alignRight smallMargin"><label>Password: <input type="password" id="password" name="password" class="loginFixedSizeInput" /></label></div>
-      <div class="alignRight smallMargin">
-        <div class="floatLeft">
+  <form method="post" action="/login" class="form-horizontal">
+    {% if redirectUrl %}
+    <input type="hidden" name="redirectUrl" value="{{redirectUrl}}"></input>
+    {% endif %}
+    <div class="form-group">
+      <label class="control-label col-lg-2 col-lg-offset-3">Log in using:</label>
+      <div class="col-lg-3">
+        <ul class="nav nav-pills">
+          <li class="active"><a href="#">Notes</a></li>
+          <li><a href="/connect/facebook">Facebook</a></li>
+          <li><a href="/connect/google">Google</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="username" class="control-label col-lg-2 col-lg-offset-3">Username:</label>
+      <div class="col-lg-3">
+        <input type="text" id="username" name="username" class="form-control" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="password" class="control-label col-lg-2 col-lg-offset-3">Password:</label>
+      <div class="col-lg-3">
+        <input type="password" id="password" name="password" class="form-control" />
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-offset-5 col-lg-3">
+        <div class="checkbox">
           <label><input type="checkbox" name="rememberMe" /> Stay signed in</label>
         </div>
-        <a href="/register">Sign up</a> | <button type="submit">Log in</button>
       </div>
-    </form>
-  </div>
-  <div class="alignCenter inlineBlock loginPanel" style="display: none;" id="panel1"><a href="/connect/facebook">Log in with Facebook</a></div>
-  <div class="alignCenter inlineBlock loginPanel" style="display: none;" id="panel2"><a href="/connect/google">Log in with Google</a></div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-offset-5 col-lg-3">
+        <button class="btn btn-primary" type="submit">Log in</button>
+        | <a href="/register">Sign up</a>
+      </div>
+    </div>
+  </form>
 </div>
-<div class="tallVspace"></div>
-{% endblock %}
-{% block extrajs %}
-<script>
-  require(['jquery', 'optioncontrol'], function($, xx) {
-    $(function() {
-      $('.optionControl').optionControl(function(sel, index) {
-        for (var i = 0; i < 4; ++i) {
-          var vis = 'none';
-          if (index === i) {
-            vis = '';
-          }
-          $('#panel' + i).css({display: vis});
-        }
-      });
-    });
-  });
-</script>
 {% endblock %}

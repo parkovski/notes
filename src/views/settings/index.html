@@ -1,87 +1,94 @@
 {% extends '../partials/layout.html' %}
 {% block content %}
-<h1 class="alignCenter">Settings.</h1>
-<div class="vspace"></div>
-<div class="alignCenter">
-  <div class="inlineBlock alignLeft">
-    <h5>Account details</h5>
-    <div class="vspace"></div>
-    {% if error %}
-      <p class="alignCenter warning">{{ error }}</p>
-      <div class="vspace"></div>
-    {% endif %}
-    <form method="post" action="/settings/update">
-      <fieldset class="settingsFormRow">
-        <label for="username" class="floatLeft settingsFormLabel">Username:</label>
-        <div class="settingsFormRight">
-          <input id="username" type="text" value="{{ user.name }}" readonly="true" class="readonly">
-        </div>
-      </fieldset>
-      <fieldset class="settingsFormRow">
-        <label for="displayname" class="floatLeft settingsFormLabel">Display name:</label>
-        <div class="settingsFormRight">
-          <input id="displayname" name="displayname" type="text" value="{{ user.displayname }}">
-        </div>
-      </fieldset>
-      <fieldset class="settingsFormRow">
-        <label for="email" class="floatLeft settingsFormLabel">Email:</label>
-        <div class="settingsFormRight">
-          <input id="email" name="email" type="text" value="{{ user.email }}">
-        </div>
-      </fieldset>
-      <fieldset class="settingsFormRow">
-        <label for="password" class="floatLeft settingsFormLabel">New password:</label>
-        <div class="settingsFormRight">
-          <input id="password" name="password" type="password">
-        </div>
-      </fieldset>
-      <fieldset class="settingsFormRow">
-        <label for="confirmPassword" class="floatLeft settingsFormLabel">Confirm new password:</label>
-        <div class="settingsFormRight">
-          <input id="confirmPassword" name="confirmPassword" type="password">
-        </div>
-      </fieldset>
-      <fieldset class="settingsFormRow">
-        <label for="currentPassword" class="floatLeft settingsFormLabel">Current password:</label>
-        <div class="settingsFormRight">
-          <input id="currentPassword" name="currentPassword" type="password">
-        </div>
-      </fieldset>
-      <div class="settingsFormRight settingsFormRow">
-        <button type="submit">Update</button>
-      </div>
-    </form>
-    <div class="hline"></div>
-    <div class="vspace"></div>
-    <h5 class="floatLeft">Linked accounts</h5>
-    <div class="settingsFormRight">
-      {% if !hasFacebook && !hasGoogle %}
-        None |
-      {% endif %}
-      {% if hasFacebook %}
-        <form method="post" action="/connect/unlink/facebook">
-          Facebook
-          <span class="lightText">(<button type="submit" class="link lightText">unlink</button>)</span> |
-        </form>
-      {% else %}
-        <a href="/connect/facebook">link facebook</a> |
-      {% endif %}
-      {% if hasGoogle %}
-        <form method="post" action="/connect/unlink/google">
-          Google
-          <span class="lightText">(<button type="submit" class="link lightText">unlink</button>)</span>
-        </form>
-      {% else %}
-        <a href="/connect/google">link google</a>
-      {% endif %}
-    </div>
-    <div class="vspace"></div>
-    <div class="hline"></div>
-    <div class="vspace"></div>
-    <h5 class="floatLeft">Color theme</h5>
-    <div class="settingsFormRight">
-      <a href="/settings/theme">Click to change</a>
+<div class="text-center">
+  <h1>Settings</h1>
+</div>
+<div class="col-lg-offset-5 col-lg-3">
+  <h3>Account details</h3>
+</div>
+{% if error %}
+  <p class="text-danger">{{ error }}</p>
+{% endif %}
+<form method="post" action="/settings/update" class="form-horizontal">
+  <div class="form-group">
+    <label for="username" class="control-label col-lg-2 col-lg-offset-3">Username:</label>
+    <div class="col-lg-3">
+      <input id="username" type="text" value="{{ user.name }}" readonly="true" class="form-control disabled">
     </div>
   </div>
+  <div class="form-group">
+    <label for="displayname" class="control-label col-lg-2 col-lg-offset-3">Display name:</label>
+    <div class="col-lg-3">
+      <input id="displayname" name="displayname" type="text" value="{{ user.displayname }}" class="form-control">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="email" class="control-label col-lg-2 col-lg-offset-3">Email:</label>
+    <div class="col-lg-3">
+      <input id="email" name="email" type="text" value="{{ user.email }}" class="form-control">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="password" class="control-label col-lg-2 col-lg-offset-3">New password:</label>
+    <div class="col-lg-3">
+      <input id="password" name="password" type="password" class="form-control">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="confirmPassword" class="control-label col-lg-2 col-lg-offset-3">Confirm new password:</label>
+    <div class="col-lg-3">
+      <input id="confirmPassword" name="confirmPassword" type="password" class="form-control">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="currentPassword" class="control-label col-lg-2 col-lg-offset-3">Current password:</label>
+    <div class="col-lg-3">
+      <input id="currentPassword" name="currentPassword" type="password" class="form-control">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-lg-2 col-lg-offset-5">
+      <button type="submit" class="btn btn-primary">Update</button>
+    </div>
+  </div>
+</form>
+<div class="row">
+  <hr class="col-lg-4 col-lg-offset-4">
 </div>
+<div class="row">
+  <label class="text-right col-lg-offset-3 col-lg-2">Linked accounts:</label>
+  <div class="col-lg-3">
+    {% if !hasFacebook && !hasGoogle %}
+      None |
+    {% endif %}
+    {% if hasFacebook %}
+      <form method="post" action="/connect/unlink/facebook">
+        Facebook
+        <span class="lightText">(<button type="submit" class="link lightText">unlink</button>)</span> |
+      </form>
+    {% else %}
+      <a href="/connect/facebook">link facebook</a> |
+    {% endif %}
+    {% if hasGoogle %}
+      <form method="post" action="/connect/unlink/google">
+        Google
+        <span class="lightText">(<button type="submit" class="link lightText">unlink</button>)</span>
+      </form>
+    {% else %}
+      <a href="/connect/google">link google</a>
+    {% endif %}
+  </div>
+</div>
+<div class="row">
+  <hr class="col-lg-4 col-lg-offset-4">
+</div>
+{#
+TODO: Themes don't really play well with bootstrap right now.
+<div class="row">
+  <label class="text-right col-lg-offset-3 col-lg-2">Color theme:</label>
+  <div class="col-lg-3">
+    <a href="/settings/theme">Click to change</a>
+  </div>
+</div>
+#}
 {% endblock %}
